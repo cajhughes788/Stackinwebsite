@@ -9,10 +9,8 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Income Tracking Made Simple",
   description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
-  applicationName: 'StackIn',
   openGraph: {
     title: 'Income Tracking Made Simple',
-    siteName: 'StackIn',
     description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
   },
   twitter: {
@@ -21,7 +19,11 @@ export const metadata: Metadata = {
     description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
   },
   icons: {
-    icon: '/icon.svg',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', rel: 'shortcut icon', type: 'image/svg+xml' },
+    ],
+    apple: '/icon.svg',
   },
 }
 
