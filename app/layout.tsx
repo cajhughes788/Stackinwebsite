@@ -7,25 +7,21 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "StackIn - Income Tracking Made Simple",
+  title: "Income Tracking Made Simple",
   description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
-  generator: 'v0.app',
+  applicationName: 'StackIn',
+  openGraph: {
+    title: 'Income Tracking Made Simple',
+    siteName: 'StackIn',
+    description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Income Tracking Made Simple',
+    description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
+  },
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/icon.svg',
   },
 }
 
