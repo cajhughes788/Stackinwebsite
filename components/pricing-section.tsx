@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import { useAuth } from "@/components/auth-provider";
 
 function DollarWaveBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -77,6 +79,7 @@ function DollarWaveBackground() {
 const plans = [
   {
     name: "W-2",
+    tier: "w2_basic",
     price: "$2.99",
     period: "/month",
     description: "Perfect for traditional employees",
@@ -91,6 +94,7 @@ const plans = [
   },
   {
     name: "Independent",
+    tier: "independent_basic",
     price: "$4.99",
     period: "/month",
     description: "For freelancers and gig workers",
@@ -105,6 +109,7 @@ const plans = [
   },
   {
     name: "Hybrid",
+    tier: "hybrid_plus",
     price: "$5.99",
     period: "/month",
     description: "Best for mixed income earners",
@@ -121,6 +126,54 @@ const plans = [
 ];
 
 export function PricingSection() {
+  const router = useRouter();
+  const { user, authLoading } = useAuth();
+  const [activeTier, setActiveTier] = useState<string | null>(null);
+  const [error, setError] = useState("");
+
+  async function handleCheckout(tier: string) {
+    setError("");
+
+    if (authLoading) {
+      return;
+    }
+
+    if (!user) {
+      router.push(`/signup?next=${encodeURIComponent("/#pricing")}`);
+      return;
+    }
+
+    const checkoutEndpoint = process.env.NEXT_PUBLIC_API_CREATE_CHECKOUT_SESSION;
+    if (!checkoutEndpoint) {
+      setError("Checkout is not configured yet.");
+      return;
+    }
+
+    try {
+      setActiveTier(tier);
+      const idToken = await user.getIdToken();
+
+      const response = await fetch(checkoutEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ tier }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.ok || !data.url) {
+        throw new Error(data?.error ?? "Unable to start checkout.");
+      }
+
+      window.location.href = data.url;
+    } catch (err: any) {
+      setError(err?.message ?? "Unable to start checkout.");
+      setActiveTier(null);
+    }
+  }
+
   return (
     <section id="pricing" className="relative overflow-hidden py-24 lg:py-32">
       {/* Animated Dollar Wave Background */}
@@ -143,6 +196,7 @@ export function PricingSection() {
           <p className="text-lg text-muted-foreground">
             Simple pricing for every type of worker. No hidden fees.
           </p>
+          {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
         </div>
 
         {/* Pricing Cards */}
@@ -189,13 +243,15 @@ export function PricingSection() {
 
               {/* CTA */}
               <Button
+                onClick={() => handleCheckout(plan.tier)}
+                disabled={authLoading || activeTier === plan.tier}
                 className={`w-full ${
                   plan.popular
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
               >
-                {plan.cta}
+                {activeTier === plan.tier ? "Redirecting..." : plan.cta}
               </Button>
             </div>
           ))}

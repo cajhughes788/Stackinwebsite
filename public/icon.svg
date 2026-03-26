@@ -1,26 +1,15 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    @media (prefers-color-scheme: light) {
-      .background { fill: black; }
-      .foreground { fill: white; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .background { fill: white; }
-      .foreground { fill: black; }
-    }
-  </style>
-  <g clip-path="url(#clip0_7960_43945)">
-    <rect class="background" width="180" height="180" rx="37" />
-    <g style="transform: scale(95%); transform-origin: center">
-      <path class="foreground"
-        d="M101.141 53H136.632C151.023 53 162.689 64.6662 162.689 79.0573V112.904H148.112V79.0573C148.112 78.7105 148.098 78.3662 148.072 78.0251L112.581 112.898C112.701 112.902 112.821 112.904 112.941 112.904H148.112V126.672H112.941C98.5504 126.672 86.5638 114.891 86.5638 100.5V66.7434H101.141V100.5C101.141 101.15 101.191 101.792 101.289 102.422L137.56 66.7816C137.255 66.7563 136.945 66.7434 136.632 66.7434H101.141V53Z" />
-      <path class="foreground"
-        d="M65.2926 124.136L14 66.7372H34.6355L64.7495 100.436V66.7372H80.1365V118.47C80.1365 126.278 70.4953 129.958 65.2926 124.136Z" />
-    </g>
-  </g>
-  <defs>
-    <clipPath id="clip0_7960_43945">
-      <rect width="180" height="180" fill="white" />
-    </clipPath>
-  </defs>
+  <rect width="180" height="180" rx="40" fill="#08110D" />
+  <rect x="10" y="10" width="160" height="160" rx="30" fill="#0D1F15" stroke="#79F16D" stroke-width="6" />
+  <path
+    d="M94.21 42C72.24 42 56 54.66 56 72.95C56 88.93 68.38 99.6 90.44 104.49L99.17 106.43C111.79 109.31 117.26 113.31 117.26 119.69C117.26 127.44 108.97 133 95.68 133C82.69 133 72.45 127.32 67.15 117.74L50 126.88C58.06 141.95 74.07 151 95.5 151C122.98 151 138 137.36 138 118.58C138 101.74 126.7 91.85 103.78 86.58L95.26 84.65C82.44 81.72 76.74 77.91 76.74 71.63C76.74 64.55 83.64 60 94.57 60C105.12 60 112.74 64.27 117.35 72.13L133.97 62.63C125.78 48.81 112.14 42 94.21 42Z"
+    fill="#79F16D"
+  />
+  <path
+    d="M95 31L95 149"
+    stroke="#D8FFC8"
+    stroke-width="10"
+    stroke-linecap="round"
+    opacity="0.9"
+  />
 </svg>

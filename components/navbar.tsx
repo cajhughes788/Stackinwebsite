@@ -58,11 +58,11 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden items-center gap-4 md:flex">
-            <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              Log In
+            <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+              <Link href="/login">Log In</Link>
             </Button>
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Get Started
+            <Button asChild size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Link href="/signup">Get Started</Link>
             </Button>
           </div>
 
@@ -95,11 +95,11 @@ export function Navbar() {
               Pricing
             </Link>
             <div className="flex flex-col gap-3 pt-4">
-              <Button variant="ghost" size="sm" className="w-full text-muted-foreground">
-                Log In
+              <Button asChild variant="ghost" size="sm" className="w-full text-muted-foreground">
+                <Link href="/login">Log In</Link>
               </Button>
-              <Button size="sm" className="w-full bg-primary text-primary-foreground">
-                Get Started
+              <Button asChild size="sm" className="w-full bg-primary text-primary-foreground">
+                <Link href="/signup">Get Started</Link>
               </Button>
             </div>
           </div>
