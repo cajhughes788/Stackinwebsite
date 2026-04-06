@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { DollarBackground } from "./dollar-background";
 import { AppPreview } from "./app-preview";
 
@@ -36,22 +35,6 @@ export function HeroSection() {
             <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
               Track everything in one place. Know exactly what you earn, save, and keep.
             </p>
-
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-              <Button
-                size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8"
-              >
-                Get Started
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-border text-foreground hover:bg-secondary"
-              >
-                Log In
-              </Button>
-            </div>
 
             {/* Social Proof */}
             <div className="mt-12 flex items-center gap-6 justify-center lg:justify-start">
