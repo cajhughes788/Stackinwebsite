@@ -4,8 +4,8 @@ import Image from "next/image";
 const footerLinks = [
   { label: "Features", href: "/features" },
   { label: "Pricing", href: "/#pricing" },
-  { label: "Privacy", href: "#" },
-  { label: "Terms", href: "#" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
 ];
 
 export function Footer() {

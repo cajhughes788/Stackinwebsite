@@ -8,16 +8,44 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Income Tracking Made Simple",
-  description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
+  metadataBase: new URL('https://stackin-app.com'),
+  title: {
+    default: 'StackIn | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    template: '%s | StackIn',
+  },
+  description:
+    'StackIn is an income tracking app for hourly workers, freelancers, and gig workers. Track paychecks, tips, cash, and self-employed income in one place.',
+  applicationName: 'StackIn',
+  keywords: [
+    'income tracking app',
+    'tip tracker',
+    'gig income tracker',
+    'paycheck tracker',
+    'self-employed income tracker',
+    'hourly worker app',
+    'freelancer income tracker',
+    'cash tip tracker',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: 'Income Tracking Made Simple',
-    description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
+    type: 'website',
+    url: 'https://stackin-app.com',
+    siteName: 'StackIn',
+    title: 'StackIn | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    description:
+      'Track paychecks, tips, cash, and gig income in one place with StackIn.',
   },
   twitter: {
     card: 'summary',
-    title: 'Income Tracking Made Simple',
-    description: 'Track everything in one place. Know exactly what you earn, save, and keep.',
+    title: 'StackIn | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    description:
+      'Track paychecks, tips, cash, and gig income in one place with StackIn.',
   },
   icons: {
     icon: [
