@@ -6,6 +6,14 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { getAuthSafe } from "@/lib/firebase";
 
+function getErrorMessage(error: unknown, fallback: string) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  return fallback;
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -21,8 +29,8 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(getAuthSafe(), email, password);
       router.push("/#pricing");
-    } catch (err: any) {
-      setError(err?.message ?? "Unable to sign in. Please try again.");
+    } catch (error: unknown) {
+      setError(getErrorMessage(error, "Unable to sign in. Please try again."));
     } finally {
       setLoading(false);
     }

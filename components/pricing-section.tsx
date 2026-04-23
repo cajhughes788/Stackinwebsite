@@ -5,6 +5,15 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { useAuth } from "@/components/auth-provider";
+import { ProcessingOverlay } from "@/components/processing-overlay";
+
+function getErrorMessage(error: unknown, fallback: string) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  return fallback;
+}
 
 function DollarWaveBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -168,8 +177,8 @@ export function PricingSection() {
       }
 
       window.location.href = data.url;
-    } catch (err: any) {
-      setError(err?.message ?? "Unable to start checkout.");
+    } catch (error: unknown) {
+      setError(getErrorMessage(error, "Unable to start checkout."));
       setActiveTier(null);
     }
   }
@@ -185,6 +194,11 @@ export function PricingSection() {
       </div>
 
       <div className="relative z-[2] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <ProcessingOverlay
+          open={activeTier !== null}
+          label="Redirecting to payment..."
+          description="Opening Stripe checkout for your selected plan."
+        />
         {/* Section Header */}
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
@@ -245,13 +259,9 @@ export function PricingSection() {
               <Button
                 onClick={() => handleCheckout(plan.tier)}
                 disabled={authLoading || activeTier === plan.tier}
-                className={`w-full ${
-                  plan.popular
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                }`}
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                {activeTier === plan.tier ? "Redirecting..." : plan.cta}
+                {activeTier === plan.tier ? "Redirecting to payment..." : plan.cta}
               </Button>
             </div>
           ))}

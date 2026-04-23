@@ -4,9 +4,18 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button } from "@/components/ui/button";
+import { ProcessingOverlay } from "@/components/processing-overlay";
 import { getAuthSafe } from "@/lib/firebase";
 
 const signupEndpoint = process.env.NEXT_PUBLIC_API_SIGNUP;
+
+function getErrorMessage(error: unknown, fallback: string) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  return fallback;
+}
 
 export default function SignupPage() {
   const router = useRouter();
@@ -65,8 +74,8 @@ export default function SignupPage() {
       }
 
       router.push("/#pricing");
-    } catch (err: any) {
-      setError(err?.message ?? "Unable to create your account.");
+    } catch (error: unknown) {
+      setError(getErrorMessage(error, "Unable to create your account."));
     } finally {
       setLoading(false);
     }
@@ -74,7 +83,12 @@ export default function SignupPage() {
 
   return (
     <main className="min-h-screen bg-background px-4 py-24">
-      <div className="mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
+      <div className="relative mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
+        <ProcessingOverlay
+          open={loading}
+          label="Signing you up..."
+          description="Creating your StackIn account and getting your pricing options ready."
+        />
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -148,7 +162,7 @@ export default function SignupPage() {
           {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Creating account..." : "Continue"}
+            {loading ? "Signing you up..." : "Continue"}
           </Button>
         </form>
 
