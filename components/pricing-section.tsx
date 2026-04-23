@@ -198,6 +198,7 @@ export function PricingSection() {
           open={activeTier !== null}
           label="Redirecting to payment..."
           description="Opening Stripe checkout for your selected plan."
+          fullscreen
         />
         {/* Section Header */}
         <div className="mx-auto mb-16 max-w-2xl text-center">

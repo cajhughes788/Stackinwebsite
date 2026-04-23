@@ -6,15 +6,27 @@ type ProcessingOverlayProps = {
   open: boolean;
   label: string;
   description?: string;
+  fullscreen?: boolean;
 };
 
-export function ProcessingOverlay({ open, label, description }: ProcessingOverlayProps) {
+export function ProcessingOverlay({
+  open,
+  label,
+  description,
+  fullscreen = false,
+}: ProcessingOverlayProps) {
   if (!open) {
     return null;
   }
 
   return (
-    <div className="absolute inset-0 z-20 flex items-center justify-center rounded-[inherit] bg-background/88 p-6 backdrop-blur-md">
+    <div
+      className={
+        fullscreen
+          ? "fixed inset-0 z-50 flex items-center justify-center bg-background/88 p-6 backdrop-blur-md"
+          : "absolute inset-0 z-20 flex items-center justify-center rounded-[inherit] bg-background/88 p-6 backdrop-blur-md"
+      }
+    >
       <div className="flex max-w-sm flex-col items-center text-center">
         <StackInLoaderWeb
           label={label}
