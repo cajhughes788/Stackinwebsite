@@ -7,6 +7,14 @@ import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProcessingOverlay } from "@/components/processing-overlay";
 import { getAuthSafe } from "@/lib/firebase";
+import {
+  LEGAL_CONSENT_SOURCE,
+  LEGAL_CONSENT_VERSION,
+  LEGAL_PRIVACY_VERSION,
+  LEGAL_TERMS_VERSION,
+  PRIVACY_PATH,
+  TERMS_PATH,
+} from "@/lib/legal";
 
 const signupEndpoint = process.env.NEXT_PUBLIC_API_SIGNUP;
 
@@ -16,6 +24,43 @@ function getErrorMessage(error: unknown, fallback: string) {
   }
 
   return fallback;
+}
+
+type SignupResponse = {
+  ok?: boolean;
+  error?: string;
+};
+
+async function postSignup(payload: {
+  idToken: string;
+  email: string;
+  phone: string;
+  legalConsent: {
+    version: string;
+    termsVersion: string;
+    privacyVersion: string;
+    acceptedAt: string;
+    userAgent: string;
+    source: string;
+  };
+}) {
+  const response = await fetch(signupEndpoint!, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  let data: SignupResponse | null = null;
+
+  try {
+    data = (await response.json()) as SignupResponse;
+  } catch {
+    data = null;
+  }
+
+  return { response, data };
 }
 
 export default function SignupPage() {
@@ -35,6 +80,7 @@ function SignupPageContent() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [legalConsentAccepted, setLegalConsentAccepted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -49,6 +95,11 @@ function SignupPageContent() {
 
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
+      return;
+    }
+
+    if (!legalConsentAccepted) {
+      setError("You must accept the Terms and Privacy Policy to create an account.");
       return;
     }
 
@@ -67,21 +118,31 @@ function SignupPageContent() {
       );
 
       const idToken = await userCredential.user.getIdToken();
-
-      const response = await fetch(signupEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const payload = {
+        idToken,
+        email,
+        phone,
+        legalConsent: {
+          version: LEGAL_CONSENT_VERSION,
+          termsVersion: LEGAL_TERMS_VERSION,
+          privacyVersion: LEGAL_PRIVACY_VERSION,
+          acceptedAt: new Date().toISOString(),
+          userAgent: window.navigator.userAgent,
+          source: LEGAL_CONSENT_SOURCE,
         },
-        body: JSON.stringify({
-          idToken,
-          email,
-          phone,
-        }),
-      });
+      };
 
-      const data = await response.json();
-      if (!response.ok || !data.ok) {
+      let { response, data } = await postSignup(payload);
+
+      if (!response.ok || !data?.ok) {
+        if (response.status === 400) {
+          throw new Error(data?.error ?? "Signup failed.");
+        }
+
+        ({ response, data } = await postSignup(payload));
+      }
+
+      if (!response.ok || !data?.ok) {
         throw new Error(data?.error ?? "Signup failed.");
       }
 
@@ -99,7 +160,7 @@ function SignupPageContent() {
         <ProcessingOverlay
           open={loading}
           label="Signing you up..."
-          description="Creating your StackIn account and getting your pricing options ready."
+          description="Creating your StackIn account, recording your consent, and getting your pricing options ready."
         />
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
@@ -197,9 +258,50 @@ function SignupPageContent() {
             </div>
           </div>
 
+          <div className="rounded-2xl border border-border bg-background/70 p-4">
+            <label
+              htmlFor="legalConsent"
+              className="flex items-start gap-3 text-sm leading-6 text-foreground"
+            >
+              <input
+                id="legalConsent"
+                type="checkbox"
+                checked={legalConsentAccepted}
+                onChange={(event) => setLegalConsentAccepted(event.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                required
+              />
+              <span>
+                I have read and agree to the{" "}
+                <Link
+                  href={TERMS_PATH}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary underline underline-offset-4"
+                >
+                  Terms and Conditions
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href={PRIVACY_PATH}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary underline underline-offset-4"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </span>
+            </label>
+            <p className="mt-2 pl-7 text-xs text-muted-foreground">
+              This is required before your account can be created and sends a consent record to the
+              backend with your signup.
+            </p>
+          </div>
+
           {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full" disabled={loading || !legalConsentAccepted}>
             {loading ? "Signing you up..." : "Continue"}
           </Button>
         </form>

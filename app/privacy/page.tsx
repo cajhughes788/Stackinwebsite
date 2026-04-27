@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { LEGAL_EFFECTIVE_DATE, LEGAL_LAST_UPDATED } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/privacy",
   },
-}
+};
 
 export default function PrivacyPage() {
   return (
@@ -26,6 +27,16 @@ export default function PrivacyPage() {
             This page explains how StackIn collects, uses, and protects information when you use
             our website and services.
           </p>
+
+          <section className="mt-8 rounded-2xl border border-border bg-background/70 p-5 text-sm leading-7 text-muted-foreground">
+            <h2 className="text-lg font-semibold text-foreground">Privacy Policy</h2>
+            <p>
+              <strong className="text-foreground">Effective Date:</strong> {LEGAL_EFFECTIVE_DATE}
+            </p>
+            <p>
+              <strong className="text-foreground">Last Updated:</strong> {LEGAL_LAST_UPDATED}
+            </p>
+          </section>
 
           <div className="mt-10 space-y-8 text-sm leading-7 text-muted-foreground sm:text-base">
             <section>
