@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,16 @@ function getErrorMessage(error: unknown, fallback: string) {
 }
 
 export default function SignupPage() {
+  return (
+    <Suspense fallback={<SignupPageFallback />}>
+      <SignupPageContent />
+    </Suspense>
+  );
+}
+
+function SignupPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -76,10 +85,10 @@ export default function SignupPage() {
         throw new Error(data?.error ?? "Signup failed.");
       }
 
-      router.push("/#pricing");
+      const nextPath = searchParams.get("next") || "/#pricing";
+      router.replace(nextPath);
     } catch (error: unknown) {
       setError(getErrorMessage(error, "Unable to create your account."));
-    } finally {
       setLoading(false);
     }
   }
@@ -201,6 +210,21 @@ export default function SignupPage() {
             Log in
           </Link>
         </p>
+      </div>
+    </main>
+  );
+}
+
+function SignupPageFallback() {
+  return (
+    <main className="min-h-screen bg-background px-4 py-24">
+      <div className="relative mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Sign up for StackIn, then choose the plan that fits how you work.
+          </p>
+        </div>
       </div>
     </main>
   );

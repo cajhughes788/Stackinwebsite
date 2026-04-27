@@ -28,9 +28,13 @@ const DEFAULT_ASSETS = {
 const WRAPPER_STYLE = `
 .stackin-loader-web__shell {
   display: inline-flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .stackin-loader-web {
+  width: 100%;
+  max-width: var(--stackin-loader-size);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -45,11 +49,16 @@ const WRAPPER_STYLE = `
   position: relative;
   z-index: 1;
   display: flex;
+  width: 100%;
+  max-width: var(--stackin-loader-size);
+  aspect-ratio: 1125.79 / 518.89;
   align-items: center;
   justify-content: center;
 }
 
 .stackin-loader-web__svg {
+  width: 100%;
+  height: 100%;
   overflow: visible;
 }
 
@@ -250,12 +259,15 @@ export default function StackInLoaderWeb({
   return (
     <div
       className={["stackin-loader-web__shell", className].filter(Boolean).join(" ")}
-      style={{ background }}
+      style={{
+        background,
+        ["--stackin-loader-size" as string]: `${size}px`,
+      }}
     >
       <style>{WRAPPER_STYLE}</style>
 
       <div className="stackin-loader-web" style={{ background: cardBackground }}>
-        <div className="stackin-loader-web__art" style={{ width: size, height }}>
+        <div className="stackin-loader-web__art" style={{ maxWidth: size }}>
           {isReady ? (
             <svg
               viewBox="0 0 1125.79 518.89"
