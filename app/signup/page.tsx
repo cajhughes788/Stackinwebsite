@@ -336,10 +336,6 @@ function SignupPageContent() {
                 .
               </div>
             </div>
-            <p className="mt-2 pl-7 text-xs text-muted-foreground">
-              This is required before your account can be created. Open the full-screen modal to
-              review both documents in one place.
-            </p>
           </div>
 
           {error ? <p className="text-sm text-red-400">{error}</p> : null}
