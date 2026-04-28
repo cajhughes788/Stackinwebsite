@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Account Created",
-  description: "Your StackIn account is ready. Refresh the app and log in with your new credentials.",
+  description: "Your checkout is complete. Download the mobile app or access the StackIn web version.",
   robots: {
     index: false,
     follow: false,

@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/auth-provider";
 import { Menu, X } from "lucide-react";
 
 export function Navbar() {
+  const { user, authLoading } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const showAuthCtas = !authLoading && !user;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,14 +60,25 @@ export function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden items-center gap-4 md:flex">
-            <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-              <Link href="/login">Log In</Link>
-            </Button>
-            <Button asChild size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <Link href="/signup">Get Started</Link>
-            </Button>
-          </div>
+          {showAuthCtas ? (
+            <div className="hidden items-center gap-4 md:flex">
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Link href="/login">Log In</Link>
+              </Button>
+              <Button
+                asChild
+                size="sm"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                <Link href="/signup">Get Started</Link>
+              </Button>
+            </div>
+          ) : null}
 
           {/* Mobile Menu Button */}
           <button
@@ -94,14 +108,16 @@ export function Navbar() {
             >
               Pricing
             </Link>
-            <div className="flex flex-col gap-3 pt-4">
-              <Button asChild variant="ghost" size="sm" className="w-full text-muted-foreground">
-                <Link href="/login">Log In</Link>
-              </Button>
-              <Button asChild size="sm" className="w-full bg-primary text-primary-foreground">
-                <Link href="/signup">Get Started</Link>
-              </Button>
-            </div>
+            {showAuthCtas ? (
+              <div className="flex flex-col gap-3 pt-4">
+                <Button asChild variant="ghost" size="sm" className="w-full text-muted-foreground">
+                  <Link href="/login">Log In</Link>
+                </Button>
+                <Button asChild size="sm" className="w-full bg-primary text-primary-foreground">
+                  <Link href="/signup">Get Started</Link>
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
       )}

@@ -208,7 +208,7 @@ function SignupPageContent() {
         <ProcessingOverlay
           open={loading}
           label="Signing you up..."
-          description="Creating your StackIn account, recording your consent, and getting your pricing options ready."
+          description="Creating your StackIn account and getting your pricing options ready."
         />
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Create your account</h1>

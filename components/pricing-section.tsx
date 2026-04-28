@@ -197,7 +197,6 @@ export function PricingSection() {
         <ProcessingOverlay
           open={activeTier !== null}
           label="Redirecting to payment..."
-          description="Opening Stripe checkout for your selected plan."
           fullscreen
         />
         {/* Section Header */}
