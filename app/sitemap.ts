@@ -5,6 +5,7 @@ export const dynamic = 'force-static'
 const routes = [
   '',
   '/features',
+  '/support',
   '/privacy',
   '/terms',
 ]

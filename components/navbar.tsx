@@ -52,6 +52,12 @@ export function Navbar() {
               Features
             </Link>
             <Link
+              href="/support"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Support
+            </Link>
+            <Link
               href="/#pricing"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -100,6 +106,13 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Features
+            </Link>
+            <Link
+              href="/support"
+              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Support
             </Link>
             <Link
               href="/#pricing"
