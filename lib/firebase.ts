@@ -1,4 +1,4 @@
-import { getApp, getApps, initializeApp, type FirebaseApp } from "firebase/app";
+import { getApps, initializeApp, type FirebaseApp } from "firebase/app";
 import { getAuth, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 
@@ -19,16 +19,6 @@ if (typeof window !== "undefined") {
   app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
   auth = getAuth(app);
   db = getFirestore(app);
-}
-
-export function getNamedFirebaseApp(name: string): FirebaseApp {
-  if (typeof window === "undefined") {
-    throw new Error("[getNamedFirebaseApp] Firebase apps are only available in the browser.");
-  }
-
-  return getApps().some((existingApp) => existingApp.name === name)
-    ? getApp(name)
-    : initializeApp(firebaseConfig, name);
 }
 
 export function getAuthSafe(): Auth {

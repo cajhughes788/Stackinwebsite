@@ -1,18 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import {
-  getAuth,
-  inMemoryPersistence,
-  setPersistence,
-  signInAnonymously,
-  type User,
-} from "firebase/auth";
 import { AlertCircle, CheckCircle2, LifeBuoy, MessageSquare, ShieldAlert, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProcessingOverlay } from "@/components/processing-overlay";
 import { useAuth } from "@/components/auth-provider";
-import { getNamedFirebaseApp } from "@/lib/firebase";
 
 const supportEndpoint =
   process.env.NEXT_PUBLIC_API_SUPPORT ??
@@ -52,7 +44,7 @@ const supportKinds = [
 
 type SupportKind = (typeof supportKinds)[number]["value"];
 
-type SubmitState = "idle" | "submitting" | "success" | "error";
+type SubmitState = "idle" | "submitting" | "success";
 
 function getErrorMessage(error: unknown, fallback: string) {
   if (error instanceof Error && error.message) {
@@ -109,6 +101,11 @@ export function SupportForm() {
       return;
     }
 
+    if (!user) {
+      setError("Please log in beforehand.");
+      return;
+    }
+
     if (!effectiveEmail) {
       setError("Add an email so the support team can follow up.");
       return;
@@ -122,8 +119,7 @@ export function SupportForm() {
     setState("submitting");
 
     try {
-      const supportUser = await resolveSupportUser(user);
-      const idToken = await supportUser.getIdToken();
+      const idToken = await user.getIdToken();
       const submittedAt = new Date().toISOString();
       const pageUrl = window.location.href;
       const payload = {
@@ -133,7 +129,7 @@ export function SupportForm() {
           message,
           submittedAt,
           pageUrl,
-          signedIn: Boolean(user && !user.isAnonymous),
+          signedIn: true,
         }),
         context: {
           route: window.location.pathname,
@@ -193,9 +189,6 @@ export function SupportForm() {
           Public support
         </span>
         <h2 className="mt-4 text-2xl font-bold text-foreground sm:text-3xl">Send a support request</h2>
-        <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          Choose the closest category, add enough detail for us to reproduce the issue, and we’ll route it through the same backend support flow used by the app.
-        </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -256,9 +249,6 @@ export function SupportForm() {
             autoComplete="email"
             required
           />
-          <p className="mt-2 text-xs text-muted-foreground">
-            We’ll include this with the request so the team can respond outside the app if needed.
-          </p>
         </div>
 
         <div>
@@ -324,33 +314,9 @@ function buildSupportMessage({
   ].join("\n");
 }
 
-async function resolveSupportUser(currentUser: User | null) {
-  if (currentUser) {
-    return currentUser;
-  }
-
-  const supportAuth = getAuth(getNamedFirebaseApp("support-public"));
-  await setPersistence(supportAuth, inMemoryPersistence);
-
-  if (supportAuth.currentUser) {
-    return supportAuth.currentUser;
-  }
-
-  const credentials = await signInAnonymously(supportAuth);
-  return credentials.user;
-}
-
 function getSupportSubmitErrorMessage(error: unknown) {
-  const fallback =
-    "We couldn't send your request right now. Please try again or use the in-app support flow.";
-  const message = getErrorMessage(error, fallback);
-
-  if (
-    message.includes("auth/admin-restricted-operation") ||
-    message.includes("auth/operation-not-allowed")
-  ) {
-    return "Public support submissions are not enabled in Firebase yet. Once anonymous auth is turned on, this page can send requests to the shared support backend.";
-  }
-
-  return message;
+  return getErrorMessage(
+    error,
+    "We couldn't send your request right now. Please try again or use the in-app support flow.",
+  );
 }
