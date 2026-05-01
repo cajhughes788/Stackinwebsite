@@ -122,12 +122,12 @@ const reminderFeatures = [
   {
     icon: MapPin,
     title: "Location-based reminders",
-    description: "Get prompted when you arrive at work",
+    description: "Get prompted when you leave or arrive at work",
   },
   {
     icon: Bell,
     title: "Time-based reminders",
-    description: "Never forget to track your income",
+    description: "Set a daily timer to remind to track",
   },
 ];
 

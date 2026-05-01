@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export function FeaturesCTA() {
@@ -22,17 +23,19 @@ export function FeaturesCTA() {
 
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Button
+              asChild
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8"
             >
-              Get Started
+              <Link href="/signup">Get Started</Link>
             </Button>
             <Button
+              asChild
               size="lg"
               variant="outline"
               className="border-border text-foreground hover:bg-secondary"
             >
-              Log In
+              <Link href="/login">Log In</Link>
             </Button>
           </div>
         </div>
