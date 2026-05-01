@@ -26,7 +26,7 @@ export function HeroSection() {
                   Now available on iOS and web
                 </span>
               </div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 Coming soon to Android
               </p>
             </div>
