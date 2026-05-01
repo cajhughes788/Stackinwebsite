@@ -127,7 +127,7 @@ const reminderFeatures = [
   {
     icon: Bell,
     title: "Time-based reminders",
-    description: "Set a daily timer to remind to track",
+    description: "Set a daily reminder to track",
   },
 ];
 
