@@ -89,48 +89,46 @@ const plans = [
   {
     name: "W-2",
     tier: "w2_basic",
-    price: "$2.99",
+    price: "$1.99",
     period: "/month",
     description: "Perfect for traditional employees",
     features: [
       "Track paycheck income",
       "Basic earnings reports",
       "Customizable pay stubs",
-      "Export to CSV",
+      "Share, export, and print pay stubs",
+      "Access to net income at all times",
     ],
     cta: "Get Started",
-    popular: false,
   },
   {
     name: "Independent",
     tier: "independent_basic",
-    price: "$4.99",
+    price: "$12.99",
     period: "/month",
     description: "For freelancers and gig workers",
     features: [
-      "Multiple income streams",
-      "Tips and cash tracking",
+      "Track multiple income streams",
+      "Track expenses",
+      "Upload receipts",
       "Advanced analytics",
-      "Tax-ready reports",
+      "Generate tax-ready monthly, quarterly, and yearly P&Ls",
     ],
     cta: "Get Started",
-    popular: true,
   },
   {
     name: "Hybrid",
     tier: "hybrid_plus",
-    price: "$5.99",
+    price: "$13.99",
     period: "/month",
-    description: "Best for mixed income earners",
+    description: "For W-2 and independent workers",
     features: [
-      "Everything in Independent",
-      "Unlimited income sources",
+      "Includes all Independent functionality",
+      "Includes all W-2 functionality",
+      "Track unlimited income sources",
       "Custom categories",
-      "Includes all W-2 features",
-      "Includes all Independent features",
     ],
     cta: "Get Started",
-    popular: false,
   },
 ];
 
@@ -218,21 +216,8 @@ export function PricingSection() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative rounded-2xl border p-8 transition-all duration-300 ${
-                plan.popular
-                  ? "border-primary bg-card/80 shadow-lg shadow-primary/10"
-                  : "border-border bg-card/50 hover:border-border/80"
-              }`}
+              className="relative rounded-2xl border border-primary/60 bg-card/80 p-8 shadow-lg shadow-primary/10 transition-all duration-300 hover:border-primary hover:shadow-primary/20"
             >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-primary px-4 py-1 text-xs font-semibold text-primary-foreground">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-
               {/* Plan Header */}
               <div className="mb-6">
                 <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
