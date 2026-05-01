@@ -17,7 +17,7 @@ export function FeaturesCTA() {
             <span className="text-balance">Start tracking your income today</span>
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-lg text-muted-foreground">
-            {"Join thousands of workers who use StackIn to understand their real earnings."}
+            {"Use StackIn to understand your real earnings."}
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">

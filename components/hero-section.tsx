@@ -19,11 +19,16 @@ export function HeroSection() {
         <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-12 py-20 lg:flex-row lg:gap-16">
           {/* Hero Content */}
           <div className="flex-1 text-center lg:text-left">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-medium text-muted-foreground">
-                Now available on iOS & Android
-              </span>
+            <div className="mb-6 flex flex-col items-center gap-2 lg:items-start">
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 backdrop-blur-sm">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+                <span className="text-xs font-medium text-muted-foreground">
+                  Now available on iOS and web
+                </span>
+              </div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                Coming soon to Android
+              </p>
             </div>
 
             <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
@@ -35,22 +40,6 @@ export function HeroSection() {
             <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
               Track everything in one place. Know exactly what you earn, save, and keep.
             </p>
-
-            {/* Social Proof */}
-            <div className="mt-12 flex items-center gap-6 justify-center lg:justify-start">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="h-10 w-10 rounded-full border-2 border-background bg-secondary"
-                  />
-                ))}
-              </div>
-              <div className="text-left">
-                <p className="text-sm font-semibold text-foreground">10,000+</p>
-                <p className="text-xs text-muted-foreground">Active users</p>
-              </div>
-            </div>
           </div>
 
           {/* App Preview */}

@@ -23,6 +23,7 @@ import {
   Users,
   MapPin,
   Bell,
+  Camera,
 } from "lucide-react";
 
 const everydayFeatures = [
@@ -34,7 +35,7 @@ const everydayFeatures = [
   {
     icon: CreditCard,
     title: "Multiple payment types",
-    description: "Cash, credit card, Venmo, Apple Cash",
+    description: "Cash, credit card, Venmo, Apple Cash, Zelle, POS",
   },
   {
     icon: Zap,
@@ -78,9 +79,14 @@ const independentFeatures = [
     description: "Log and categorize business expenses",
   },
   {
+    icon: Camera,
+    title: "Upload receipts",
+    description: "Track all your receipts and build expenses from these receipts",
+  },
+  {
     icon: PieChart,
-    title: "Monthly P&L reports",
-    description: "Clean profit and loss summaries",
+    title: "Profit and loss reports",
+    description: "Monthly, quarterly, and yearly profit and loss summaries",
   },
   {
     icon: FolderTree,
@@ -121,7 +127,7 @@ const reminderFeatures = [
   {
     icon: Bell,
     title: "Time-based reminders",
-    description: "Never forget to log your income",
+    description: "Never forget to track your income",
   },
 ];
 
@@ -173,7 +179,7 @@ export default function FeaturesPage() {
 
         <FeatureSection
           label="Reminders"
-          title="Never forget to log"
+          title="Never forget to track"
           description="Smart reminders that help you stay consistent with tracking."
           features={reminderFeatures}
           columns={2}
