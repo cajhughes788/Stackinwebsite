@@ -1,9 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useAuth } from "@/components/auth-provider";
 import { Button } from "@/components/ui/button";
 
 export function FeaturesCTA() {
+  const { user, authLoading } = useAuth();
+  const showAuthCtas = !authLoading && !user;
+
   return (
     <section className="relative py-24 lg:py-32">
       {/* Background Gradient */}
@@ -21,23 +25,25 @@ export function FeaturesCTA() {
             {"Use StackIn to understand your real earnings."}
           </p>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 px-8"
-            >
-              <Link href="/signup">Get Started</Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-border text-foreground hover:bg-secondary"
-            >
-              <Link href="/login">Log In</Link>
-            </Button>
-          </div>
+          {showAuthCtas ? (
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8"
+              >
+                <Link href="/signup">Get Started</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-border text-foreground hover:bg-secondary"
+              >
+                <Link href="/login">Log In</Link>
+              </Button>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
