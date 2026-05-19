@@ -99,7 +99,7 @@ const plans = [
       "Share, export, and print pay stubs",
       "Access to net income at all times",
     ],
-    cta: "Get Started",
+    cta: "Try for Free",
   },
   {
     name: "Independent",
@@ -114,7 +114,7 @@ const plans = [
       "Advanced analytics",
       "Generate tax-ready monthly, quarterly, and yearly P&Ls",
     ],
-    cta: "Get Started",
+    cta: "Try for Free",
   },
   {
     name: "Hybrid",
@@ -128,7 +128,7 @@ const plans = [
       "Track unlimited income sources",
       "Custom categories",
     ],
-    cta: "Get Started",
+    cta: "Try for Free",
   },
 ];
 
