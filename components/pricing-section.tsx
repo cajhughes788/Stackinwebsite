@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { useAuth } from "@/components/auth-provider";
 import { ProcessingOverlay } from "@/components/processing-overlay";
+import type { AppSource } from "@/lib/app-source";
+import { getAppSource, withAppSource } from "@/lib/app-source";
 
 function getErrorMessage(error: unknown, fallback: string) {
   if (error instanceof Error && error.message) {
@@ -132,7 +134,30 @@ const plans = [
   },
 ];
 
-export function PricingSection() {
+type PricingSectionProps = {
+  source?: AppSource | null;
+};
+
+export function PricingSection({ source = null }: PricingSectionProps) {
+  return (
+    <Suspense fallback={<PricingSectionContent source={source} />}>
+      <PricingSectionWithSearchParams fallbackSource={source} />
+    </Suspense>
+  );
+}
+
+function PricingSectionWithSearchParams({
+  fallbackSource,
+}: {
+  fallbackSource: AppSource | null;
+}) {
+  const searchParams = useSearchParams();
+  const source = getAppSource(searchParams.get("source")) ?? fallbackSource;
+
+  return <PricingSectionContent source={source} />;
+}
+
+function PricingSectionContent({ source }: { source: AppSource | null }) {
   const router = useRouter();
   const { user, authLoading } = useAuth();
   const [activeTier, setActiveTier] = useState<string | null>(null);
@@ -146,7 +171,16 @@ export function PricingSection() {
     }
 
     if (!user) {
-      router.push(`/signup?next=${encodeURIComponent("/#pricing")}`);
+      const nextPath = withAppSource("/#pricing", source);
+      const signupParams = new URLSearchParams({
+        next: nextPath,
+      });
+
+      if (source) {
+        signupParams.set("source", source);
+      }
+
+      router.push(`/signup?${signupParams.toString()}`);
       return;
     }
 
@@ -159,6 +193,7 @@ export function PricingSection() {
     try {
       setActiveTier(tier);
       const idToken = await user.getIdToken();
+      const payload = source ? { tier, source } : { tier };
 
       const response = await fetch(checkoutEndpoint, {
         method: "POST",
@@ -166,7 +201,7 @@ export function PricingSection() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify({ tier }),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();

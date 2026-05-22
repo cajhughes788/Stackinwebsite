@@ -7,6 +7,7 @@ import { Eye, EyeOff, X } from "lucide-react";
 import { LegalPrivacyContent, LegalTermsContent } from "@/components/legal-content";
 import { Button } from "@/components/ui/button";
 import { ProcessingOverlay } from "@/components/processing-overlay";
+import { getAppSource, withAppSource } from "@/lib/app-source";
 import { getAuthSafe } from "@/lib/firebase";
 import {
   LEGAL_CONSENT_SOURCE,
@@ -75,6 +76,7 @@ export default function SignupPage() {
 function SignupPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const source = getAppSource(searchParams.get("source"));
   const termsSectionRef = useRef<HTMLElement | null>(null);
   const privacySectionRef = useRef<HTMLElement | null>(null);
   const [email, setEmail] = useState("");
@@ -194,7 +196,7 @@ function SignupPageContent() {
         throw new Error(data?.error ?? "Signup failed.");
       }
 
-      const nextPath = searchParams.get("next") || "/#pricing";
+      const nextPath = withAppSource(searchParams.get("next") || "/#pricing", source);
       router.replace(nextPath);
     } catch (error: unknown) {
       setError(getErrorMessage(error, "Unable to create your account."));
