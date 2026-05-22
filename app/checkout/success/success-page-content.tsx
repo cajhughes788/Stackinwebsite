@@ -16,8 +16,18 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
 
   return (
     <main className="min-h-screen bg-background px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto flex min-h-[calc(100vh-8rem)] w-full max-w-5xl flex-col items-center justify-between">
-        <section className="flex w-full flex-1 flex-col items-center justify-center gap-8 text-center sm:gap-10">
+      <div
+        className={`mx-auto flex w-full max-w-5xl flex-col items-center ${
+          isIosAppSource
+            ? "min-h-screen justify-center py-6"
+            : "min-h-[calc(100vh-8rem)] justify-between"
+        }`}
+      >
+        <section
+          className={`flex w-full flex-col items-center justify-center text-center ${
+            isIosAppSource ? "max-w-2xl gap-6 sm:gap-8" : "flex-1 gap-8 sm:gap-10"
+          }`}
+        >
           <h1 className="w-full max-w-[18rem] text-balance text-3xl font-bold tracking-tight text-primary sm:max-w-2xl sm:text-4xl md:max-w-3xl md:text-5xl lg:max-w-4xl">
             {isIosAppSource ? "Your account is ready." : "Your checkout is complete."}
           </h1>
@@ -33,20 +43,19 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
             />
           </div>
 
-          <div className="flex w-full max-w-2xl flex-col items-center gap-4 text-center">
+          <div
+            className={`flex w-full flex-col items-center text-center ${
+              isIosAppSource ? "max-w-xl gap-3" : "max-w-2xl gap-4"
+            }`}
+          >
             {isIosAppSource ? (
               <>
-                <p className="text-lg text-foreground sm:text-xl">
+                <p className="max-w-lg text-balance text-lg text-foreground sm:text-xl">
                   Close this page and return to the StackIn app.
                 </p>
-                <p className="text-sm text-muted-foreground sm:text-base">
+                <p className="max-w-lg text-balance text-sm text-muted-foreground sm:text-base">
                   Then log in with the email and password you just created.
                 </p>
-                <Button asChild variant="outline" className="w-full sm:w-auto">
-                  <a href="https://stackin.web.app" target="_blank" rel="noreferrer">
-                    Open Web Login
-                  </a>
-                </Button>
               </>
             ) : (
               <>
@@ -84,11 +93,13 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
           </div>
         </section>
 
-        <div className="pt-8">
-          <Button asChild variant="outline" className="w-full sm:w-auto">
-            <Link href="/">Back to Home</Link>
-          </Button>
-        </div>
+        {!isIosAppSource ? (
+          <div className="pt-8">
+            <Button asChild variant="outline" className="w-full sm:w-auto">
+              <Link href="/">Back to Home</Link>
+            </Button>
+          </div>
+        ) : null}
       </div>
     </main>
   );
