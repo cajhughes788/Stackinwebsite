@@ -7,7 +7,7 @@ import { Check } from "lucide-react";
 import { useAuth } from "@/components/auth-provider";
 import { ProcessingOverlay } from "@/components/processing-overlay";
 import type { AppSource } from "@/lib/app-source";
-import { getAppSource, withAppSource } from "@/lib/app-source";
+import { getAppSource, getPricingPath, withAppSource } from "@/lib/app-source";
 
 function getErrorMessage(error: unknown, fallback: string) {
   if (error instanceof Error && error.message) {
@@ -136,32 +136,46 @@ const plans = [
 
 type PricingSectionProps = {
   source?: AppSource | null;
+  presentation?: "marketing" | "app";
 };
 
-export function PricingSection({ source = null }: PricingSectionProps) {
+export function PricingSection({
+  source = null,
+  presentation = "marketing",
+}: PricingSectionProps) {
   return (
-    <Suspense fallback={<PricingSectionContent source={source} />}>
-      <PricingSectionWithSearchParams fallbackSource={source} />
+    <Suspense fallback={<PricingSectionContent source={source} presentation={presentation} />}>
+      <PricingSectionWithSearchParams fallbackSource={source} presentation={presentation} />
     </Suspense>
   );
 }
 
 function PricingSectionWithSearchParams({
   fallbackSource,
+  presentation,
 }: {
   fallbackSource: AppSource | null;
+  presentation: "marketing" | "app";
 }) {
   const searchParams = useSearchParams();
   const source = getAppSource(searchParams.get("source")) ?? fallbackSource;
 
-  return <PricingSectionContent source={source} />;
+  return <PricingSectionContent source={source} presentation={presentation} />;
 }
 
-function PricingSectionContent({ source }: { source: AppSource | null }) {
+function PricingSectionContent({
+  source,
+  presentation,
+}: {
+  source: AppSource | null;
+  presentation: "marketing" | "app";
+}) {
   const router = useRouter();
   const { user, authLoading } = useAuth();
   const [activeTier, setActiveTier] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const isAppPresentation = presentation === "app";
+  const nextPath = isAppPresentation ? withAppSource("/pricing", source) : getPricingPath(source);
 
   async function handleCheckout(tier: string) {
     setError("");
@@ -171,7 +185,6 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
     }
 
     if (!user) {
-      const nextPath = withAppSource("/#pricing", source);
       const signupParams = new URLSearchParams({
         next: nextPath,
       });
@@ -217,41 +230,60 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
   }
 
   return (
-    <section id="pricing" className="relative overflow-hidden py-24 lg:py-32">
+    <section
+      id={isAppPresentation ? undefined : "pricing"}
+      className={
+        isAppPresentation
+          ? "relative overflow-hidden rounded-[2rem] border border-border/80 bg-card/70 px-5 py-6 shadow-2xl shadow-black/20 sm:px-8 sm:py-8"
+          : "relative overflow-hidden py-24 lg:py-32"
+      }
+    >
       {/* Animated Dollar Wave Background */}
       <DollarWaveBackground />
-      
+
       {/* Gradient Overlay */}
       <div className="pointer-events-none absolute inset-0 z-[1]">
         <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
       </div>
 
-      <div className="relative z-[2] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        className={
+          isAppPresentation
+            ? "relative z-[2] mx-auto max-w-5xl"
+            : "relative z-[2] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+        }
+      >
         <ProcessingOverlay
           open={activeTier !== null}
           label="Redirecting to payment..."
           fullscreen
         />
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-2xl text-center">
+        <div className={isAppPresentation ? "mx-auto mb-8 max-w-2xl text-center sm:mb-10" : "mx-auto mb-16 max-w-2xl text-center"}>
           <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
             Pricing
           </span>
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             <span className="text-balance">Choose your plan</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
-            Simple pricing for every type of worker. No hidden fees.
+          <p className={isAppPresentation ? "text-base text-muted-foreground sm:text-lg" : "text-lg text-muted-foreground"}>
+            {isAppPresentation
+              ? "Finish setting up your StackIn account with a plan that fits how you work."
+              : "Simple pricing for every type of worker. No hidden fees."}
           </p>
           {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className={isAppPresentation ? "grid gap-4 md:grid-cols-2 xl:grid-cols-3" : "grid gap-8 lg:grid-cols-3"}>
           {plans.map((plan, index) => (
             <div
               key={index}
-              className="relative rounded-2xl border border-primary/60 bg-card/80 p-8 shadow-lg shadow-primary/10 transition-all duration-300 hover:border-primary hover:shadow-primary/20"
+              className={
+                isAppPresentation
+                  ? "relative rounded-[1.5rem] border border-primary/50 bg-background/75 p-6 shadow-lg shadow-black/20 transition-all duration-300 hover:border-primary hover:shadow-primary/20 sm:p-7"
+                  : "relative rounded-2xl border border-primary/60 bg-card/80 p-8 shadow-lg shadow-primary/10 transition-all duration-300 hover:border-primary hover:shadow-primary/20"
+              }
             >
               {/* Plan Header */}
               <div className="mb-6">
@@ -279,7 +311,8 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
               <Button
                 onClick={() => handleCheckout(plan.tier)}
                 disabled={authLoading || activeTier === plan.tier}
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                size="lg"
+                className="min-h-12 w-full bg-primary text-base text-primary-foreground hover:bg-primary/90"
               >
                 {activeTier === plan.tier ? "Redirecting to payment..." : plan.cta}
               </Button>

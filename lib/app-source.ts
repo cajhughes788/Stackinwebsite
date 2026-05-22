@@ -25,3 +25,11 @@ export function withAppSource(
 
   return `${url.pathname}${url.search}${url.hash}`;
 }
+
+export function getPricingPath(
+  source: string | string[] | null | undefined,
+): string {
+  const normalizedSource = getAppSource(source);
+
+  return withAppSource(normalizedSource ? "/pricing" : "/#pricing", normalizedSource);
+}

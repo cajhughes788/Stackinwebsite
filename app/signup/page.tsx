@@ -4,10 +4,11 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Eye, EyeOff, X } from "lucide-react";
+import { AppFlowShell } from "@/components/app-flow-shell";
 import { LegalPrivacyContent, LegalTermsContent } from "@/components/legal-content";
 import { Button } from "@/components/ui/button";
 import { ProcessingOverlay } from "@/components/processing-overlay";
-import { getAppSource, withAppSource } from "@/lib/app-source";
+import { getAppSource, getPricingPath, withAppSource } from "@/lib/app-source";
 import { getAuthSafe } from "@/lib/firebase";
 import {
   LEGAL_CONSENT_SOURCE,
@@ -77,6 +78,7 @@ function SignupPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const source = getAppSource(searchParams.get("source"));
+  const defaultNextPath = getPricingPath(source);
   const termsSectionRef = useRef<HTMLElement | null>(null);
   const privacySectionRef = useRef<HTMLElement | null>(null);
   const [email, setEmail] = useState("");
@@ -90,6 +92,17 @@ function SignupPageContent() {
   const [legalModalSection, setLegalModalSection] = useState<LegalModalSection>("terms");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const loginParams = new URLSearchParams();
+  const nextParam = searchParams.get("next");
+
+  if (nextParam) {
+    loginParams.set("next", nextParam);
+  }
+
+  const loginHref = withAppSource(
+    loginParams.size > 0 ? `/login?${loginParams.toString()}` : "/login",
+    source,
+  );
 
   useEffect(() => {
     if (!legalModalOpen) {
@@ -196,7 +209,7 @@ function SignupPageContent() {
         throw new Error(data?.error ?? "Signup failed.");
       }
 
-      const nextPath = withAppSource(searchParams.get("next") || "/#pricing", source);
+      const nextPath = withAppSource(searchParams.get("next") || defaultNextPath, source);
       router.replace(nextPath);
     } catch (error: unknown) {
       setError(getErrorMessage(error, "Unable to create your account."));
@@ -205,7 +218,7 @@ function SignupPageContent() {
   }
 
   return (
-    <main className="min-h-screen bg-background px-4 py-24">
+    <AppFlowShell contentClassName="max-w-md">
       <div className="relative mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
         <ProcessingOverlay
           open={loading}
@@ -230,7 +243,7 @@ function SignupPageContent() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-primary"
+              className="min-h-12 w-full rounded-xl border border-border bg-background px-4 py-3 text-base text-foreground outline-none transition focus:border-primary"
               required
             />
           </div>
@@ -245,7 +258,7 @@ function SignupPageContent() {
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
               placeholder="(555) 123-4567"
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-primary"
+              className="min-h-12 w-full rounded-xl border border-border bg-background px-4 py-3 text-base text-foreground outline-none transition focus:border-primary"
             />
           </div>
 
@@ -260,7 +273,7 @@ function SignupPageContent() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Create a password"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 pr-11 text-sm text-foreground outline-none transition focus:border-primary"
+                className="min-h-12 w-full rounded-xl border border-border bg-background px-4 py-3 pr-12 text-base text-foreground outline-none transition focus:border-primary"
                 required
               />
               <button
@@ -289,7 +302,7 @@ function SignupPageContent() {
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 placeholder="Re-enter your password"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 pr-11 text-sm text-foreground outline-none transition focus:border-primary"
+                className="min-h-12 w-full rounded-xl border border-border bg-background px-4 py-3 pr-12 text-base text-foreground outline-none transition focus:border-primary"
                 required
               />
               <button
@@ -349,7 +362,7 @@ function SignupPageContent() {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/login" className="text-primary underline underline-offset-4">
+          <Link href={loginHref} className="text-primary underline underline-offset-4">
             Log in
           </Link>
         </p>
@@ -408,13 +421,13 @@ function SignupPageContent() {
           </div>
         </div>
       ) : null}
-    </main>
+    </AppFlowShell>
   );
 }
 
 function SignupPageFallback() {
   return (
-    <main className="min-h-screen bg-background px-4 py-24">
+    <AppFlowShell contentClassName="max-w-md">
       <div className="relative mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
@@ -423,6 +436,6 @@ function SignupPageFallback() {
           </p>
         </div>
       </div>
-    </main>
+    </AppFlowShell>
   );
 }

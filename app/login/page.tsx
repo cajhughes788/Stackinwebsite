@@ -1,10 +1,12 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Eye, EyeOff } from "lucide-react";
+import { AppFlowShell } from "@/components/app-flow-shell";
 import { Button } from "@/components/ui/button";
+import { getAppSource, getPricingPath, withAppSource } from "@/lib/app-source";
 import { getAuthSafe } from "@/lib/firebase";
 
 function getErrorMessage(error: unknown, fallback: string) {
@@ -16,12 +18,33 @@ function getErrorMessage(error: unknown, fallback: string) {
 }
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginPageFallback />}>
+      <LoginPageContent />
+    </Suspense>
+  );
+}
+
+function LoginPageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const source = getAppSource(searchParams.get("source"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const signupParams = new URLSearchParams();
+  const nextParam = searchParams.get("next");
+
+  if (nextParam) {
+    signupParams.set("next", nextParam);
+  }
+
+  const signupHref = withAppSource(
+    signupParams.size > 0 ? `/signup?${signupParams.toString()}` : "/signup",
+    source,
+  );
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,7 +53,7 @@ export default function LoginPage() {
 
     try {
       await signInWithEmailAndPassword(getAuthSafe(), email, password);
-      router.push("/#pricing");
+      router.push(withAppSource(searchParams.get("next") || getPricingPath(source), source));
     } catch (error: unknown) {
       setError(getErrorMessage(error, "Unable to sign in. Please try again."));
     } finally {
@@ -39,7 +62,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background px-4 py-24">
+    <AppFlowShell contentClassName="max-w-md">
       <div className="mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Log in</h1>
@@ -59,7 +82,7 @@ export default function LoginPage() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-primary"
+              className="min-h-12 w-full rounded-xl border border-border bg-background px-4 py-3 text-base text-foreground outline-none transition focus:border-primary"
               required
             />
           </div>
@@ -75,7 +98,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Your password"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 pr-11 text-sm text-foreground outline-none transition focus:border-primary"
+                className="min-h-12 w-full rounded-xl border border-border bg-background px-4 py-3 pr-12 text-base text-foreground outline-none transition focus:border-primary"
                 required
               />
               <button
@@ -99,11 +122,26 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-primary underline underline-offset-4">
+          <Link href={signupHref} className="text-primary underline underline-offset-4">
             Sign up
           </Link>
         </p>
       </div>
-    </main>
+    </AppFlowShell>
+  );
+}
+
+function LoginPageFallback() {
+  return (
+    <AppFlowShell contentClassName="max-w-md">
+      <div className="mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold text-foreground">Log in</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Access your StackIn account to manage your subscription.
+          </p>
+        </div>
+      </div>
+    </AppFlowShell>
   );
 }
