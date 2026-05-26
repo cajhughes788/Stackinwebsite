@@ -34,7 +34,7 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/stackin-logo.png"
+              src="/images/stackin-logo.webp"
               alt="StackIn"
               width={350}
               height={90}

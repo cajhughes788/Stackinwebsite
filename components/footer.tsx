@@ -17,7 +17,7 @@ export function Footer() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/stackin-logo.png"
+              src="/images/stackin-logo.webp"
               alt="StackIn"
               width={300}
               height={80}

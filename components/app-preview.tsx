@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 
 const previews = [
   {
-    src: "/images/app-preview-1.jpg",
+    src: "/images/app-preview-1.webp",
     alt: "Stackin app preview showing the current pay period screen.",
   },
   {
-    src: "/images/app-preview-2.jpg",
+    src: "/images/app-preview-2.webp",
     alt: "Stackin app preview showing the current month income screen.",
   },
   {
-    src: "/images/app-preview-3.jpg",
+    src: "/images/app-preview-3.webp",
     alt: "Stackin app preview showing the expenses breakdown screen.",
   },
 ] as const;
