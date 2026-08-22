@@ -91,8 +91,8 @@ const plans = [
   {
     name: "W-2",
     tier: "w2_basic",
-    price: "$1.99",
-    period: "/month",
+    price: "Free",
+    period: "",
     description: "Perfect for traditional employees",
     features: [
       "Track paycheck income",
