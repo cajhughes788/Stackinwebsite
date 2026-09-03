@@ -9,6 +9,7 @@ interface Feature {
 }
 
 interface FeatureSectionProps {
+  id?: string;
   label: string;
   title: string;
   description: string;
@@ -17,6 +18,7 @@ interface FeatureSectionProps {
 }
 
 export function FeatureSection({
+  id,
   label,
   title,
   description,
@@ -30,7 +32,7 @@ export function FeatureSection({
   };
 
   return (
-    <section className="relative z-10 py-16 lg:py-24">
+    <section id={id} className="relative z-10 scroll-mt-24 py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto mb-12 max-w-2xl text-center">

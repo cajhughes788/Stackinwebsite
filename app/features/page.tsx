@@ -24,6 +24,15 @@ import {
   MapPin,
   Bell,
   Camera,
+  Car,
+  Repeat,
+  AlertTriangle,
+  Percent,
+  Target,
+  Landmark,
+  Sparkles,
+  BellRing,
+  Upload,
 } from "lucide-react";
 
 const everydayFeatures = [
@@ -53,7 +62,8 @@ const w2Features = [
   {
     icon: Calculator,
     title: "Net paycheck calculator",
-    description: "Estimate take-home pay automatically",
+    description:
+      "Get a full breakdown of federal, state, FICA, and 401(k) withholding, built from your real W-4 details",
   },
   {
     icon: CalendarDays,
@@ -64,6 +74,16 @@ const w2Features = [
     icon: BarChart3,
     title: "Income breakdowns",
     description: "Clear gross totals by pay period",
+  },
+  {
+    icon: Percent,
+    title: "Paycheck tax estimate",
+    description: "See a full federal, state, and FICA withholding breakdown on every paystub",
+  },
+  {
+    icon: Target,
+    title: "Weekly hours goal",
+    description: "Set a weekly target and track your progress right on your earnings page",
   },
 ];
 
@@ -81,7 +101,7 @@ const independentFeatures = [
   {
     icon: Camera,
     title: "Upload receipts",
-    description: "Track all your receipts and build expenses from these receipts",
+    description: "Attach a photo to every expense, so proof is always on hand",
   },
   {
     icon: PieChart,
@@ -92,6 +112,44 @@ const independentFeatures = [
     icon: FolderTree,
     title: "Organized categories",
     description: "Understand where your money goes",
+  },
+  {
+    icon: Car,
+    title: "Mileage tracking",
+    description: "Log business miles and StackIn calculates your deduction at the IRS rate",
+  },
+  {
+    icon: Repeat,
+    title: "Recurring transactions",
+    description: "Mark income or expenses as repeating and StackIn logs them automatically",
+  },
+  {
+    icon: AlertTriangle,
+    title: "Duplicate detection",
+    description: "Get warned before you log the same expense twice",
+  },
+];
+
+const bankSyncFeatures = [
+  {
+    icon: Landmark,
+    title: "Automatic import",
+    description: "New charges and deposits show up as suggested expenses, no manual entry",
+  },
+  {
+    icon: Sparkles,
+    title: "Smart categorization that learns",
+    description: "Confirm a transaction once and StackIn remembers it next time",
+  },
+  {
+    icon: BellRing,
+    title: "Instant alerts",
+    description: "Get notified the moment a new transaction comes in",
+  },
+  {
+    icon: Upload,
+    title: "Import from Venmo",
+    description: "Bring in your Venmo history with a CSV upload",
   },
 ];
 
@@ -154,6 +212,7 @@ export default function FeaturesPage() {
         />
 
         <FeatureSection
+          id="w2-tools"
           label="W-2 Tools"
           title="Built for hourly workers"
           description="Track shifts, calculate net pay, and stay on top of your earnings."
@@ -162,10 +221,19 @@ export default function FeaturesPage() {
         />
 
         <FeatureSection
+          id="independent-tools"
           label="Independent Tools"
           title="Made for the self-employed"
           description="Track income, expenses, and profit with tools designed for independent work."
           features={independentFeatures}
+          columns={4}
+        />
+
+        <FeatureSection
+          label="Bank Sync"
+          title="Your bank, connected"
+          description="Link your accounts and let StackIn find your business transactions for you."
+          features={bankSyncFeatures}
           columns={4}
         />
 

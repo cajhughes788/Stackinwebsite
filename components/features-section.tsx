@@ -1,6 +1,7 @@
 "use client";
 
-import { DollarSign, BarChart3, Briefcase, Zap } from "lucide-react";
+import Link from "next/link";
+import { DollarSign, BarChart3, Briefcase, Zap, ArrowRight } from "lucide-react";
 
 const features = [
   {
@@ -68,6 +69,24 @@ export function FeaturesSection() {
               <div className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           ))}
+        </div>
+
+        {/* Audience-specific CTAs */}
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Link
+            href="/features#w2-tools"
+            className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-card/80"
+          >
+            See all features for W-2
+            <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-0.5" />
+          </Link>
+          <Link
+            href="/features#independent-tools"
+            className="group inline-flex items-center gap-1.5 rounded-full border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-card/80"
+          >
+            See all features for Independent
+            <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
       </div>
     </section>
