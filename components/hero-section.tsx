@@ -1,7 +1,7 @@
 "use client";
 
 import { DollarBackground } from "./dollar-background";
-import { AppPreview } from "./app-preview";
+import { ReelPreview } from "./reel-preview";
 
 export function HeroSection() {
   return (
@@ -44,7 +44,7 @@ export function HeroSection() {
 
           {/* App Preview */}
           <div className="flex-1 w-full max-w-md lg:max-w-lg">
-            <AppPreview />
+            <ReelPreview />
           </div>
         </div>
       </div>
