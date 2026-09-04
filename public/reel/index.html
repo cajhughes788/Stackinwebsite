@@ -645,6 +645,15 @@
 
   replayBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(0); });
 
+  const ctaButton = document.querySelector('.cta-button');
+  if (ctaButton) {
+    ctaButton.addEventListener('click', () => {
+      if (embedded) {
+        window.parent.postMessage({ type: 'stackin-reel:start-free' }, window.location.origin);
+      }
+    });
+  }
+
   reel.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') next();
     else if (e.key === 'ArrowLeft') prev();

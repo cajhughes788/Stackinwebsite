@@ -24,6 +24,17 @@ export function ReelPreview() {
     };
   }, [isFullscreen]);
 
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === "stackin-reel:start-free") {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+
   return (
     <>
       <div className="relative">
