@@ -101,6 +101,13 @@ export function Navbar() {
         <div className="border-t border-border bg-background/95 backdrop-blur-xl md:hidden">
           <div className="space-y-4 px-4 py-6">
             <Link
+              href="/"
+              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
               href="/features"
               className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
