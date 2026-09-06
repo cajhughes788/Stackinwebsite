@@ -4,6 +4,8 @@ import {
   LEGAL_EFFECTIVE_DATE,
   LEGAL_LAST_UPDATED,
   LEGAL_OWNER,
+  PRIVACY_EFFECTIVE_DATE,
+  PRIVACY_LAST_UPDATED,
   PRIVACY_PAGE_INTRO,
   PRIVACY_PAGE_TITLE,
   PRIVACY_SECTIONS,
@@ -87,10 +89,10 @@ export function LegalPrivacyContent() {
 
       <LegalSummaryCard title={PRIVACY_PAGE_TITLE}>
         <p>
-          <strong className="text-foreground">Effective Date:</strong> {LEGAL_EFFECTIVE_DATE}
+          <strong className="text-foreground">Effective Date:</strong> {PRIVACY_EFFECTIVE_DATE}
         </p>
         <p>
-          <strong className="text-foreground">Last Updated:</strong> {LEGAL_LAST_UPDATED}
+          <strong className="text-foreground">Last Updated:</strong> {PRIVACY_LAST_UPDATED}
         </p>
       </LegalSummaryCard>
 
