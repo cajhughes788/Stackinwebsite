@@ -2,7 +2,8 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { Eye, EyeOff, X } from "lucide-react";
 import { LegalPrivacyContent, LegalTermsContent } from "@/components/legal-content";
 import { Button } from "@/components/ui/button";
@@ -18,12 +19,30 @@ import {
 
 const signupEndpoint = process.env.NEXT_PUBLIC_API_SIGNUP;
 
-function getErrorMessage(error: unknown, fallback: string) {
+// Unlike login or password-reset, confirming "this email already has an
+// account" at signup time is standard, widely-accepted UX (Google, GitHub,
+// etc. all do it) — the fix here isn't hiding that specific case, it's
+// making sure every *other* error (including ones we haven't anticipated)
+// gets a safe generic message instead of Firebase's raw internal text.
+function getSignupErrorMessage(error: unknown): string {
+  if (error instanceof FirebaseError) {
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        return "An account with this email already exists. Try logging in instead.";
+      case "auth/weak-password":
+        return "Please choose a stronger password.";
+      case "auth/invalid-email":
+        return "Please enter a valid email address.";
+      default:
+        return "Unable to create your account. Please try again.";
+    }
+  }
+
   if (error instanceof Error && error.message) {
     return error.message;
   }
 
-  return fallback;
+  return "Unable to create your account.";
 }
 
 type SignupResponse = {
@@ -138,8 +157,12 @@ function SignupPageContent() {
     event.preventDefault();
     setError("");
 
-    if (password.length < 8) {
-      setError("Use at least 8 characters for your password.");
+    // Immediate feedback only — the actual enforcement boundary is the
+    // Firebase Auth password policy configured in the Firebase Console,
+    // which applies regardless of this check (or any client that skips it
+    // entirely by calling the Auth SDK directly).
+    if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+      setError("Use at least 8 characters, including a letter and a number.");
       return;
     }
 
@@ -166,6 +189,13 @@ function SignupPageContent() {
         email,
         password,
       );
+
+      // Best-effort — the account is already created at this point, and a
+      // transient email-sending failure shouldn't block signup. Without
+      // this at all, an account could be created with an email address the
+      // signer-upper doesn't actually control, with no confirmation step
+      // ever sent to the real owner.
+      void sendEmailVerification(userCredential.user).catch(() => {});
 
       const idToken = await userCredential.user.getIdToken();
       const payload = {
@@ -199,7 +229,7 @@ function SignupPageContent() {
       const nextPath = withAppSource(searchParams.get("next") || "/#pricing", source);
       router.replace(nextPath);
     } catch (error: unknown) {
-      setError(getErrorMessage(error, "Unable to create your account."));
+      setError(getSignupErrorMessage(error));
       setLoading(false);
     }
   }

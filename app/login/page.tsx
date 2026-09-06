@@ -2,17 +2,36 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAuthSafe } from "@/lib/firebase";
 
-function getErrorMessage(error: unknown, fallback: string) {
-  if (error instanceof Error && error.message) {
-    return error.message;
+// Deliberately identical for user-not-found, wrong-password, and
+// invalid-credential — distinguishing them tells an attacker which emails
+// have a StackIn account (email enumeration) without ever needing the
+// right password. Never pass a raw Firebase error message through to the
+// UI here, however specific-sounding it seems.
+function getLoginErrorMessage(error: unknown): string {
+  if (error instanceof FirebaseError) {
+    switch (error.code) {
+      case "auth/invalid-credential":
+      case "auth/user-not-found":
+      case "auth/wrong-password":
+        return "That email or password doesn't match our records. Double-check both and try again.";
+      case "auth/invalid-email":
+        return "Please enter a valid email address.";
+      case "auth/user-disabled":
+        return "This account is disabled. Please contact support if you think this was a mistake.";
+      case "auth/too-many-requests":
+        return "Too many attempts. Please wait a few minutes before trying again.";
+      default:
+        return "We couldn't log you in right now. Please try again in a moment.";
+    }
   }
 
-  return fallback;
+  return "Unable to sign in. Please try again.";
 }
 
 export default function LoginPage() {
@@ -32,7 +51,7 @@ export default function LoginPage() {
       await signInWithEmailAndPassword(getAuthSafe(), email, password);
       router.push("/#pricing");
     } catch (error: unknown) {
-      setError(getErrorMessage(error, "Unable to sign in. Please try again."));
+      setError(getLoginErrorMessage(error));
     } finally {
       setLoading(false);
     }
