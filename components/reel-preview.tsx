@@ -52,7 +52,7 @@ export function ReelPreview() {
 
           <div className="relative aspect-[1242/2147] overflow-hidden rounded-[1.65rem] bg-[#0d1512]">
             <iframe
-              src="/reel/"
+              src="/reel"
               title="StackIn promo reel"
               className="absolute inset-0 h-full w-full border-0"
             />
@@ -74,7 +74,7 @@ export function ReelPreview() {
             </button>
 
             <iframe
-              src="/reel/"
+              src="/reel"
               title="StackIn promo reel, full screen"
               className="h-full w-full border-0"
             />
