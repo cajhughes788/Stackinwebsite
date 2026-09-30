@@ -3,7 +3,11 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FirebaseError } from "firebase/app";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  deleteUser,
+  sendEmailVerification,
+} from "firebase/auth";
 import { Eye, EyeOff, X } from "lucide-react";
 import { LegalPrivacyContent, LegalTermsContent } from "@/components/legal-content";
 import { Button } from "@/components/ui/button";
@@ -33,6 +37,10 @@ function getSignupErrorMessage(error: unknown): string {
         return "Please choose a stronger password.";
       case "auth/invalid-email":
         return "Please enter a valid email address.";
+      case "auth/too-many-requests":
+        return "Too many attempts. Please wait a few minutes before trying again.";
+      case "auth/network-request-failed":
+        return "No connection. Check your internet connection and try again.";
       default:
         return "Unable to create your account. Please try again.";
     }
@@ -43,6 +51,17 @@ function getSignupErrorMessage(error: unknown): string {
   }
 
   return "Unable to create your account.";
+}
+
+// Progressive US phone mask matching the "(555) 123-4567" placeholder —
+// strips anything that isn't a digit (so pasted/typed junk like letters or
+// stray punctuation can't end up stored) and caps at 10 digits.
+function formatPhoneInput(rawValue: string): string {
+  const digits = rawValue.replace(/\D/g, "").slice(0, 10);
+  if (digits.length === 0) return "";
+  if (digits.length < 4) return `(${digits}`;
+  if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
 }
 
 type SignupResponse = {
@@ -183,8 +202,16 @@ function SignupPageContent() {
 
     setLoading(true);
 
+    // Tracked outside the try block so the catch handler can tell whether
+    // the Firebase Auth account was actually created — if it was, but
+    // provisioning the backend profile below fails, we roll it back rather
+    // than leaving an orphaned account (email-already-in-use on retry, but
+    // no matching Firestore profile/consent record to actually use it).
+    let userCredential: Awaited<ReturnType<typeof createUserWithEmailAndPassword>> | null =
+      null;
+
     try {
-      const userCredential = await createUserWithEmailAndPassword(
+      userCredential = await createUserWithEmailAndPassword(
         getAuthSafe(),
         email,
         password,
@@ -229,6 +256,12 @@ function SignupPageContent() {
       const nextPath = withAppSource(searchParams.get("next") || "/#pricing", source);
       router.replace(nextPath);
     } catch (error: unknown) {
+      // The Auth account exists but backend provisioning didn't finish —
+      // delete it (best-effort) so the user isn't left stuck: unable to
+      // sign up again with this email, but with no usable profile either.
+      if (userCredential) {
+        await deleteUser(userCredential.user).catch(() => {});
+      }
       setError(getSignupErrorMessage(error));
       setLoading(false);
     }
@@ -273,7 +306,7 @@ function SignupPageContent() {
               id="phone"
               type="tel"
               value={phone}
-              onChange={(event) => setPhone(event.target.value)}
+              onChange={(event) => setPhone(formatPhoneInput(event.target.value))}
               placeholder="(555) 123-4567"
               className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-primary"
             />
@@ -288,7 +321,13 @@ function SignupPageContent() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => {
+                  const next = event.target.value;
+                  setPassword(next);
+                  if (error === "Passwords do not match." && next === confirmPassword) {
+                    setError("");
+                  }
+                }}
                 placeholder="Create a password"
                 className="w-full rounded-md border border-border bg-background px-3 py-2 pr-11 text-sm text-foreground outline-none transition focus:border-primary"
                 required
@@ -317,7 +356,13 @@ function SignupPageContent() {
                 id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
+                onChange={(event) => {
+                  const next = event.target.value;
+                  setConfirmPassword(next);
+                  if (error === "Passwords do not match." && password === next) {
+                    setError("");
+                  }
+                }}
                 placeholder="Re-enter your password"
                 className="w-full rounded-md border border-border bg-background px-3 py-2 pr-11 text-sm text-foreground outline-none transition focus:border-primary"
                 required
