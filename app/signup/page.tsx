@@ -7,6 +7,8 @@ import {
   createUserWithEmailAndPassword,
   deleteUser,
   sendEmailVerification,
+  validatePassword,
+  type PasswordValidationStatus,
 } from "firebase/auth";
 import { Eye, EyeOff, X } from "lucide-react";
 import { LegalPrivacyContent, LegalTermsContent } from "@/components/legal-content";
@@ -34,7 +36,11 @@ function getSignupErrorMessage(error: unknown): string {
       case "auth/email-already-in-use":
         return "An account with this email already exists. Try logging in instead.";
       case "auth/weak-password":
-        return "Please choose a stronger password.";
+      case "auth/password-does-not-meet-requirements":
+        // The pre-submit validatePassword() check below should catch this
+        // first with a specific message — this is a fallback in case that
+        // check was skipped (e.g. it failed to load the policy).
+        return "Your password doesn't meet the requirements. Please choose a stronger password.";
       case "auth/invalid-email":
         return "Please enter a valid email address.";
       case "auth/too-many-requests":
@@ -62,6 +68,49 @@ function formatPhoneInput(rawValue: string): string {
   if (digits.length < 4) return `(${digits}`;
   if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
   return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
+// Turns a validatePassword() result into a specific "what's missing"
+// message, driven by the project's actual configured policy (Firebase
+// Console → Authentication → Settings → Password policy) rather than a
+// guess baked into this form — so it can never fall out of sync with what
+// the server will actually reject.
+function describeMissingPasswordRequirements(status: PasswordValidationStatus): string {
+  const { customStrengthOptions } = status.passwordPolicy;
+  const missing: string[] = [];
+
+  if (status.meetsMinPasswordLength === false) {
+    missing.push(`at least ${customStrengthOptions.minPasswordLength} characters`);
+  }
+  if (status.meetsMaxPasswordLength === false) {
+    missing.push(`no more than ${customStrengthOptions.maxPasswordLength} characters`);
+  }
+  if (status.containsUppercaseLetter === false) {
+    missing.push("an uppercase letter");
+  }
+  if (status.containsLowercaseLetter === false) {
+    missing.push("a lowercase letter");
+  }
+  if (status.containsNumericCharacter === false) {
+    missing.push("a number");
+  }
+  if (status.containsNonAlphanumericCharacter === false) {
+    missing.push("a special character");
+  }
+
+  if (missing.length === 0) {
+    return "Please choose a different password.";
+  }
+  if (missing.length === 1) {
+    return `Password must include ${missing[0]}.`;
+  }
+  if (missing.length === 2) {
+    return `Password must include ${missing[0]} and ${missing[1]}.`;
+  }
+
+  const last = missing[missing.length - 1];
+  const rest = missing.slice(0, -1);
+  return `Password must include ${rest.join(", ")}, and ${last}.`;
 }
 
 type SignupResponse = {
@@ -176,13 +225,20 @@ function SignupPageContent() {
     event.preventDefault();
     setError("");
 
-    // Immediate feedback only — the actual enforcement boundary is the
-    // Firebase Auth password policy configured in the Firebase Console,
-    // which applies regardless of this check (or any client that skips it
-    // entirely by calling the Auth SDK directly).
-    if (password.length < 8 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
-      setError("Use at least 8 characters, including a letter and a number.");
-      return;
+    // Checked against the project's actual password policy (Firebase
+    // Console → Authentication → Settings → Password policy) rather than a
+    // hardcoded guess, so this can tell the user exactly which requirement
+    // they're missing instead of a generic "that didn't work" once they
+    // reach the real signup attempt below.
+    try {
+      const passwordStatus = await validatePassword(getAuthSafe(), password);
+      if (!passwordStatus.isValid) {
+        setError(describeMissingPasswordRequirements(passwordStatus));
+        return;
+      }
+    } catch {
+      // Couldn't load the policy (e.g. offline) — fall through and let the
+      // actual signup attempt below surface a weak-password error instead.
     }
 
     if (password !== confirmPassword) {
