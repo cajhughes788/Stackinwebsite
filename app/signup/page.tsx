@@ -22,6 +22,7 @@ import {
   LEGAL_PRIVACY_VERSION,
   LEGAL_TERMS_VERSION,
 } from "@/lib/legal";
+import { clearStoredUtms, getStoredUtms, type StoredUtms } from "@/lib/utm";
 
 const signupEndpoint = process.env.NEXT_PUBLIC_API_SIGNUP;
 
@@ -120,10 +121,12 @@ type SignupResponse = {
 
 type LegalModalSection = "terms" | "privacy";
 
-async function postSignup(payload: {
+async function postSignup(payload: StoredUtms & {
   idToken: string;
   email: string;
   phone: string;
+  signup_platform: "web" | "ios";
+  plan: string | null;
   legalConsent: {
     version: string;
     termsVersion: string;
@@ -293,6 +296,12 @@ function SignupPageContent() {
           userAgent: window.navigator.userAgent,
           source: LEGAL_CONSENT_SOURCE,
         },
+        // Signup attribution — getStoredUtms() never throws and returns {}
+        // when storage is blocked, so this can't hold up signup. The backend
+        // only records these when the account is first created.
+        ...getStoredUtms(),
+        signup_platform: source ? ("ios" as const) : ("web" as const),
+        plan: searchParams.get("plan"),
       };
 
       let { response, data } = await postSignup(payload);
@@ -308,6 +317,8 @@ function SignupPageContent() {
       if (!response.ok || !data?.ok) {
         throw new Error(data?.error ?? "Signup failed.");
       }
+
+      clearStoredUtms();
 
       const nextPath = withAppSource(searchParams.get("next") || "/#pricing", source);
       router.replace(nextPath);

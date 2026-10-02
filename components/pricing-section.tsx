@@ -174,6 +174,8 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
       const nextPath = withAppSource("/#pricing", source);
       const signupParams = new URLSearchParams({
         next: nextPath,
+        // Lets the signup record which plan the person was going for.
+        plan: tier,
       });
 
       if (source) {

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/components/auth-provider'
+import { UtmCapture } from '@/components/utm-capture'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -64,6 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${_geist.className} font-sans antialiased`}>
+        <UtmCapture />
         <AuthProvider>{children}</AuthProvider>
         <Analytics />
       </body>
