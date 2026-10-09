@@ -23,62 +23,62 @@ export type LegalSection = {
 };
 
 export const TERMS_PAGE_TITLE = "Terms and Conditions";
-export const TERMS_PAGE_DESCRIPTION = "Read the Stackin terms and conditions.";
+export const TERMS_PAGE_DESCRIPTION = "Read the 521 terms and conditions.";
 export const TERMS_PAGE_INTRO =
-  "These terms govern your access to and use of Stackin and related services.";
+  "These terms govern your access to and use of 521 and related services.";
 export const TERMS_CLOSING_STATEMENT =
-  "By using Stackin, you acknowledge that you have read and understood these Terms and Conditions, that Stackin provides organizational and informational tools only, and that you are responsible for reviewing and verifying any output before relying on it.";
+  "By using 521, you acknowledge that you have read and understood these Terms and Conditions, that 521 provides organizational and informational tools only, and that you are responsible for reviewing and verifying any output before relying on it.";
 
 export const PRIVACY_PAGE_TITLE = "Privacy Policy";
-export const PRIVACY_PAGE_DESCRIPTION = "Read the StackIn privacy policy.";
+export const PRIVACY_PAGE_DESCRIPTION = "Read the 521 privacy policy.";
 export const PRIVACY_PAGE_INTRO =
-  "This page explains how StackIn collects, uses, and protects information when you use our website and services.";
+  "This page explains how 521 collects, uses, and protects information when you use our website and services.";
 
 export const TERMS_SECTIONS: LegalSection[] = [
   {
     title: "1. Acceptance of These Terms",
     paragraphs: [
-      "These Terms and Conditions govern your access to and use of Stackin and any related websites, mobile applications, software, content, and services we provide. By clicking to accept, creating an account, downloading, accessing, subscribing to, or using Stackin, you agree to these terms. If you do not agree, do not use the app.",
+      "These Terms and Conditions govern your access to and use of 521 and any related websites, mobile applications, software, content, and services we provide. By clicking to accept, creating an account, downloading, accessing, subscribing to, or using 521, you agree to these terms. If you do not agree, do not use the app.",
     ],
   },
   {
     title: "2. Eligibility and Authority",
     paragraphs: [
-      "You must be at least 18 years old and legally able to enter into a binding agreement to use Stackin. If you use Stackin on behalf of a business, employer, or other entity, you represent that you have authority to bind that entity to these terms.",
+      "You must be at least 18 years old and legally able to enter into a binding agreement to use 521. If you use 521 on behalf of a business, employer, or other entity, you represent that you have authority to bind that entity to these terms.",
     ],
   },
   {
-    title: "3. What Stackin Does",
+    title: "3. What 521 Does",
     paragraphs: [
-      "Stackin is a financial organization and income-tracking tool. Depending on your plan and device, features may include work-entry tracking, W-2 and independent income logging, expense tracking, receipt capture, OCR-assisted data extraction, profit and loss summaries, paycheck and withholding estimates, pay stub generation, reminders, workspace management, notifications, and premium features.",
-      "Stackin is designed to help you organize information. It is not represented as an official bookkeeping system of record, payroll processor, payroll administrator, employer, employer-of-record, consumer reporting agency, bank, lender, money transmitter, tax filing service, tax preparation service, or government reporting platform.",
+      "521 is a financial organization and income-tracking tool. Depending on your plan and device, features may include work-entry tracking, W-2 and independent income logging, expense tracking, receipt capture, OCR-assisted data extraction, profit and loss summaries, paycheck and withholding estimates, pay stub generation, reminders, workspace management, notifications, and premium features.",
+      "521 is designed to help you organize information. It is not represented as an official bookkeeping system of record, payroll processor, payroll administrator, employer, employer-of-record, consumer reporting agency, bank, lender, money transmitter, tax filing service, tax preparation service, or government reporting platform.",
     ],
   },
   {
     title: "4. No Tax, Legal, Accounting, Payroll, or Financial Advice",
     paragraphs: [
-      "Stackin does not provide tax, legal, accounting, payroll, audit, investment, or financial advice, and no fiduciary, advisory, attorney-client, accountant-client, or similar professional relationship is created by your use of the app.",
+      "521 does not provide tax, legal, accounting, payroll, audit, investment, or financial advice, and no fiduciary, advisory, attorney-client, accountant-client, or similar professional relationship is created by your use of the app.",
       "Any estimates, categorizations, summaries, paycheck calculations, withholding projections, pay stubs, tax-related outputs, or other generated materials are for informational and organizational purposes only. You are responsible for getting advice from qualified professionals before relying on any output for taxes, payroll, accounting, wage-and-hour compliance, worker classification, employment verification, lending, housing, immigration, public benefits, insurance, or legal purposes.",
     ],
   },
   {
     title: "5. No Guarantee of Accuracy or Acceptance",
     paragraphs: [
-      "Stackin depends on information from you, your device, and in some cases third-party services. You are solely responsible for ensuring your entries, imported records, expense details, rates, dates, tax profile information, and other inputs are accurate, complete, lawful, and current.",
+      "521 depends on information from you, your device, and in some cases third-party services. You are solely responsible for ensuring your entries, imported records, expense details, rates, dates, tax profile information, and other inputs are accurate, complete, lawful, and current.",
       "You are also solely responsible for reviewing and verifying all outputs before using them. We do not guarantee that any estimate, calculation, category suggestion, report, reminder, or generated record will be accurate, complete, current, accepted by any employer, worker, accountant, lender, insurer, government agency, court, or other third party, or suitable for your intended purpose.",
     ],
   },
   {
     title: "6. Generated Records and Reports",
     paragraphs: [
-      "Any pay stubs, summaries, reports, statements, profit and loss outputs, receipt extractions, tax estimates, or similar materials generated by Stackin are based on user-supplied or third-party-supplied data and app logic. Unless we expressly state otherwise in writing, they are not official payroll records, certified accounting statements, audited financial statements, tax returns, government filings, or legal documents.",
-      "You may not use Stackin to create, submit, distribute, or present false, misleading, unauthorized, or deceptively altered documents or to misrepresent your identity, employment status, income, expenses, tax position, or business records.",
+      "Any pay stubs, summaries, reports, statements, profit and loss outputs, receipt extractions, tax estimates, or similar materials generated by 521 are based on user-supplied or third-party-supplied data and app logic. Unless we expressly state otherwise in writing, they are not official payroll records, certified accounting statements, audited financial statements, tax returns, government filings, or legal documents.",
+      "You may not use 521 to create, submit, distribute, or present false, misleading, unauthorized, or deceptively altered documents or to misrepresent your identity, employment status, income, expenses, tax position, or business records.",
     ],
   },
   {
     title: "7. Automated Features, OCR, and Suggestions",
     paragraphs: [
-      "Some Stackin features may use automation, OCR, rules, heuristics, machine learning, or similar technologies to extract, suggest, classify, summarize, or generate information. These features are provided for convenience only and may make mistakes, omit information, or produce misleading or incomplete results.",
+      "Some 521 features may use automation, OCR, rules, heuristics, machine learning, or similar technologies to extract, suggest, classify, summarize, or generate information. These features are provided for convenience only and may make mistakes, omit information, or produce misleading or incomplete results.",
       "You remain responsible for checking and approving anything created or suggested by those features before relying on it.",
     ],
   },
@@ -86,13 +86,13 @@ export const TERMS_SECTIONS: LegalSection[] = [
     title: "8. Device Permissions, Notifications, and Location-Based Features",
     paragraphs: [
       "Certain features may request access to notifications, camera, photos, location, or other device permissions in order to provide receipt capture, reminders, geofence alerts, and similar functionality.",
-      "If you enable those features, you authorize Stackin to use the relevant permissions for those purposes. You acknowledge that reminders and location-based features may be delayed, inaccurate, incomplete, duplicated, or unavailable due to device settings, battery restrictions, operating system behavior, connectivity, third-party platform limitations, or disabled permissions. These features are convenience tools only and must not be relied on for safety-critical, payroll-critical, tax-critical, compliance-critical, or legal purposes.",
+      "If you enable those features, you authorize 521 to use the relevant permissions for those purposes. You acknowledge that reminders and location-based features may be delayed, inaccurate, incomplete, duplicated, or unavailable due to device settings, battery restrictions, operating system behavior, connectivity, third-party platform limitations, or disabled permissions. These features are convenience tools only and must not be relied on for safety-critical, payroll-critical, tax-critical, compliance-critical, or legal purposes.",
     ],
   },
   {
     title: "9. Offline Use, Local Storage, and Sync",
     paragraphs: [
-      "Some Stackin features may support caching, offline entry, delayed synchronization, or queued actions. Because of that, information shown on your device may temporarily differ from server data, and sync actions may be delayed, duplicated, partially applied, or fail altogether.",
+      "Some 521 features may support caching, offline entry, delayed synchronization, or queued actions. Because of that, information shown on your device may temporarily differ from server data, and sync actions may be delayed, duplicated, partially applied, or fail altogether.",
       "You are responsible for confirming that important data has been entered, saved, and synchronized properly.",
       "You should keep your own backup copies of any information you consider important, including records you may need for tax, payroll, accounting, compliance, employment, or legal purposes.",
     ],
@@ -106,7 +106,7 @@ export const TERMS_SECTIONS: LegalSection[] = [
   {
     title: "11. Limited License",
     paragraphs: [
-      "Subject to your compliance with these terms, we grant you a limited, personal, non-exclusive, non-transferable, non-sublicensable, revocable license to use Stackin for your internal lawful use during your authorized access period. Stackin is licensed, not sold.",
+      "Subject to your compliance with these terms, we grant you a limited, personal, non-exclusive, non-transferable, non-sublicensable, revocable license to use 521 for your internal lawful use during your authorized access period. 521 is licensed, not sold.",
     ],
   },
   {
@@ -120,40 +120,40 @@ export const TERMS_SECTIONS: LegalSection[] = [
   {
     title: "13. App Stores and Device Platforms",
     paragraphs: [
-      "If you download or access Stackin through Apple's App Store, Google Play, or another app marketplace or device platform, you acknowledge that the platform provider is not a party to these terms and is not responsible for Stackin, its content, maintenance, support, or claims relating to Stackin, except to the extent required by applicable law or mandatory platform terms.",
-      "Your use of Stackin must also comply with the applicable platform's usage rules, terms, and technical limitations. To the extent permitted by law, applicable platform providers are third-party beneficiaries of this section and may enforce it against you.",
+      "If you download or access 521 through Apple's App Store, Google Play, or another app marketplace or device platform, you acknowledge that the platform provider is not a party to these terms and is not responsible for 521, its content, maintenance, support, or claims relating to 521, except to the extent required by applicable law or mandatory platform terms.",
+      "Your use of 521 must also comply with the applicable platform's usage rules, terms, and technical limitations. To the extent permitted by law, applicable platform providers are third-party beneficiaries of this section and may enforce it against you.",
     ],
   },
   {
     title: "14. Privacy and Electronic Communications",
     paragraphs: [
-      "Your use of Stackin is also subject to our Privacy Policy. By using the app, you consent to the collection, use, storage, and processing of information as described in that policy and as reasonably necessary to operate, secure, support, maintain, and improve Stackin.",
+      "Your use of 521 is also subject to our Privacy Policy. By using the app, you consent to the collection, use, storage, and processing of information as described in that policy and as reasonably necessary to operate, secure, support, maintain, and improve 521.",
       "You also agree that we may send you service-related notices and other legally required communications electronically, including through the app, by email, or by other reasonable digital means. You are responsible for keeping your email address and other contact information current.",
     ],
   },
   {
     title: "15. Your Content and Data",
     paragraphs: [
-      "As between you and Optivium AI Solutions LLC, you retain ownership of the information and content you submit to Stackin. You grant us a worldwide, non-exclusive, royalty-free license to host, store, reproduce, process, format, transmit, and use that content only as necessary to operate, provide, secure, troubleshoot, support, improve, and enforce Stackin and these terms.",
+      "As between you and Optivium AI Solutions LLC, you retain ownership of the information and content you submit to 521. You grant us a worldwide, non-exclusive, royalty-free license to host, store, reproduce, process, format, transmit, and use that content only as necessary to operate, provide, secure, troubleshoot, support, improve, and enforce 521 and these terms.",
       "You represent that you have the rights, notices, and permissions needed to submit any data or content you provide, including information about other people, and that your submission and our permitted use of it will not violate any law or third-party rights.",
     ],
   },
   {
     title: "16. Feedback",
     paragraphs: [
-      "If you send us suggestions, ideas, requests, or feedback about Stackin, you allow us to use that feedback without restriction or compensation to you.",
+      "If you send us suggestions, ideas, requests, or feedback about 521, you allow us to use that feedback without restriction or compensation to you.",
     ],
   },
   {
     title: "17. Prohibited Uses",
     paragraphs: [
-      "You may not use Stackin for any unlawful, fraudulent, deceptive, abusive, harmful, or unauthorized purpose. This includes attempting to access another user's data, interfering with app operations, submitting false information, reverse engineering the app, bypassing security or usage limits, reselling unauthorized access, scraping data, uploading malicious code, infringing intellectual property rights, or using Stackin in violation of tax, payroll, employment, privacy, consumer protection, sanctions, export, or financial recordkeeping laws. It also includes using Stackin to fabricate, falsify, or deceptively alter pay stubs, income records, receipts, tax-related information, or other documents, or to mislead employers, workers, lenders, landlords, insurers, regulators, courts, or government agencies.",
+      "You may not use 521 for any unlawful, fraudulent, deceptive, abusive, harmful, or unauthorized purpose. This includes attempting to access another user's data, interfering with app operations, submitting false information, reverse engineering the app, bypassing security or usage limits, reselling unauthorized access, scraping data, uploading malicious code, infringing intellectual property rights, or using 521 in violation of tax, payroll, employment, privacy, consumer protection, sanctions, export, or financial recordkeeping laws. It also includes using 521 to fabricate, falsify, or deceptively alter pay stubs, income records, receipts, tax-related information, or other documents, or to mislead employers, workers, lenders, landlords, insurers, regulators, courts, or government agencies.",
     ],
   },
   {
     title: "18. Third-Party Services and Content",
     paragraphs: [
-      "Stackin may rely on or integrate with third-party services such as authentication, cloud hosting, notifications, app stores, analytics, payment processing, maps, OCR, or other service providers. We are not responsible for the availability, accuracy, security, legality, or terms of any third-party services, content, or products. Those providers may change, suspend, or discontinue their services at any time.",
+      "521 may rely on or integrate with third-party services such as authentication, cloud hosting, notifications, app stores, analytics, payment processing, maps, OCR, or other service providers. We are not responsible for the availability, accuracy, security, legality, or terms of any third-party services, content, or products. Those providers may change, suspend, or discontinue their services at any time.",
     ],
   },
   {
@@ -165,40 +165,40 @@ export const TERMS_SECTIONS: LegalSection[] = [
   {
     title: "20. Service Availability and Changes",
     paragraphs: [
-      "We may modify, improve, restrict, suspend, or discontinue all or part of Stackin at any time, with or without notice, to the extent permitted by law. We do not guarantee uninterrupted availability, continued support for any feature, or that Stackin will be error-free, secure, or compatible with every device or operating system version.",
+      "We may modify, improve, restrict, suspend, or discontinue all or part of 521 at any time, with or without notice, to the extent permitted by law. We do not guarantee uninterrupted availability, continued support for any feature, or that 521 will be error-free, secure, or compatible with every device or operating system version.",
     ],
   },
   {
     title: "21. Suspension, Termination, and Account Deletion",
     paragraphs: [
-      "We may suspend or terminate your access to Stackin, with or without notice, if we believe you violated these terms, created legal, financial, or security risk, failed to pay required fees, or used the app in a way that may harm us, other users, or third parties.",
+      "We may suspend or terminate your access to 521, with or without notice, if we believe you violated these terms, created legal, financial, or security risk, failed to pay required fees, or used the app in a way that may harm us, other users, or third parties.",
       "You may request account deletion, subject to identity verification and any applicable legal, contractual, technical, fraud-prevention, billing, tax, security, or record-retention requirements. Deleting the app from your device does not necessarily cancel a subscription or delete your account or stored data.",
     ],
   },
   {
     title: "22. Intellectual Property",
     paragraphs: [
-      "Stackin, including its software, code, design, branding, interfaces, text, graphics, underlying technology, and related intellectual property, is owned by Optivium AI Solutions LLC or its licensors and is protected by law. Except for the limited rights expressly granted in these terms, no rights are granted to you.",
+      "521, including its software, code, design, branding, interfaces, text, graphics, underlying technology, and related intellectual property, is owned by Optivium AI Solutions LLC or its licensors and is protected by law. Except for the limited rights expressly granted in these terms, no rights are granted to you.",
     ],
   },
   {
     title: "23. Disclaimer of Warranties",
     paragraphs: [
-      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, STACKIN IS PROVIDED \"AS IS\" AND \"AS AVAILABLE.\" WE DISCLAIM ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, ACCURACY, SECURITY, AVAILABILITY, AND QUIET ENJOYMENT.",
+      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, 521 IS PROVIDED \"AS IS\" AND \"AS AVAILABLE.\" WE DISCLAIM ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, ACCURACY, SECURITY, AVAILABILITY, AND QUIET ENJOYMENT.",
       "WITHOUT LIMITING THE FOREGOING, WE DO NOT WARRANT THAT ANY DATA, ESTIMATE, CLASSIFICATION, GENERATED DOCUMENT, REMINDER, RECEIPT EXTRACTION, LOCATION-BASED FEATURE, SUBSCRIPTION FEATURE, SYNC PROCESS, OR THIRD-PARTY INTEGRATION WILL BE ACCURATE, COMPLETE, CURRENT, ACCEPTED BY THIRD PARTIES, ERROR-FREE, SECURE, OR UNINTERRUPTED.",
     ],
   },
   {
     title: "24. Limitation of Liability",
     paragraphs: [
-      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, OPTIVIUM AI SOLUTIONS LLC AND ITS AFFILIATES, OFFICERS, MEMBERS, EMPLOYEES, CONTRACTORS, LICENSORS, AND SERVICE PROVIDERS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, SAVINGS, TAX BENEFITS, BUSINESS OPPORTUNITY, GOODWILL, DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATING TO STACKIN OR THESE TERMS, WHETHER IN CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY, STATUTE, OR ANY OTHER LEGAL THEORY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
-      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS ARISING OUT OF OR RELATING TO STACKIN OR THESE TERMS WILL NOT EXCEED THE GREATER OF THE AMOUNT YOU PAID TO US FOR STACKIN IN THE TWELVE MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM OR USD $100.",
+      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, OPTIVIUM AI SOLUTIONS LLC AND ITS AFFILIATES, OFFICERS, MEMBERS, EMPLOYEES, CONTRACTORS, LICENSORS, AND SERVICE PROVIDERS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, SAVINGS, TAX BENEFITS, BUSINESS OPPORTUNITY, GOODWILL, DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATING TO 521 OR THESE TERMS, WHETHER IN CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY, STATUTE, OR ANY OTHER LEGAL THEORY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
+      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS ARISING OUT OF OR RELATING TO 521 OR THESE TERMS WILL NOT EXCEED THE GREATER OF THE AMOUNT YOU PAID TO US FOR 521 IN THE TWELVE MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM OR USD $100.",
     ],
   },
   {
     title: "25. Indemnification",
     paragraphs: [
-      "You agree to defend, indemnify, and hold harmless Optivium AI Solutions LLC and its affiliates, officers, members, employees, contractors, licensors, and service providers from and against any claims, liabilities, damages, losses, judgments, fines, penalties, costs, and expenses, including reasonable attorneys' fees, arising out of or related to your use of Stackin, your data, your content, your violation of these terms, or your violation of any law or third-party rights.",
+      "You agree to defend, indemnify, and hold harmless Optivium AI Solutions LLC and its affiliates, officers, members, employees, contractors, licensors, and service providers from and against any claims, liabilities, damages, losses, judgments, fines, penalties, costs, and expenses, including reasonable attorneys' fees, arising out of or related to your use of 521, your data, your content, your violation of these terms, or your violation of any law or third-party rights.",
     ],
   },
   {
@@ -218,20 +218,20 @@ export const TERMS_SECTIONS: LegalSection[] = [
   {
     title: "28. Updates to These Terms",
     paragraphs: [
-      "We may update these terms from time to time. If we make material changes, we may provide notice by updating the date above, posting updated terms in the app, emailing you, or using other reasonable means. Your continued use of Stackin after updated terms become effective constitutes acceptance of the revised terms.",
+      "We may update these terms from time to time. If we make material changes, we may provide notice by updating the date above, posting updated terms in the app, emailing you, or using other reasonable means. Your continued use of 521 after updated terms become effective constitutes acceptance of the revised terms.",
     ],
   },
   {
     title: "29. Miscellaneous",
     paragraphs: [
-      "These terms, together with any incorporated policies or additional terms presented to you, form the entire agreement between you and us regarding Stackin. If any provision is held unenforceable, the remaining provisions will remain in effect. Our failure to enforce any provision is not a waiver. We may assign these terms in connection with a merger, acquisition, corporate reorganization, or sale of assets. Except as expressly stated in these terms, there are no third-party beneficiaries. Sections that by their nature should survive termination will survive termination.",
+      "These terms, together with any incorporated policies or additional terms presented to you, form the entire agreement between you and us regarding 521. If any provision is held unenforceable, the remaining provisions will remain in effect. Our failure to enforce any provision is not a waiver. We may assign these terms in connection with a merger, acquisition, corporate reorganization, or sale of assets. Except as expressly stated in these terms, there are no third-party beneficiaries. Sections that by their nature should survive termination will survive termination.",
     ],
   },
   {
     title: "30. Contact Information",
     paragraphs: [
       "Optivium AI Solutions LLC",
-      "For support, legal notices, or terms-related questions, please use the contact information provided through Stackin or our official business contact channels, including the contact information we make available at stackin-app.com.",
+      "For support, legal notices, or terms-related questions, please use the contact information provided through 521 or our official business contact channels, including the contact information we make available at stackin-app.com.",
     ],
   },
 ];
@@ -240,9 +240,9 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
   {
     title: "Information we collect",
     paragraphs: [
-      "We collect information you provide directly when you use StackIn, including your email address, phone number, account and workspace identifiers, subscription details, support messages, and other content you choose to enter into the app.",
-      "Because StackIn is designed for income and tax-related recordkeeping, we collect financial information you enter, such as income, expenses, deductions, tax profile information, pay period details, and related bookkeeping records.",
-      "If you connect a bank account using Plaid, Plaid transmits certain account and transaction information to us on your behalf — such as account balances, transaction history, and merchant and category details — so that StackIn can help you review and categorize that activity. We do not receive or store your online banking username or password; those credentials are entered directly with Plaid or your financial institution and are never shared with us. Plaid's own use of your information is governed by Plaid's End User Privacy Policy, available at plaid.com/legal.",
+      "We collect information you provide directly when you use 521, including your email address, phone number, account and workspace identifiers, subscription details, support messages, and other content you choose to enter into the app.",
+      "Because 521 is designed for income and tax-related recordkeeping, we collect financial information you enter, such as income, expenses, deductions, tax profile information, pay period details, and related bookkeeping records.",
+      "If you connect a bank account using Plaid, Plaid transmits certain account and transaction information to us on your behalf — such as account balances, transaction history, and merchant and category details — so that 521 can help you review and categorize that activity. We do not receive or store your online banking username or password; those credentials are entered directly with Plaid or your financial institution and are never shared with us. Plaid's own use of your information is governed by Plaid's End User Privacy Policy, available at plaid.com/legal.",
       "If you use receipt capture or upload features, we collect the photos you provide and information extracted from them (such as merchant name, date, and amount) to help create or organize expense records. Receipt images are processed using a third-party optical character recognition service to extract this information.",
       "If you subscribe to a paid plan, our payment processor collects and processes your payment card details directly; we do not receive or store your full card number.",
       "If you enable location-based features, reminders, or workplace tools, we collect precise location information and related saved location details, such as workplace coordinates or addresses, and link that information to your account or workspace.",
@@ -253,14 +253,14 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
   {
     title: "How we use information",
     paragraphs: [
-      "We use collected information to provide the core functionality of StackIn, including account authentication, workspace management, income and expense tracking, bank transaction review, pay and tax estimate features, receipt storage and processing, reminders, and customer support.",
+      "We use collected information to provide the core functionality of 521, including account authentication, workspace management, income and expense tracking, bank transaction review, pay and tax estimate features, receipt storage and processing, reminders, and customer support.",
       "We also use information to maintain security, detect and prevent misuse, troubleshoot issues, process user requests, send service-related notifications, and operate, improve, and support the reliability of the service.",
     ],
   },
   {
     title: "How data is linked to you",
     paragraphs: [
-      "The information described in this policy may be linked to your identity through your account, workspace, or user identifier so that StackIn can provide app functionality such as sign-in, saved records, bank transaction review, reminders, receipt management, support, and account recovery.",
+      "The information described in this policy may be linked to your identity through your account, workspace, or user identifier so that 521 can provide app functionality such as sign-in, saved records, bank transaction review, reminders, receipt management, support, and account recovery.",
       "We do not use the data described in this policy for third-party advertising tracking. We do not share your precise location, email address, financial information, bank transaction data, receipt uploads, or support content with data brokers for targeted advertising.",
     ],
   },
@@ -279,20 +279,20 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
       "Cloud infrastructure providers (including Google Cloud Platform and Firebase) — for hosting, databases, authentication, file storage, and push notification delivery.",
       "Optical character recognition and document-processing providers (including Amazon Web Services) — to extract information from receipt images you upload.",
       "Email delivery providers (including SendGrid) — to send account, billing, and support-related emails.",
-      "We may also disclose information when required by law, to respond to valid legal requests, to enforce our terms, or to protect the rights, safety, and security of StackIn, our users, or others.",
+      "We may also disclose information when required by law, to respond to valid legal requests, to enforce our terms, or to protect the rights, safety, and security of 521, our users, or others.",
     ],
   },
   {
     title: "Your privacy choices and rights",
     paragraphs: [
       "Regardless of where you live, we offer all users the following choices with respect to their information: the right to request access to the personal information we hold about you, the right to request correction of inaccurate information, and the right to request deletion of your account and associated information, subject to the retention exceptions described below.",
-      "You will not be discriminated against, and your access to StackIn will not be degraded, for exercising any of these choices. To exercise any of these rights, contact us using the information in the Contact section below.",
+      "You will not be discriminated against, and your access to 521 will not be degraded, for exercising any of these choices. To exercise any of these rights, contact us using the information in the Contact section below.",
     ],
   },
   {
     title: "Data retention",
     paragraphs: [
-      "We retain information for as long as your account remains active, in order to provide StackIn's core functionality.",
+      "We retain information for as long as your account remains active, in order to provide 521's core functionality.",
       "If you request deletion of your account and do not have an active paid subscription, your data is deleted promptly upon request.",
       "If you have an active paid subscription at the time you request deletion, deletion is scheduled to occur once your current paid period ends, and is then completed automatically, typically within about 24 hours of that date.",
       "If you disconnect a linked bank account without deleting your entire account, that connection is revoked immediately, independent of your account's overall status.",
@@ -302,14 +302,14 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
   {
     title: "Data security",
     paragraphs: [
-      "We use industry-standard measures to protect your information, including encryption of data in transit using TLS, encryption of data at rest, and additional application-level encryption of the credentials used to maintain your bank connection. Access to your data within StackIn is restricted to the specific account or workspace it belongs to.",
+      "We use industry-standard measures to protect your information, including encryption of data in transit using TLS, encryption of data at rest, and additional application-level encryption of the credentials used to maintain your bank connection. Access to your data within 521 is restricted to the specific account or workspace it belongs to.",
       "No method of transmission or storage is completely secure, and we cannot guarantee absolute security.",
     ],
   },
   {
     title: "Children's privacy",
     paragraphs: [
-      "StackIn is not directed to, and is not intended for use by, children under the age of 13. We do not knowingly collect personal information from children under 13. If we learn that we have collected personal information from a child under 13, we will take steps to delete that information.",
+      "521 is not directed to, and is not intended for use by, children under the age of 13. We do not knowingly collect personal information from children under 13. If we learn that we have collected personal information from a child under 13, we will take steps to delete that information.",
     ],
   },
   {

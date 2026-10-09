@@ -22,7 +22,7 @@ export function FeaturesCTA() {
             <span className="text-balance">Start tracking your income today</span>
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-lg text-muted-foreground">
-            {"Use StackIn to understand your real earnings."}
+            {"Use 521 to understand your real earnings."}
           </p>
 
           {showAuthCtas ? (

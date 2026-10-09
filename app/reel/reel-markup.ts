@@ -1,5 +1,5 @@
 export const REEL_MARKUP = `
-<div class="reel" id="reel" tabindex="0" aria-label="StackIn promotional reel &mdash; use arrow keys to navigate, space to pause, escape to close">
+<div class="reel" id="reel" tabindex="0" aria-label="521 promotional reel &mdash; use arrow keys to navigate, space to pause, escape to close">
   <div class="stage" id="stage">
     <div class="progress" id="progress">
       <div class="seg"><span class="fill"></span></div>
@@ -11,8 +11,8 @@ export const REEL_MARKUP = `
       <div class="seg"><span class="fill"></span></div>
     </div>
 
-    <div class="brandmark"><div class="brand-logo brand-logo--mark" role="img" aria-label="StackIn"></div></div>
-    <a class="close-btn" href="/" aria-label="Close and return to the StackIn website">&times;</a>
+    <div class="brandmark"><div class="brand-logo brand-logo--mark" role="img" aria-label="521"></div></div>
+    <a class="close-btn" href="/" aria-label="Close and return to the 521 website">&times;</a>
 
     <section class="scene active" data-duration="4200" id="scene0">
       <canvas class="chaos-canvas" id="chaosCanvas"></canvas>
@@ -30,7 +30,7 @@ export const REEL_MARKUP = `
 
     <section class="scene" data-duration="3600" id="scene2">
       <div class="logo-reveal">
-        <div class="brand-logo brand-logo--reveal" role="img" aria-label="StackIn"></div>
+        <div class="brand-logo brand-logo--reveal" role="img" aria-label="521"></div>
       </div>
       <p class="sub">No tutorials. No manual. Just your numbers.</p>
     </section>
@@ -49,8 +49,8 @@ export const REEL_MARKUP = `
         <text class="node-label" x="60" y="112" text-anchor="middle">YOUR BANK</text>
 
         <circle class="node-ring" cx="240" cy="70" r="26"></circle>
-        <text class="stackin-mark" x="240" y="76" text-anchor="middle">$</text>
-        <text class="node-label" x="240" y="112" text-anchor="middle">STACKIN</text>
+        <text class="node-mark" x="240" y="76" text-anchor="middle">521</text>
+        <text class="node-label" x="240" y="112" text-anchor="middle">YOUR DASHBOARD</text>
       </svg>
     </section>
 
@@ -83,7 +83,7 @@ export const REEL_MARKUP = `
     </section>
 
     <section class="scene" data-duration="7000" id="scene6">
-      <div class="brand-logo brand-logo--cta" role="img" aria-label="StackIn"></div>
+      <div class="brand-logo brand-logo--cta" role="img" aria-label="521"></div>
       <p class="tagline">Built for people who run their own show.</p>
       <a class="cta-button" href="/#pricing" target="_top">Start Free &rarr;</a>
       <button class="replay" id="replayBtn" type="button">&#8635; Watch again</button>

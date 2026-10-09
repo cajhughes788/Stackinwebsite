@@ -36,7 +36,7 @@ export function FeatureSection({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
+          <span className="eyebrow mb-4 inline-block">
             {label}
           </span>
           <h2 className="mb-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">

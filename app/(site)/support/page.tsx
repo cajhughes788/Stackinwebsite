@@ -6,7 +6,7 @@ import { SupportForm } from "@/components/support-form";
 export const metadata: Metadata = {
   title: "Support",
   description:
-    "Get help with StackIn, report a problem, ask a question, or send feedback through our public support page.",
+    "Get help with 521, report a problem, ask a question, or send feedback through our public support page.",
   alternates: {
     canonical: "/support",
   },

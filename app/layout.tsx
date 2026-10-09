@@ -1,19 +1,22 @@
 import type { Metadata } from 'next'
-import { Geist } from 'next/font/google'
+import { Geist, Sora } from 'next/font/google'
 import { UtmCapture } from '@/components/utm-capture'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 
+// Display face for headings; matches the geometric 521 wordmark.
+const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://stackin-app.com'),
   title: {
-    default: 'StackIn | Income Tracking App for Hourly Workers, Tips, and Gig Income',
-    template: '%s | StackIn',
+    default: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    template: '%s | 521',
   },
   description:
-    'StackIn is an income tracking app for hourly workers, freelancers, and gig workers. Track paychecks, tips, cash, and self-employed income in one place.',
-  applicationName: 'StackIn',
+    '521 is an income tracking app for hourly workers, freelancers, and gig workers. Track paychecks, tips, cash, and self-employed income in one place.',
+  applicationName: '521',
   keywords: [
     'income tracking app',
     'tip tracker',
@@ -34,25 +37,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://stackin-app.com',
-    siteName: 'StackIn',
-    title: 'StackIn | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    siteName: '521',
+    title: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
     description:
-      'Track paychecks, tips, cash, and gig income in one place with StackIn.',
+      'All your income. One place. Track paychecks, tips, cash, and gig income with 521.',
   },
   twitter: {
     card: 'summary',
-    title: 'StackIn | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    title: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
     description:
-      'Track paychecks, tips, cash, and gig income in one place with StackIn.',
+      'All your income. One place. Track paychecks, tips, cash, and gig income with 521.',
   },
   icons: {
     icon: [
-      { url: '/icon.svg?v=2', type: 'image/svg+xml' },
-      { url: '/icon-192.png?v=2', sizes: '192x192', type: 'image/png' },
-      { url: '/icon-512.png?v=2', sizes: '512x512', type: 'image/png' },
+      { url: '/icon.svg?v=3', type: 'image/svg+xml' },
+      { url: '/icon-192.png?v=3', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png?v=3', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: '/apple-icon.png?v=2', sizes: '180x180', type: 'image/png' }],
-    shortcut: ['/icon-192.png?v=2'],
+    apple: [{ url: '/apple-icon.png?v=3', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/icon-192.png?v=3'],
   },
 }
 
@@ -62,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={sora.variable}>
       <body className={`${_geist.className} font-sans antialiased`}>
         <UtmCapture />
         {children}

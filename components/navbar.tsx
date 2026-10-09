@@ -34,11 +34,11 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/stackin-logo.webp"
-              alt="StackIn"
-              width={881}
-              height={148}
-              className="h-[30px] w-auto md:h-[34px]"
+              src="/images/521-logo.svg"
+              alt="521"
+              width={147}
+              height={77}
+              className="h-[26px] w-auto md:h-[28px]"
               priority
             />
           </Link>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sign Up",
-  description: "Create your StackIn account and choose the plan that fits how you work.",
+  description: "Create your 521 account and choose the plan that fits how you work.",
   robots: {
     index: false,
     follow: false,

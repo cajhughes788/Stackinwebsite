@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import StackInLoaderWeb from "@/components/stackin-loader-web";
+import BrandLoaderWeb from "@/components/brand-loader-web";
 import { Button } from "@/components/ui/button";
 import type { AppSource } from "@/lib/app-source";
 import { getAppSource } from "@/lib/app-source";
@@ -33,7 +33,7 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
           </h1>
 
           <div className="flex w-full justify-center">
-            <StackInLoaderWeb
+            <BrandLoaderWeb
               label="Account ready..."
               showLabel={false}
               size={320}
@@ -51,7 +51,7 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
             {isIosAppSource ? (
               <>
                 <p className="max-w-lg text-balance text-lg text-foreground sm:text-xl">
-                  Close this page and return to the StackIn app.
+                  Close this page and return to the 521 app.
                 </p>
                 <p className="max-w-lg text-balance text-sm text-muted-foreground sm:text-base">
                   Then log in with the email and password you just created.

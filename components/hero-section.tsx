@@ -1,7 +1,14 @@
 "use client";
 
+import { ShieldCheck, Zap, Cloud } from "lucide-react";
 import { DollarBackground } from "./dollar-background";
 import { ReelPreview } from "./reel-preview";
+
+const pillars = [
+  { icon: ShieldCheck, title: "Reliable", copy: "Your income. Always accessible." },
+  { icon: Zap, title: "Simple", copy: "No clutter. No confusion." },
+  { icon: Cloud, title: "Optimized", copy: "Smarter tracking. Better decisions." },
+];
 
 export function HeroSection() {
   return (
@@ -19,7 +26,30 @@ export function HeroSection() {
         <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-12 py-20 lg:flex-row lg:gap-16">
           {/* Hero Content */}
           <div className="flex-1 text-center lg:text-left">
-            <div className="mb-6 flex flex-col items-center gap-2 lg:items-start">
+            <p className="brand-aura mb-10 text-sm font-medium uppercase tracking-[0.3em] text-foreground sm:text-lg lg:mb-12 lg:text-xl">
+              All your income. One place.
+            </p>
+
+            <h1 className="mb-6 flex flex-col gap-2 text-4xl font-normal leading-[1.08] text-foreground sm:gap-3 sm:text-5xl lg:text-6xl">
+              <span className="text-balance">Simpler tracking.</span>
+              <span className="text-balance">Smarter decisions.</span>
+            </h1>
+
+            <span className="brand-rule mx-auto mb-10 lg:mx-0" />
+
+            <ul className="mx-auto grid max-w-xl grid-cols-3 divide-x divide-border lg:mx-0">
+              {pillars.map((pillar) => (
+                <li key={pillar.title} className="flex flex-col items-center gap-2 px-2 text-center">
+                  <pillar.icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
+                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-foreground">
+                    {pillar.title}
+                  </span>
+                  <span className="text-xs leading-snug text-muted-foreground">{pillar.copy}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10 flex flex-col items-center gap-2 lg:items-start">
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 backdrop-blur-sm">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
                 <span className="text-xs font-medium text-muted-foreground">
@@ -30,16 +60,6 @@ export function HeroSection() {
                 Coming soon to Android
               </p>
             </div>
-
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              <span className="text-balance">Income tracking</span>
-              <br />
-              <span className="text-primary">made simple</span>
-            </h1>
-
-            <p className="mb-8 max-w-xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-              Track everything in one place. Know exactly what you earn, save, and keep.
-            </p>
           </div>
 
           {/* App Preview */}

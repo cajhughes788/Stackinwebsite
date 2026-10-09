@@ -204,7 +204,7 @@ export function SupportForm() {
                   key={supportKind.value}
                   className={`flex cursor-pointer gap-3 rounded-2xl border px-4 py-3 transition ${
                     active
-                      ? "border-primary bg-primary/10 shadow-[0_0_0_1px_rgba(43,174,138,0.2)]"
+                      ? "border-primary bg-primary/10 shadow-[0_0_0_1px_rgba(47,168,102,0.2)]"
                       : "border-border bg-background/70 hover:border-primary/40 hover:bg-card"
                   }`}
                 >

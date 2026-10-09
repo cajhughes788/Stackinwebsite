@@ -10,7 +10,7 @@ import { getAuthSafe } from "@/lib/firebase";
 
 // Deliberately identical for user-not-found, wrong-password, and
 // invalid-credential — distinguishing them tells an attacker which emails
-// have a StackIn account (email enumeration) without ever needing the
+// have a 521 account (email enumeration) without ever needing the
 // right password. Never pass a raw Firebase error message through to the
 // UI here, however specific-sounding it seems.
 function getLoginErrorMessage(error: unknown): string {
@@ -63,7 +63,7 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Log in</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Access your StackIn account to manage your subscription.
+            Access your 521 account to manage your subscription.
           </p>
         </div>
 

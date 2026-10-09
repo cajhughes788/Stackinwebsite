@@ -15,21 +15,18 @@ export function FeaturesHero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-        <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 backdrop-blur-sm">
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span className="text-xs font-medium text-muted-foreground">
-            Full Feature Overview
-          </span>
-        </span>
+        <p className="eyebrow mb-6">Full feature overview</p>
 
-        <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+        <h1 className="mb-6 text-4xl font-normal leading-[1.08] text-foreground sm:text-5xl lg:text-6xl">
           <span className="text-balance">Everything you need to</span>
           <br />
-          <span className="text-primary">track your income</span>
+          <span className="text-balance">track your income</span>
         </h1>
 
+        <span className="brand-rule mx-auto mb-6" />
+
         <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-          {"From hourly wages to side income, StackIn keeps it all organized in one place."}
+          {"From hourly wages to side income, 521 keeps it all organized in one place."}
         </p>
       </div>
     </section>

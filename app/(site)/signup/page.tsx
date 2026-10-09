@@ -340,12 +340,12 @@ function SignupPageContent() {
         <ProcessingOverlay
           open={loading}
           label="Signing you up..."
-          description="Creating your StackIn account and getting your pricing options ready."
+          description="Creating your 521 account and getting your pricing options ready."
         />
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign up for StackIn, then choose the plan that fits how you work.
+            Sign up for 521, then choose the plan that fits how you work.
           </p>
         </div>
 
@@ -561,7 +561,7 @@ function SignupPageFallback() {
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign up for StackIn, then choose the plan that fits how you work.
+            Sign up for 521, then choose the plan that fits how you work.
           </p>
         </div>
       </div>

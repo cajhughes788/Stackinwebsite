@@ -22,7 +22,7 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: "Reel",
-  description: "StackIn promo reel.",
+  description: "521 promo reel.",
   robots: {
     index: false,
     follow: false,

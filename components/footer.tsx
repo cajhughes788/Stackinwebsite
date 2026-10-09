@@ -17,11 +17,11 @@ export function Footer() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/stackin-logo.webp"
-              alt="StackIn"
-              width={881}
-              height={148}
-              className="h-[26px] w-auto md:h-[30px]"
+              src="/images/521-logo.svg"
+              alt="521"
+              width={147}
+              height={77}
+              className="h-[22px] w-auto md:h-[24px]"
             />
           </Link>
 
@@ -42,7 +42,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 border-t border-border pt-8 text-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} {"StackIn"}. All rights reserved.
+            © {new Date().getFullYear()} {"521"}. All rights reserved.
           </p>
         </div>
       </div>

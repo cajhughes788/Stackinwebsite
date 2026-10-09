@@ -27,7 +27,7 @@ export function ReelPreview() {
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== window.location.origin) return;
-      if (event.data?.type === "stackin-reel:start-free") {
+      if (event.data?.type === "521-reel:start-free") {
         setIsFullscreen(false);
       }
     };
@@ -50,10 +50,10 @@ export function ReelPreview() {
             <Maximize2 className="h-4 w-4" />
           </button>
 
-          <div className="relative aspect-[1242/2147] overflow-hidden rounded-[1.65rem] bg-[#0d1512]">
+          <div className="relative aspect-[1242/2147] overflow-hidden rounded-[1.65rem] bg-[#121b1c]">
             <iframe
               src="/reel/"
-              title="StackIn promo reel"
+              title="521 promo reel"
               className="absolute inset-0 h-full w-full border-0"
             />
           </div>
@@ -62,7 +62,7 @@ export function ReelPreview() {
 
       {isFullscreen &&
         createPortal(
-          <div className="fixed inset-0 z-[100] bg-[#0d1512]">
+          <div className="fixed inset-0 z-[100] bg-[#121b1c]">
             <button
               type="button"
               onClick={() => setIsFullscreen(false)}
@@ -75,7 +75,7 @@ export function ReelPreview() {
 
             <iframe
               src="/reel/"
-              title="StackIn promo reel, full screen"
+              title="521 promo reel, full screen"
               className="h-full w-full border-0"
             />
           </div>,

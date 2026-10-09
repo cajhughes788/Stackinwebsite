@@ -1,6 +1,6 @@
 "use client";
 
-import StackInLoaderWeb from "@/components/stackin-loader-web";
+import BrandLoaderWeb from "@/components/brand-loader-web";
 
 type ProcessingOverlayProps = {
   open: boolean;
@@ -28,7 +28,7 @@ export function ProcessingOverlay({
       }
     >
       <div className="flex w-full max-w-sm flex-col items-center text-center">
-        <StackInLoaderWeb
+        <BrandLoaderWeb
           label={label}
           size={220}
           background="transparent"

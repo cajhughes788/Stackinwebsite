@@ -18,7 +18,7 @@ type Particle = {
 
 export default function ReelPage() {
   const router = useRouter();
-  preload("/images/stackin-logo.webp", { as: "image", fetchPriority: "high" });
+  preload("/images/521-logo.svg", { as: "image", fetchPriority: "high" });
 
   useEffect(() => {
     router.prefetch("/");
@@ -218,7 +218,7 @@ export default function ReelPage() {
 
     function onCtaClick(e: Event) {
       if (embedded) {
-        window.parent.postMessage({ type: "stackin-reelEl:start-free" }, window.location.origin);
+        window.parent.postMessage({ type: "521-reel:start-free" }, window.location.origin);
         return;
       }
       e.preventDefault();

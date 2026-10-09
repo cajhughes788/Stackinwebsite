@@ -1,15 +1,15 @@
   :root {
-    --ink: #0d1512;
-    --ink-2: #131d18;
-    --ink-3: #182420;
-    --paper: #f3eee0;
-    --paper-dim: #a3ac9f;
-    --paper-faint: rgba(243,238,224,0.14);
-    --emerald: #1d7a60;
-    --emerald-bright: #2bae8a;
-    --brass: #d2a354;
-    --rule: rgba(243,238,224,0.14);
-    --logo-img: url("/images/stackin-logo.webp");
+    --ink: #121b1c;
+    --ink-2: #182224;
+    --ink-3: #1e292b;
+    --paper: #ecebe6;
+    --paper-dim: #9ca5a4;
+    --paper-faint: rgba(236,235,230,0.14);
+    --emerald: #1f7a4a;
+    --emerald-bright: #2fa866;
+    --brass: #c9cfcd;
+    --rule: rgba(236,235,230,0.14);
+    --logo-img: url("/images/521-logo.svg");
   }
 
   * { box-sizing: border-box; }
@@ -118,18 +118,18 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    aspect-ratio: 881 / 148;
+    aspect-ratio: 1471 / 771;
   }
 
-  .brand-logo--mark { height: 22px; width: auto; }
+  .brand-logo--mark { height: 20px; width: auto; }
 
-  .brand-logo--reveal { width: clamp(200px, 55vw, 290px); opacity: 0; }
+  .brand-logo--reveal { width: clamp(130px, 36vw, 180px); opacity: 0; }
 
   .scene.active .brand-logo--reveal {
     animation: popIn 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both 0.15s;
   }
 
-  .brand-logo--cta { width: clamp(230px, 62vw, 330px); opacity: 0; }
+  .brand-logo--cta { width: clamp(150px, 42vw, 210px); opacity: 0; }
 
   .scene.active .brand-logo--cta {
     animation: popIn 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both;
@@ -300,7 +300,7 @@
 
   .node-ring { fill: var(--ink-2); stroke: var(--rule); stroke-width: 1.5; }
   .bank-mark { stroke: var(--paper-dim); stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-  .stackin-mark { fill: var(--emerald-bright); font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+  .node-mark { fill: var(--emerald-bright); font-family: var(--font-display); font-weight: 700; font-size: 13px; }
 
   /* scene 4 &mdash; profit stats */
   .stats-row { display: flex; gap: clamp(1.25rem, 6vw, 2.5rem); }

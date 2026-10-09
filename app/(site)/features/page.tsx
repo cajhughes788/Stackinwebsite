@@ -116,12 +116,12 @@ const independentFeatures = [
   {
     icon: Car,
     title: "Mileage tracking",
-    description: "Log business miles and StackIn calculates your deduction at the IRS rate",
+    description: "Log business miles and 521 calculates your deduction at the IRS rate",
   },
   {
     icon: Repeat,
     title: "Recurring transactions",
-    description: "Mark income or expenses as repeating and StackIn logs them automatically",
+    description: "Mark income or expenses as repeating and 521 logs them automatically",
   },
   {
     icon: AlertTriangle,
@@ -139,7 +139,7 @@ const bankSyncFeatures = [
   {
     icon: Sparkles,
     title: "Smart categorization that learns",
-    description: "Confirm a transaction once and StackIn remembers it next time",
+    description: "Confirm a transaction once and 521 remembers it next time",
   },
   {
     icon: BellRing,
@@ -232,7 +232,7 @@ export default function FeaturesPage() {
         <FeatureSection
           label="Bank Sync"
           title="Your bank, connected"
-          description="Link your accounts and let StackIn find your business transactions for you."
+          description="Link your accounts and let 521 find your business transactions for you."
           features={bankSyncFeatures}
           columns={4}
         />

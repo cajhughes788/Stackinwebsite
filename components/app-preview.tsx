@@ -6,15 +6,15 @@ import { useEffect, useState } from "react";
 const previews = [
   {
     src: "/images/app-preview-1.jpg",
-    alt: "Stackin app preview showing the current pay period screen.",
+    alt: "521 app preview showing the current pay period screen.",
   },
   {
     src: "/images/app-preview-2.jpg",
-    alt: "Stackin app preview showing the current month income screen.",
+    alt: "521 app preview showing the current month income screen.",
   },
   {
     src: "/images/app-preview-3.jpg",
-    alt: "Stackin app preview showing the expenses breakdown screen.",
+    alt: "521 app preview showing the expenses breakdown screen.",
   },
 ] as const;
 
@@ -34,7 +34,7 @@ export function AppPreview() {
       <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-2xl" />
 
       <div className="relative rounded-3xl border border-border bg-card/80 p-3 shadow-2xl backdrop-blur-xl">
-        <div className="relative aspect-[1242/2147] overflow-hidden rounded-[1.65rem] bg-[#080a08]">
+        <div className="relative aspect-[1242/2147] overflow-hidden rounded-[1.65rem] bg-[#121b1c]">
           {previews.map((preview, index) => (
             <Image
               key={preview.src}
