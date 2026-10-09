@@ -1,6 +1,5 @@
 import { getApps, initializeApp, type FirebaseApp } from "firebase/app";
 import { getAuth, type Auth } from "firebase/auth";
-import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
@@ -13,12 +12,10 @@ const firebaseConfig = {
 
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
-let db: Firestore | undefined;
 
 if (typeof window !== "undefined") {
   app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
   auth = getAuth(app);
-  db = getFirestore(app);
 }
 
 export function getAuthSafe(): Auth {
@@ -26,9 +23,4 @@ export function getAuthSafe(): Auth {
   return auth;
 }
 
-export function getDbSafe(): Firestore {
-  if (!db) throw new Error("[getDbSafe] Firestore not initialized yet.");
-  return db;
-}
-
-export { app, auth, db };
+export { app, auth };

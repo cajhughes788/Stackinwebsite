@@ -9,11 +9,7 @@
     --emerald-bright: #2bae8a;
     --brass: #d2a354;
     --rule: rgba(243,238,224,0.14);
-    --logo-img: url("/reel-assets/logo.png");
-
-    --font-display: 'Fraunces', ui-serif, Georgia, serif;
-    --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+    --logo-img: url("/images/stackin-logo.webp");
   }
 
   * { box-sizing: border-box; }
@@ -42,6 +38,7 @@
     justify-content: center;
     overflow: hidden;
     outline: none;
+    font-family: var(--font-body);
   }
 
   .reel:focus-visible {

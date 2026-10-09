@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { preload } from "react-dom";
 import { useRouter } from "next/navigation";
 import { REEL_MARKUP } from "./reel-markup";
 import "./reel.css";
@@ -17,6 +18,7 @@ type Particle = {
 
 export default function ReelPage() {
   const router = useRouter();
+  preload("/images/stackin-logo.webp", { as: "image", fetchPriority: "high" });
 
   useEffect(() => {
     router.prefetch("/");
@@ -119,12 +121,16 @@ export default function ReelPage() {
       else drawChaosStatic();
     }
 
-    function goTo(i: number, opts?: { silent?: boolean }) {
+    function goTo(i: number, opts?: { silent?: boolean; initial?: boolean }) {
       const silent = opts?.silent ?? false;
       current = ((i % scenes.length) + scenes.length) % scenes.length;
-      scenes.forEach((s) => s.classList.remove("active"));
-      void stageEl.offsetWidth;
-      scenes[current].classList.add("active");
+      // The first scene is already active in the static HTML; re-toggling it on
+      // hydration would replay its entrance animation.
+      if (!(opts?.initial && scenes[current].classList.contains("active"))) {
+        scenes.forEach((s) => s.classList.remove("active"));
+        void stageEl.offsetWidth;
+        scenes[current].classList.add("active");
+      }
       setSegments(current);
       runSceneEffects(current);
       if (!silent) scheduleAdvance(duration(current));
@@ -305,7 +311,7 @@ export default function ReelPage() {
 
     window.addEventListener("resize", sizeCanvas);
     sizeCanvas();
-    goTo(0, { silent: false });
+    goTo(0, { initial: true });
 
     return () => {
       clearTimer();
@@ -326,12 +332,6 @@ export default function ReelPage() {
 
   return (
     <>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet"
-      />
       <div dangerouslySetInnerHTML={{ __html: REEL_MARKUP }} />
     </>
   );
