@@ -36,9 +36,9 @@ export function Navbar() {
             <Image
               src="/images/stackin-logo.png"
               alt="StackIn"
-              width={350}
-              height={90}
-              className="h-[53px] w-auto md:h-[60px]"
+              width={881}
+              height={148}
+              className="h-[30px] w-auto md:h-[34px]"
               priority
             />
           </Link>

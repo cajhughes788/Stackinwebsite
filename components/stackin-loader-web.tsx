@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-
 export type StackInLoaderWebProps = {
   className?: string;
   label?: string;
@@ -10,20 +8,23 @@ export type StackInLoaderWebProps = {
   background?: string;
   cardBackground?: string;
   textColor?: string;
-  assets?: {
-    base?: string;
-    dollar?: string;
-    coinStack?: string;
-    coin?: string;
-  };
 };
 
-const DEFAULT_ASSETS = {
-  base: "/images/aligned-hole-logo-mobile.png",
-  dollar: "/images/aligned-dollar-mobile.png",
-  coinStack: "/images/aligned-coin-stack-mobile.png",
-  coin: "/images/aligned-coin-mobile.png",
-};
+// The StackIn mark: three stacked bars, each a short left cap and a long body.
+const MARK_BARS = [
+  {
+    fill: "#FFFFFF",
+    d: "M26 75H17A7 7 0 0 0 10 82V103A7 7 0 0 0 17 110H26ZM31 75H145A7 7 0 0 1 152 82V103A7 7 0 0 1 145 110H31Z",
+  },
+  {
+    fill: "#C5CCD5",
+    d: "M19 38H7A7 7 0 0 0 0 45V66A7 7 0 0 0 7 73H19ZM24 38H133A7 7 0 0 1 140 45V66A7 7 0 0 1 133 73H24Z",
+  },
+  {
+    fill: "#2BAE8A",
+    d: "M30 0H18A7 7 0 0 0 11 7V28A7 7 0 0 0 18 35H30ZM35 0H148A7 7 0 0 1 155 7V28A7 7 0 0 1 148 35H35Z",
+  },
+];
 
 const WRAPPER_STYLE = `
 .stackin-loader-web__shell {
@@ -40,7 +41,7 @@ const WRAPPER_STYLE = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   border-radius: 2rem;
   padding: 1.5rem 2rem;
 }
@@ -49,10 +50,9 @@ const WRAPPER_STYLE = `
   position: relative;
   z-index: 1;
   display: flex;
-  width: 100%;
-  max-width: var(--stackin-loader-size);
-  aspect-ratio: 1125.79 / 518.89;
-  align-items: center;
+  width: 45%;
+  aspect-ratio: 155 / 150;
+  align-items: flex-end;
   justify-content: center;
 }
 
@@ -70,126 +70,47 @@ const WRAPPER_STYLE = `
   font-weight: 500;
 }
 
-.stackin-loader-web__fallback {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 9999px;
-  border: 2px solid #486b18;
-  border-top-color: #c9ff63;
-  animation: stackin-loader-web-spin 1s linear infinite;
-}
-
-.stackin-loader-web__dollar {
-  transform-box: view-box;
-  transform-origin: 23% 58%;
-  animation: stackin-loader-web-pulse 0.9s linear infinite;
-}
-
-.stackin-loader-web__coin-stack {
-  transform-box: view-box;
-  transform-origin: 80% 67%;
-  animation: stackin-loader-web-stack-bounce 1.8s ease-in-out infinite;
-}
-
-.stackin-loader-web__coin {
+.stackin-loader-web__bar {
   opacity: 0;
-  transform-box: view-box;
-  transform-origin: 80% 24%;
+  animation: stackin-loader-web-stack 2.4s cubic-bezier(0.3, 1.3, 0.5, 1) infinite;
 }
 
-.stackin-loader-web__coin--a {
-  animation: stackin-loader-web-coin-drop 1.8s linear infinite;
+.stackin-loader-web__bar--1 {
+  animation-delay: 0s;
 }
 
-.stackin-loader-web__coin--b {
-  animation: stackin-loader-web-coin-drop 1.8s linear infinite 0.6s;
+.stackin-loader-web__bar--2 {
+  animation-delay: 0.15s;
 }
 
-.stackin-loader-web__coin--c {
-  animation: stackin-loader-web-coin-drop 1.8s linear infinite 1.2s;
+.stackin-loader-web__bar--3 {
+  animation-delay: 0.3s;
 }
 
-@keyframes stackin-loader-web-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes stackin-loader-web-pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.14);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes stackin-loader-web-coin-drop {
+@keyframes stackin-loader-web-stack {
   0% {
     opacity: 0;
-    transform: translateY(-132px);
+    transform: translateY(-40px);
   }
-  6% {
+  18% {
     opacity: 1;
-    transform: translateY(-132px);
+    transform: translateY(0);
   }
-  39% {
+  78% {
     opacity: 1;
-    transform: translateY(72px);
+    transform: translateY(0);
   }
-  40% {
-    opacity: 0;
-    transform: translateY(72px);
-  }
+  90%,
   100% {
     opacity: 0;
-    transform: translateY(72px);
+    transform: translateY(0);
   }
 }
 
-@keyframes stackin-loader-web-stack-bounce {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  6% {
-    transform: translateY(0) scale(1);
-  }
-  9% {
-    transform: translateY(4px) scale(1.02, 0.97);
-  }
-  15% {
-    transform: translateY(-1px) scale(0.995, 1.015);
-  }
-  22% {
-    transform: translateY(0) scale(1);
-  }
-  39% {
-    transform: translateY(0) scale(1);
-  }
-  42% {
-    transform: translateY(4px) scale(1.02, 0.97);
-  }
-  48% {
-    transform: translateY(-1px) scale(0.995, 1.015);
-  }
-  55% {
-    transform: translateY(0) scale(1);
-  }
-  73% {
-    transform: translateY(0) scale(1);
-  }
-  76% {
-    transform: translateY(4px) scale(1.02, 0.97);
-  }
-  82% {
-    transform: translateY(-1px) scale(0.995, 1.015);
-  }
-  89%,
-  100% {
-    transform: translateY(0) scale(1);
+@media (prefers-reduced-motion: reduce) {
+  .stackin-loader-web__bar {
+    opacity: 1;
+    animation: none;
   }
 }
 `;
@@ -201,61 +122,8 @@ export default function StackInLoaderWeb({
   size = 260,
   background = "transparent",
   cardBackground = "#000000",
-  textColor = "#c9ff63",
-  assets,
+  textColor = "#2BAE8A",
 }: StackInLoaderWebProps) {
-  const mergedAssets = useMemo(
-    () => ({
-      ...DEFAULT_ASSETS,
-      ...assets,
-    }),
-    [assets],
-  );
-  const height = (size * 650) / 1125.79;
-  const alignedArtX = -10;
-  const alignedArtY = -78;
-  const alignedArtWidth = 1146;
-  const alignedArtHeight = 680;
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const loadAsset = (src: string) =>
-      new Promise<void>((resolve) => {
-        const image = new window.Image();
-
-        const finish = () => resolve();
-        image.onload = () => {
-          if ("decode" in image) {
-            image.decode().then(finish).catch(finish);
-            return;
-          }
-          finish();
-        };
-        image.onerror = finish;
-        image.src = src;
-
-        if (image.complete) {
-          if ("decode" in image) {
-            image.decode().then(finish).catch(finish);
-            return;
-          }
-          finish();
-        }
-      });
-
-    Promise.all(Object.values(mergedAssets).map(loadAsset)).then(() => {
-      if (!cancelled) {
-        setIsReady(true);
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [mergedAssets]);
-
   return (
     <div
       className={["stackin-loader-web__shell", className].filter(Boolean).join(" ")}
@@ -267,87 +135,22 @@ export default function StackInLoaderWeb({
       <style>{WRAPPER_STYLE}</style>
 
       <div className="stackin-loader-web" style={{ background: cardBackground }}>
-        <div className="stackin-loader-web__art" style={{ maxWidth: size }}>
-          {isReady ? (
-            <svg
-              viewBox="0 0 1125.79 518.89"
-              width={size}
-              height={height}
-              role="img"
-              aria-label={label}
-              className="stackin-loader-web__svg"
-            >
-              <g>
-                <g>
-                  <image
-                    href={mergedAssets.base}
-                    x={alignedArtX}
-                    y={alignedArtY}
-                    width={alignedArtWidth}
-                    height={alignedArtHeight}
-                    preserveAspectRatio="none"
-                  />
-                </g>
-
-                <g className="stackin-loader-web__dollar">
-                  <image
-                    href={mergedAssets.dollar}
-                    x={alignedArtX}
-                    y={alignedArtY}
-                    width={alignedArtWidth}
-                    height={alignedArtHeight}
-                    preserveAspectRatio="none"
-                  />
-                </g>
-
-                <g className="stackin-loader-web__coin-stack">
-                  <image
-                    href={mergedAssets.coinStack}
-                    x={alignedArtX}
-                    y={alignedArtY}
-                    width={alignedArtWidth}
-                    height={alignedArtHeight}
-                    preserveAspectRatio="none"
-                  />
-                </g>
-
-                <g className="stackin-loader-web__coin stackin-loader-web__coin--a">
-                  <image
-                    href={mergedAssets.coin}
-                    x={alignedArtX}
-                    y={alignedArtY}
-                    width={alignedArtWidth}
-                    height={alignedArtHeight}
-                    preserveAspectRatio="none"
-                  />
-                </g>
-
-                <g className="stackin-loader-web__coin stackin-loader-web__coin--b">
-                  <image
-                    href={mergedAssets.coin}
-                    x={alignedArtX}
-                    y={alignedArtY}
-                    width={alignedArtWidth}
-                    height={alignedArtHeight}
-                    preserveAspectRatio="none"
-                  />
-                </g>
-
-                <g className="stackin-loader-web__coin stackin-loader-web__coin--c">
-                  <image
-                    href={mergedAssets.coin}
-                    x={alignedArtX}
-                    y={alignedArtY}
-                    width={alignedArtWidth}
-                    height={alignedArtHeight}
-                    preserveAspectRatio="none"
-                  />
-                </g>
-              </g>
-            </svg>
-          ) : (
-            <div className="stackin-loader-web__fallback" aria-hidden="true" />
-          )}
+        <div className="stackin-loader-web__art">
+          <svg
+            viewBox="0 -40 155 150"
+            role="img"
+            aria-label={label}
+            className="stackin-loader-web__svg"
+          >
+            {MARK_BARS.map((bar, index) => (
+              <path
+                key={bar.fill}
+                d={bar.d}
+                fill={bar.fill}
+                className={`stackin-loader-web__bar stackin-loader-web__bar--${index + 1}`}
+              />
+            ))}
+          </svg>
         </div>
 
         {showLabel ? (
@@ -355,7 +158,7 @@ export default function StackInLoaderWeb({
             className="stackin-loader-web__label"
             style={{
               color: textColor,
-              textShadow: "0 0 10px rgba(133,255,77,0.22)",
+              textShadow: "0 0 10px rgba(43,174,138,0.22)",
             }}
           >
             {label}

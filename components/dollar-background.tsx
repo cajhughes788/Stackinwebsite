@@ -50,7 +50,7 @@ export function DollarBackground() {
         const opacity = 0.08 - distanceFromCenter * 0.04;
 
         ctx.font = `${dollar.size}px monospace`;
-        ctx.fillStyle = `rgba(74, 222, 128, ${Math.max(0.02, opacity)})`;
+        ctx.fillStyle = `rgba(43, 174, 138, ${Math.max(0.02, opacity)})`;
         ctx.fillText("$", dollar.x + waveX, dollar.y + waveY);
       });
 

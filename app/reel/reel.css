@@ -5,8 +5,8 @@
     --paper: #f3eee0;
     --paper-dim: #a3ac9f;
     --paper-faint: rgba(243,238,224,0.14);
-    --emerald: #326c12;
-    --emerald-bright: #a3ee4e;
+    --emerald: #1d7a60;
+    --emerald-bright: #2bae8a;
     --brass: #d2a354;
     --rule: rgba(243,238,224,0.14);
     --logo-img: url("/reel-assets/logo.png");
@@ -121,7 +121,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    aspect-ratio: 900 / 323;
+    aspect-ratio: 881 / 148;
   }
 
   .brand-logo--mark { height: 22px; width: auto; }

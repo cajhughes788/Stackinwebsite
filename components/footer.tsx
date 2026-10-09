@@ -19,9 +19,9 @@ export function Footer() {
             <Image
               src="/images/stackin-logo.png"
               alt="StackIn"
-              width={300}
-              height={80}
-              className="h-[47px] w-auto md:h-[53px]"
+              width={881}
+              height={148}
+              className="h-[26px] w-auto md:h-[30px]"
             />
           </Link>
 
