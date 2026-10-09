@@ -9,7 +9,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://stackin-app.com'),
+  metadataBase: new URL('https://the521app.com'),
   title: {
     default: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
     template: '%s | 521',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    url: 'https://stackin-app.com',
+    url: 'https://the521app.com',
     siteName: '521',
     title: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
     description:

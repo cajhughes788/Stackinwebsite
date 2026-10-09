@@ -231,7 +231,7 @@ export const TERMS_SECTIONS: LegalSection[] = [
     title: "30. Contact Information",
     paragraphs: [
       "Optivium AI Solutions LLC",
-      "For support, legal notices, or terms-related questions, please use the contact information provided through 521 or our official business contact channels, including the contact information we make available at stackin-app.com.",
+      "For support, legal notices, or terms-related questions, please use the contact information provided through 521 or our official business contact channels, including the contact information we make available at the521app.com.",
     ],
   },
 ];
@@ -321,7 +321,7 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
   {
     title: "Contact",
     paragraphs: [
-      "If you have questions about this policy or your information, visit https://stackin-app.com/support.",
+      "If you have questions about this policy or your information, visit https://the521app.com/support.",
     ],
   },
 ];

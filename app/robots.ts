@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://stackin-app.com/sitemap.xml',
-    host: 'https://stackin-app.com',
+    sitemap: 'https://the521app.com/sitemap.xml',
+    host: 'https://the521app.com',
   }
 }
