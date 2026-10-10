@@ -21,7 +21,6 @@ import {
   PieChart,
   Car,
   FolderTree,
-  AlertTriangle,
   Briefcase,
   Layers,
   MapPin,
@@ -109,11 +108,6 @@ const businessFeatures = [
     icon: FolderTree,
     title: "Clear categories",
     description: "See exactly where your money goes.",
-  },
-  {
-    icon: AlertTriangle,
-    title: "Duplicate detection",
-    description: "A heads-up before you log the same expense twice.",
   },
 ];
 
