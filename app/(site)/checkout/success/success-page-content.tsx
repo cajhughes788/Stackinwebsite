@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import BrandLoaderWeb from "@/components/brand-loader-web";
-import { APP_STORE_URL } from "@/lib/site";
+import { APP_STORE_URL, WEB_APP_URL } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import type { AppSource } from "@/lib/app-source";
 import { getAppSource } from "@/lib/app-source";
@@ -85,7 +85,7 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
                   asChild
                   className="w-full bg-primary text-primary-foreground hover:bg-primary/90 sm:w-auto"
                 >
-                  <a href="https://stackin.web.app" target="_blank" rel="noreferrer">
+                  <a href={WEB_APP_URL} target="_blank" rel="noreferrer">
                     Open Web Login
                   </a>
                 </Button>
