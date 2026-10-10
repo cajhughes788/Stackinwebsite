@@ -106,8 +106,8 @@ const businessFeatures = [
   },
   {
     icon: FolderTree,
-    title: "Clear categories",
-    description: "See exactly where your money goes.",
+    title: "Custom categories",
+    description: "Create your own categories so your reports match how you work.",
   },
 ];
 
