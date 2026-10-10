@@ -1,6 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowUpRight, Banknote, Landmark, Smartphone } from "lucide-react";
-import type { ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode, type RefObject } from "react";
 
 // Illustrative numbers; the five streams add up to the total shown.
 const streams: { name: string; detail: string; amount: string; share: number; mark: ReactNode }[] = [
@@ -11,7 +13,38 @@ const streams: { name: string; detail: string; amount: string; share: number; ma
   { name: "Apple Cash", detail: "Via your bank", amount: "$277.10", share: 8, mark: <Smartphone className="h-4 w-4" /> },
 ];
 
+const TOTAL = 3482.17;
+const formatUsd = (n: number) =>
+  n.toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+// Counts the total up from zero on first paint, unless the viewer prefers
+// reduced motion. Writes straight to the DOM so React renders once and the
+// server-rendered final value never flashes first (layout effect).
+function useCountUp(ref: RefObject<HTMLElement | null>, target: number, durationMs: number) {
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let frame = 0;
+    const start = performance.now();
+    el.textContent = formatUsd(0);
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / durationMs, 1);
+      el.textContent = formatUsd(target * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(frame);
+      el.textContent = formatUsd(target);
+    };
+  }, [ref, target, durationMs]);
+}
+
 export function IncomeMockup() {
+  const totalRef = useRef<HTMLParagraphElement>(null);
+  useCountUp(totalRef, TOTAL, 1600);
+
   return (
     <div className="relative mx-auto w-full max-w-[340px]" aria-label="521 app showing total income across five payment streams" role="img">
       <div className="rounded-[2.75rem] border border-border bg-[#04070b] p-2.5 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)]">
@@ -26,10 +59,12 @@ export function IncomeMockup() {
           <Image src="/images/521-logo.svg" alt="" width={147} height={77} className="mb-5 h-6 w-auto" />
 
           {/* Total */}
-          <div className="mb-6 rounded-2xl border border-border bg-card px-4 py-4">
+          <div className="mb-6 rounded-xl border border-border bg-card px-4 py-4">
             <p className="text-xs text-muted-foreground">Total income · this month</p>
             <div className="mt-1 flex items-end justify-between">
-              <p className="font-[family-name:var(--font-display)] text-3xl text-foreground">$3,482.17</p>
+              <p ref={totalRef} className="font-[family-name:var(--font-display)] text-3xl tabular-nums tracking-tight text-foreground">
+                {formatUsd(TOTAL)}
+              </p>
               <p className="mb-1 flex items-center gap-0.5 text-xs font-medium text-primary">
                 <ArrowUpRight className="h-3.5 w-3.5" />
                 12%
@@ -39,22 +74,29 @@ export function IncomeMockup() {
 
           <p className="mb-3 text-xs font-medium text-muted-foreground">Payment streams</p>
           <ul className="space-y-3.5">
-            {streams.map((stream) => (
-              <li key={stream.name} className="flex items-center gap-3">
+            {streams.map((stream, index) => (
+              <li
+                key={stream.name}
+                className="stream-in flex items-center gap-3"
+                style={{ animationDelay: `${300 + index * 140}ms` }}
+              >
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-secondary text-sm font-semibold text-foreground">
                   {stream.mark}
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="truncate text-sm text-foreground">{stream.name}</p>
-                    <p className="text-sm tabular-nums text-foreground">{stream.amount}</p>
+                    <p className="font-mono text-[13px] tabular-nums text-foreground">{stream.amount}</p>
                   </div>
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="text-[11px] text-muted-foreground">{stream.detail}</p>
-                    <p className="text-[11px] tabular-nums text-muted-foreground">{stream.share}%</p>
+                    <p className="font-mono text-[10px] tabular-nums text-muted-foreground">{stream.share}%</p>
                   </div>
                   <span className="mt-1.5 block h-1 overflow-hidden rounded-full bg-secondary">
-                    <span className="block h-full rounded-full bg-primary" style={{ width: `${stream.share}%` }} />
+                    <span
+                      className="bar-grow block h-full rounded-full bg-primary"
+                      style={{ width: `${stream.share}%`, animationDelay: `${500 + index * 140}ms` }}
+                    />
                   </span>
                 </div>
               </li>

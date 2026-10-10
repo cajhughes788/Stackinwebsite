@@ -31,7 +31,7 @@ export function SecuritySection() {
     <section id="security" className="scroll-mt-16 border-t border-border py-24 lg:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:px-8">
         <div>
-          <span className="eyebrow mb-4 inline-block">Security</span>
+          <span className="eyebrow mb-4 inline-block">02 / Security</span>
           <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
             <span className="text-balance">Built to be trusted with your money</span>
           </h2>
@@ -45,7 +45,7 @@ export function SecuritySection() {
           </Link>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
           {points.map((point) => (
             <div key={point.title} className="bg-background p-8">
               <point.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />

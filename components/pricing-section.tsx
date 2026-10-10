@@ -160,9 +160,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
         />
         {/* Section Header */}
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="eyebrow mb-4 inline-block">
-            Pricing
-          </span>
+          <span className="eyebrow mb-4 inline-block">03 / Pricing</span>
           <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
             <span className="text-balance">Simple, transparent pricing</span>
           </h2>
@@ -177,7 +175,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
           {plans.map((plan) => (
             <div
               key={plan.tier}
-              className={`relative rounded-2xl border bg-card p-8 ${
+              className={`relative rounded-lg border bg-card p-8 ${
                 plan.recommended ? "border-primary" : "border-border"
               }`}
             >
@@ -193,8 +191,8 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
               </div>
 
               <div className="mb-8">
-                <span className="font-[family-name:var(--font-display)] text-4xl text-foreground">{plan.price}</span>
-                <span className="text-muted-foreground">{plan.period}</span>
+                <span className="font-[family-name:var(--font-display)] text-4xl tracking-tight text-foreground">{plan.price}</span>
+                <span className="font-mono text-sm text-muted-foreground">{plan.period}</span>
               </div>
 
               <Button

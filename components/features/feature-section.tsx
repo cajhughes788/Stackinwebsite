@@ -1,6 +1,7 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
+import { Reveal } from "@/components/reveal";
 
 interface Feature {
   icon: LucideIcon;
@@ -45,32 +46,34 @@ export function FeatureSection({
 
   return (
     <section id={id} className="scroll-mt-16 border-t border-border py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="eyebrow mb-4 inline-block">{label}</span>
-          <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
-            <span className="text-balance">{title}</span>
-          </h2>
-          <p className="text-lg text-muted-foreground">{description}</p>
-        </div>
+      <Reveal>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <span className="eyebrow mb-4 inline-block">{label}</span>
+            <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
+              <span className="text-balance">{title}</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">{description}</p>
+          </div>
 
-        <div
-          className={`mx-auto grid gap-px overflow-hidden rounded-2xl border border-border bg-border ${gridCols[columns]}`}
-        >
-          {features.map((feature, index) => (
-            <div
-              key={feature.title}
-              className={`bg-background p-8 ${
-                index === features.length - 1 ? `${lastSmSpan} ${lastLgSpan}` : ""
-              }`}
-            >
-              <feature.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
-              <h3 className="mb-2 text-base font-medium text-foreground">{feature.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
-            </div>
-          ))}
+          <div
+            className={`mx-auto grid gap-px overflow-hidden rounded-lg border border-border bg-border ${gridCols[columns]}`}
+          >
+            {features.map((feature, index) => (
+              <div
+                key={feature.title}
+                className={`bg-background p-8 ${
+                  index === features.length - 1 ? `${lastSmSpan} ${lastLgSpan}` : ""
+                }`}
+              >
+                <feature.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
+                <h3 className="mb-2 text-base font-medium text-foreground">{feature.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

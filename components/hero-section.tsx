@@ -14,14 +14,15 @@ const pillars = [
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden pt-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-16 py-20 lg:flex-row lg:gap-20">
           <div className="flex-1 text-center lg:text-left">
             <p className="brand-aura mb-10 text-sm font-medium uppercase tracking-[0.3em] text-foreground sm:text-lg lg:mb-12 lg:text-xl">
               All your income. One place.
             </p>
 
-            <h1 className="mb-6 flex flex-col gap-2 text-4xl font-normal leading-[1.08] text-foreground sm:gap-3 sm:text-5xl lg:text-6xl">
+            <h1 className="mb-6 flex flex-col gap-2 text-[2.3rem] font-normal leading-[1.02] text-foreground sm:gap-3 sm:text-6xl lg:text-7xl">
               <span className="text-balance">Simpler tracking.</span>
               <span className="text-balance">Smarter decisions.</span>
             </h1>
@@ -42,7 +43,7 @@ export function HeroSection() {
                 </a>
               </Button>
             </div>
-            <p className="mb-12 text-xs text-muted-foreground">
+            <p className="mb-12 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
               On iPhone and the web. Android coming soon.
             </p>
 
@@ -50,7 +51,7 @@ export function HeroSection() {
               {pillars.map((pillar) => (
                 <li key={pillar.title} className="flex flex-col items-center gap-2 px-2 text-center">
                   <pillar.icon className="h-5 w-5 text-foreground" strokeWidth={1.5} />
-                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-foreground">
+                  <span className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.18em] text-foreground">
                     {pillar.title}
                   </span>
                   <span className="text-xs leading-snug text-muted-foreground">{pillar.copy}</span>

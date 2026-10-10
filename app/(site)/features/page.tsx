@@ -142,7 +142,7 @@ export default function FeaturesPage() {
       
       <FeatureSection
         id="income"
-        label="Income"
+        label="01 / Income"
         title="Every way you get paid"
         description="Bank deposits, Venmo, and cash come together in one ledger, sorted for you."
         features={incomeFeatures}
@@ -151,7 +151,7 @@ export default function FeaturesPage() {
 
       <FeatureSection
         id="paychecks"
-        label="Paychecks"
+        label="02 / Paychecks"
         title="Paychecks, explained"
         description="See what you earned, what was withheld, and what you actually take home."
         features={paycheckFeatures}
@@ -160,7 +160,7 @@ export default function FeaturesPage() {
 
       <FeatureSection
         id="business"
-        label="Business"
+        label="03 / Business"
         title="Run your business with clarity"
         description="Expenses, receipts, and profit, organized for tax time and every day before it."
         features={businessFeatures}
@@ -169,7 +169,7 @@ export default function FeaturesPage() {
 
       <FeatureSection
         id="organize"
-        label="Organization"
+        label="04 / Organization"
         title="Organized your way"
         description="Workspaces and reminders that keep everything current without extra effort."
         features={organizeFeatures}

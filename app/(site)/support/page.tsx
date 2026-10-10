@@ -63,7 +63,7 @@ export default function SupportPage() {
             </p>
           </div>
 
-          <div className="mb-16 divide-y divide-border rounded-2xl border border-border">
+          <div className="mb-16 divide-y divide-border rounded-lg border border-border">
             {faqs.map((faq) => (
               <details key={faq.question} className="group px-6 py-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base text-foreground">

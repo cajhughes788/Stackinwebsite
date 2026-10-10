@@ -29,7 +29,7 @@ export function FeaturesSection() {
     <section id="features" className="scroll-mt-16 border-t border-border py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="eyebrow mb-4 inline-block">Platform</span>
+          <span className="eyebrow mb-4 inline-block">01 / Platform</span>
           <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
             <span className="text-balance">Every way you get paid, in one view</span>
           </h2>
@@ -38,7 +38,7 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
             <div key={feature.title} className="bg-background p-8">
               <feature.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />

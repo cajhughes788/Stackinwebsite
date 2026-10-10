@@ -338,7 +338,7 @@ function SignupPageContent() {
   return (
     <main className="min-h-screen bg-background px-4 py-16">
       <AuthLogo />
-      <div className="relative mx-auto max-w-md rounded-2xl border border-border bg-card p-8">
+      <div className="relative mx-auto max-w-md rounded-lg border border-border bg-card p-8">
         <ProcessingOverlay
           open={loading}
           label="Signing you up..."
@@ -452,7 +452,7 @@ function SignupPageContent() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border bg-background/70 p-4">
+          <div className="rounded-lg border border-border bg-background/70 p-4">
             <div className="flex items-start gap-3 text-sm leading-6 text-foreground">
               <input
                 id="legalConsent"
@@ -530,14 +530,14 @@ function SignupPageContent() {
             <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 py-6 sm:px-6 lg:px-8">
               <section
                 ref={termsSectionRef}
-                className="rounded-3xl border border-border bg-card/50 p-8 shadow-sm sm:p-12"
+                className="rounded-xl border border-border bg-card/50 p-8 shadow-sm sm:p-12"
               >
                 <LegalTermsContent />
               </section>
 
               <section
                 ref={privacySectionRef}
-                className="rounded-3xl border border-border bg-card/50 p-8 shadow-sm sm:p-12"
+                className="rounded-xl border border-border bg-card/50 p-8 shadow-sm sm:p-12"
               >
                 <LegalPrivacyContent />
               </section>
@@ -561,7 +561,7 @@ function SignupPageFallback() {
   return (
     <main className="min-h-screen bg-background px-4 py-16">
       <AuthLogo />
-      <div className="relative mx-auto max-w-md rounded-2xl border border-border bg-card p-8">
+      <div className="relative mx-auto max-w-md rounded-lg border border-border bg-card p-8">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-normal text-foreground">Create your account</h1>
           <p className="mt-2 text-sm text-muted-foreground">

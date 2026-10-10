@@ -24,7 +24,7 @@ function LegalSummaryCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-8 rounded-2xl border border-border bg-background/70 p-5 text-sm leading-7 text-muted-foreground">
+    <section className="mt-8 rounded-lg border border-border bg-background/70 p-5 text-sm leading-7 text-muted-foreground">
       <h2 className="text-lg font-semibold text-foreground">{title}</h2>
       {children}
     </section>

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Sora } from 'next/font/google'
+import { Geist, IBM_Plex_Mono, Sora } from 'next/font/google'
 import { UtmCapture } from '@/components/utm-capture'
 import { APP_STORE_URL, COMPANY_NAME, SITE_URL } from '@/lib/site'
 import './globals.css'
@@ -8,6 +8,9 @@ const _geist = Geist({ subsets: ["latin"] });
 
 // Display face for headings; matches the geometric 521 wordmark.
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
+
+// Monospace accents: section labels, numbers, and figures.
+const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-plex-mono" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -81,8 +84,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={sora.variable}>
+    <html lang="en" className={`${sora.variable} ${plexMono.variable}`} suppressHydrationWarning>
       <body className={`${_geist.className} font-sans antialiased`}>
+        {/* Marks JS as available so scroll reveals can start hidden. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.js = ''" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
