@@ -16,15 +16,15 @@ export const REEL_MARKUP = `
 
     <section class="scene active" data-duration="4200" id="scene0">
       <canvas class="chaos-canvas" id="chaosCanvas"></canvas>
-      <h1 class="headline">You didn't start a business<br>to become an accountant.</h1>
+      <h1 class="headline">Paid five<br>different ways?</h1>
     </section>
 
     <section class="scene" data-duration="4800" id="scene1">
-      <h2 class="headline small">Complicated dashboards.<br>Endless menus.<br>A learning curve you don't have time for.</h2>
+      <h2 class="headline small">A paycheck in one app.<br>Venmo in another.<br>Cash in your pocket.</h2>
       <div class="tag-row">
-        <span class="tag">12 menus, one report</span>
-        <span class="tag">38-minute setup video</span>
-        <span class="tag">Accounting degree not included</span>
+        <span class="tag">Three apps to check</span>
+        <span class="tag">Totals that never match</span>
+        <span class="tag">No clear picture</span>
       </div>
     </section>
 
@@ -32,12 +32,12 @@ export const REEL_MARKUP = `
       <div class="logo-reveal">
         <div class="brand-logo brand-logo--reveal" role="img" aria-label="521"></div>
       </div>
-      <p class="sub">No tutorials. No manual. Just your numbers.</p>
+      <p class="sub">All your income. One place.</p>
     </section>
 
     <section class="scene" data-duration="4800" id="scene3">
       <h2 class="headline small">Connect your accounts<br>once.</h2>
-      <p class="sub">Every deposit, every expense &mdash; sorted the moment it hits your bank.</p>
+      <p class="sub">Every deposit sorted the moment it lands.</p>
       <svg class="sync-diagram" viewBox="0 0 300 140">
         <path class="sync-path" pathLength="100" d="M60,70 C130,20 170,120 240,70"></path>
         <circle class="sync-dot" r="4" style="offset-path: path('M60,70 C130,20 170,120 240,70');"></circle>
@@ -55,14 +55,14 @@ export const REEL_MARKUP = `
     </section>
 
     <section class="scene" data-duration="5200" id="scene4">
-      <h2 class="headline small">Know your real profit.<br>Every day.</h2>
+      <h2 class="headline small">Know what you keep.<br>Every day.</h2>
       <div class="stats-row">
         <div class="stat">
-          <span class="label">Revenue, this month</span>
+          <span class="label">Income, this month</span>
           <span class="value" data-countup="6140">$0</span>
         </div>
         <div class="stat">
-          <span class="label">Net profit, this month</span>
+          <span class="label">Take-home, this month</span>
           <span class="value" data-countup="4286">$0</span>
         </div>
       </div>
@@ -74,7 +74,7 @@ export const REEL_MARKUP = `
         <span class="bar" style="--h:60%; --i:4;"></span>
         <span class="bar" style="--h:78%; --i:5;"></span>
       </div>
-      <p class="bars-caption">Monthly &middot; quarterly &middot; yearly reports</p>
+      <p class="bars-caption">Net pay &middot; profit and loss &middot; reports</p>
     </section>
 
     <section class="scene" data-duration="3400" id="scene5">
@@ -84,8 +84,8 @@ export const REEL_MARKUP = `
 
     <section class="scene" data-duration="7000" id="scene6">
       <div class="brand-logo brand-logo--cta" role="img" aria-label="521"></div>
-      <p class="tagline">Built for people who run their own show.</p>
-      <a class="cta-button" href="/#pricing" target="_top">Start Free &rarr;</a>
+      <p class="tagline">Simpler tracking. Smarter decisions.</p>
+      <a class="cta-button" href="/#pricing" target="_top">Get started &rarr;</a>
       <button class="replay" id="replayBtn" type="button">&#8635; Watch again</button>
     </section>
   </div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Eye, EyeOff } from "lucide-react";
+import { AuthLogo, AuthSecurityNote } from "@/components/auth-brand";
 import { Button } from "@/components/ui/button";
 import { getAuthSafe } from "@/lib/firebase";
 
@@ -58,10 +59,11 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background px-4 py-24">
-      <div className="mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
+    <main className="min-h-screen bg-background px-4 py-16">
+      <AuthLogo />
+      <div className="mx-auto max-w-md rounded-2xl border border-border bg-card p-8">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-foreground">Log in</h1>
+          <h1 className="text-3xl font-normal text-foreground">Log in</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Access your 521 account to manage your subscription.
           </p>
@@ -112,7 +114,7 @@ export default function LoginPage() {
           {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Logging in..." : "Log In"}
+            {loading ? "Logging in..." : "Log in"}
           </Button>
         </form>
 
@@ -123,6 +125,7 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
+      <AuthSecurityNote />
     </main>
   );
 }

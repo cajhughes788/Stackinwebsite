@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Features for Paychecks, Tips, and Gig Income",
+  title: "Features",
   description:
-    "Explore 521 features for tracking hourly pay, tips, self-employed income, expenses, and profit across multiple jobs or workspaces.",
+    "Bank sync, Venmo import, net pay breakdowns, expenses, receipts, and P&Ls. See how 521 brings every way you get paid into one place.",
   alternates: {
     canonical: "/features",
   },

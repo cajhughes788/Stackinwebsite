@@ -1,30 +1,21 @@
-"use client";
-
-import { ShieldCheck, Zap, Cloud } from "lucide-react";
-import { DollarBackground } from "./dollar-background";
-import { ReelPreview } from "./reel-preview";
+import Link from "next/link";
+import { Lock, ShieldCheck, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { IncomeMockup } from "./income-mockup";
+import { ReelTour } from "./reel-tour";
+import { APP_STORE_URL } from "@/lib/site";
 
 const pillars = [
   { icon: ShieldCheck, title: "Reliable", copy: "Your income. Always accessible." },
-  { icon: Zap, title: "Simple", copy: "No clutter. No confusion." },
-  { icon: Cloud, title: "Optimized", copy: "Smarter tracking. Better decisions." },
+  { icon: Sparkles, title: "Simple", copy: "No clutter. No confusion." },
+  { icon: Lock, title: "Private", copy: "Encrypted. Never sold." },
 ];
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen overflow-hidden pt-16">
-      {/* Animated Dollar Sign Background */}
-      <DollarBackground />
-
-      {/* Gradient Overlays */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-12 py-20 lg:flex-row lg:gap-16">
-          {/* Hero Content */}
+    <section className="relative overflow-hidden pt-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-16 py-20 lg:flex-row lg:gap-20">
           <div className="flex-1 text-center lg:text-left">
             <p className="brand-aura mb-10 text-sm font-medium uppercase tracking-[0.3em] text-foreground sm:text-lg lg:mb-12 lg:text-xl">
               All your income. One place.
@@ -35,12 +26,30 @@ export function HeroSection() {
               <span className="text-balance">Smarter decisions.</span>
             </h1>
 
-            <span className="brand-rule mx-auto mb-10 lg:mx-0" />
+            <span className="brand-rule mx-auto mb-8 lg:mx-0" />
+
+            <p className="mx-auto mb-10 max-w-md text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              Paychecks, Venmo, Zelle, and cash, together in one clear view.
+            </p>
+
+            <div className="mb-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+              <Button asChild size="lg" className="h-12 px-7 text-base">
+                <Link href="/signup">Get started</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 border-border px-7 text-base text-foreground hover:bg-secondary">
+                <a href={APP_STORE_URL} target="_blank" rel="noreferrer">
+                  Download for iPhone
+                </a>
+              </Button>
+            </div>
+            <p className="mb-12 text-xs text-muted-foreground">
+              On iPhone and the web. Android coming soon.
+            </p>
 
             <ul className="mx-auto grid max-w-xl grid-cols-3 divide-x divide-border lg:mx-0">
               {pillars.map((pillar) => (
                 <li key={pillar.title} className="flex flex-col items-center gap-2 px-2 text-center">
-                  <pillar.icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
+                  <pillar.icon className="h-5 w-5 text-foreground" strokeWidth={1.5} />
                   <span className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-foreground">
                     {pillar.title}
                   </span>
@@ -48,23 +57,11 @@ export function HeroSection() {
                 </li>
               ))}
             </ul>
-
-            <div className="mt-10 flex flex-col items-center gap-2 lg:items-start">
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 backdrop-blur-sm">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-                <span className="text-xs font-medium text-muted-foreground">
-                  Now available on iOS and web
-                </span>
-              </div>
-              <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                Coming soon to Android
-              </p>
-            </div>
           </div>
 
-          {/* App Preview */}
-          <div className="flex-1 w-full max-w-md lg:max-w-lg">
-            <ReelPreview />
+          <div className="flex w-full flex-1 flex-col items-center gap-8">
+            <IncomeMockup />
+            <ReelTour />
           </div>
         </div>
       </div>

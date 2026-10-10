@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Sora } from 'next/font/google'
 import { UtmCapture } from '@/components/utm-capture'
+import { APP_STORE_URL, COMPANY_NAME, SITE_URL } from '@/lib/site'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -9,23 +10,23 @@ const _geist = Geist({ subsets: ["latin"] });
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://the521app.com'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    default: '521 | All Your Income. One Place.',
     template: '%s | 521',
   },
   description:
-    '521 is an income tracking app for hourly workers, freelancers, and gig workers. Track paychecks, tips, cash, and self-employed income in one place.',
+    '521 brings every way you get paid into one clear view. Connect your bank, import Venmo, and see paychecks, transfers, and cash together, with net pay and profit built in.',
   applicationName: '521',
   keywords: [
+    'income dashboard',
+    'all payments in one place',
     'income tracking app',
-    'tip tracker',
-    'gig income tracker',
-    'paycheck tracker',
-    'self-employed income tracker',
-    'hourly worker app',
-    'freelancer income tracker',
-    'cash tip tracker',
+    'Venmo Zelle direct deposit tracker',
+    'net pay calculator',
+    'freelancer income and expenses',
+    'profit and loss app',
+    'bank sync income tracker',
   ],
   alternates: {
     canonical: '/',
@@ -36,17 +37,19 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    url: 'https://the521app.com',
+    url: SITE_URL,
     siteName: '521',
-    title: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    title: '521 | All Your Income. One Place.',
     description:
-      'All your income. One place. Track paychecks, tips, cash, and gig income with 521.',
+      'Every way you get paid, in one clear view. Paychecks, Venmo, Zelle, and cash, together.',
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: '521: All your income. One place.' }],
   },
   twitter: {
-    card: 'summary',
-    title: '521 | Income Tracking App for Hourly Workers, Tips, and Gig Income',
+    card: 'summary_large_image',
+    title: '521 | All Your Income. One Place.',
     description:
-      'All your income. One place. Track paychecks, tips, cash, and gig income with 521.',
+      'Every way you get paid, in one clear view. Paychecks, Venmo, Zelle, and cash, together.',
+    images: ['/og.png'],
   },
   icons: {
     icon: [
@@ -59,6 +62,19 @@ export const metadata: Metadata = {
   },
 }
 
+// Lets Google show 521 as an app, with its App Store listing.
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: '521',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'iOS, Web',
+  url: SITE_URL,
+  downloadUrl: APP_STORE_URL,
+  description: 'All your income in one place: paychecks, Venmo, Zelle, and cash, together.',
+  publisher: { '@type': 'Organization', name: COMPANY_NAME },
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -67,6 +83,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={sora.variable}>
       <body className={`${_geist.className} font-sans antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <UtmCapture />
         {children}
       </body>

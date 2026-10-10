@@ -247,7 +247,7 @@ export default function ReelPage() {
     }
     document.addEventListener("visibilitychange", onVisibilityChange);
 
-    const chaosItems = ["$1,204.50", "47", "0.00", "Q3", "?", "12%", "$842", "--", "$0.00", "x3"];
+    const chaosItems = ["Venmo", "$1,204.50", "Zelle", "$85.00", "Cash", "?", "Direct deposit", "$240", "Apple Cash", "--"];
     let particles: Particle[] = [];
 
     function spawnParticle(rect: DOMRect): Particle {

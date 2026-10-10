@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -17,120 +17,52 @@ function getErrorMessage(error: unknown, fallback: string) {
   return fallback;
 }
 
-function DollarWaveBackground() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Create dollar sign grid
-    const cols = window.innerWidth < 768 ? 12 : 20;
-    const rows = 8;
-    const dollarSigns: HTMLSpanElement[] = [];
-
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const span = document.createElement("span");
-        span.textContent = "$";
-        span.className = "dollar-sign";
-        span.style.cssText = `
-          position: absolute;
-          left: ${(col / cols) * 100}%;
-          top: ${(row / rows) * 100}%;
-          font-size: ${window.innerWidth < 768 ? "1.5rem" : "2rem"};
-          font-weight: 600;
-          color: var(--primary);
-          opacity: 0;
-          transform: translateY(0);
-          animation: dollarWave 4s ease-in-out infinite;
-          animation-delay: ${(col * 0.15) + (row * 0.1)}s;
-        `;
-        container.appendChild(span);
-        dollarSigns.push(span);
-      }
-    }
-
-    return () => {
-      dollarSigns.forEach((span) => span.remove());
-    };
-  }, []);
-
-  return (
-    <>
-      <style jsx global>{`
-        @keyframes dollarWave {
-          0%, 100% {
-            opacity: 0.06;
-            transform: translateY(0) translateX(0);
-          }
-          25% {
-            opacity: 0.1;
-            transform: translateY(-8px) translateX(4px);
-          }
-          50% {
-            opacity: 0.06;
-            transform: translateY(0) translateX(8px);
-          }
-          75% {
-            opacity: 0.1;
-            transform: translateY(8px) translateX(4px);
-          }
-        }
-      `}</style>
-      <div
-        ref={containerRef}
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden blur-[0.5px]"
-        aria-hidden="true"
-      />
-    </>
-  );
-}
-
+// `tier` is the billing ID sent to checkout; only the display names changed.
 const plans = [
   {
-    name: "W-2",
+    name: "Essential",
     tier: "w2_basic",
     price: "Free",
     period: "",
-    description: "Perfect for traditional employees",
+    description: "Your paychecks, tracked and explained",
     features: [
-      "Track paycheck income",
-      "Basic earnings reports",
-      "Customizable pay stubs",
-      "Share, export, and print pay stubs",
-      "Access to net income at all times",
+      "Track paychecks and hours",
+      "Net pay after federal, state, and FICA",
+      "Custom pay periods",
+      "Earnings reports",
+      "Export and share paystub summaries",
     ],
-    cta: "Try for Free",
+    cta: "Get started",
+    recommended: false,
   },
   {
-    name: "Independent",
+    name: "Pro",
     tier: "independent_basic",
     price: "$12.99",
     period: "/month",
-    description: "For freelancers and gig workers",
+    description: "For freelancers and business owners",
     features: [
-      "Track multiple income streams",
-      "Track expenses",
-      "Upload receipts",
+      "Every income stream in one place",
+      "Expense tracking with receipt uploads",
       "Advanced analytics",
-      "Generate tax-ready monthly, quarterly, and yearly P&Ls",
+      "Monthly, quarterly, and yearly P&Ls",
     ],
-    cta: "Try for Free",
+    cta: "Choose Pro",
+    recommended: false,
   },
   {
-    name: "Hybrid",
+    name: "Complete",
     tier: "hybrid_plus",
     price: "$13.99",
     period: "/month",
-    description: "For W-2 and independent workers",
+    description: "Paychecks and business income, side by side",
     features: [
-      "Includes all Independent functionality",
-      "Includes all W-2 functionality",
-      "Track unlimited income sources",
+      "Everything in Essential and Pro",
+      "Unlimited income sources",
       "Custom categories",
     ],
-    cta: "Try for Free",
+    cta: "Choose Complete",
+    recommended: true,
   },
 ];
 
@@ -219,16 +151,8 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
   }
 
   return (
-    <section id="pricing" className="relative overflow-hidden py-24 lg:py-32">
-      {/* Animated Dollar Wave Background */}
-      <DollarWaveBackground />
-      
-      {/* Gradient Overlay */}
-      <div className="pointer-events-none absolute inset-0 z-[1]">
-        <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
-      </div>
-
-      <div className="relative z-[2] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="pricing" className="scroll-mt-16 border-t border-border py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ProcessingOverlay
           open={activeTier !== null}
           label="Redirecting to payment..."
@@ -239,55 +163,66 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
           <span className="eyebrow mb-4 inline-block">
             Pricing
           </span>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            <span className="text-balance">Choose your plan</span>
+          <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
+            <span className="text-balance">Simple, transparent pricing</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Simple pricing for every type of worker. No hidden fees.
+            Start with your paychecks. Add your business when you&apos;re ready. No hidden fees.
           </p>
           {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid gap-8 lg:grid-cols-3">
-          {plans.map((plan, index) => (
+        <div className="grid items-start gap-6 md:grid-cols-3">
+          {plans.map((plan) => (
             <div
-              key={index}
-              className="relative rounded-2xl border border-primary/60 bg-card/80 p-8 shadow-lg shadow-primary/10 transition-all duration-300 hover:border-primary hover:shadow-primary/20"
+              key={plan.tier}
+              className={`relative rounded-2xl border bg-card p-8 ${
+                plan.recommended ? "border-primary" : "border-border"
+              }`}
             >
-              {/* Plan Header */}
+              {plan.recommended ? (
+                <span className="absolute -top-3 left-8 rounded-full bg-primary px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground">
+                  Recommended
+                </span>
+              ) : null}
+
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
+                <h3 className="text-xl font-medium text-foreground">{plan.name}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{plan.description}</p>
               </div>
 
-              {/* Price */}
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+              <div className="mb-8">
+                <span className="font-[family-name:var(--font-display)] text-4xl text-foreground">{plan.price}</span>
                 <span className="text-muted-foreground">{plan.period}</span>
               </div>
 
-              {/* Features */}
-              <ul className="mb-8 space-y-3">
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <Check className="h-4 w-4 flex-shrink-0 text-primary" />
+              <Button
+                onClick={() => handleCheckout(plan.tier)}
+                disabled={authLoading || activeTier === plan.tier}
+                variant={plan.recommended ? "default" : "outline"}
+                className={`mb-8 h-11 w-full ${
+                  plan.recommended ? "" : "border-border text-foreground hover:bg-secondary"
+                }`}
+              >
+                {activeTier === plan.tier ? "Redirecting to payment..." : plan.cta}
+              </Button>
+
+              <ul className="space-y-3">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3 text-sm text-muted-foreground">
+                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
                     {feature}
                   </li>
                 ))}
               </ul>
-
-              {/* CTA */}
-              <Button
-                onClick={() => handleCheckout(plan.tier)}
-                disabled={authLoading || activeTier === plan.tier}
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                {activeTier === plan.tier ? "Redirecting to payment..." : plan.cta}
-              </Button>
             </div>
           ))}
         </div>
+
+        <p className="mt-10 text-center text-xs text-muted-foreground">
+          Already subscribed? W-2 is now Essential, Independent is now Pro, and Hybrid is now Complete.
+        </p>
       </div>
     </section>
   );

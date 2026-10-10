@@ -177,18 +177,15 @@ export function SupportForm() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-border bg-card/60 p-6 shadow-sm backdrop-blur-sm sm:p-8">
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8">
       <ProcessingOverlay
         open={state === "submitting"}
         label="Sending your request..."
-        description="Packaging your message and forwarding it to the same support pipeline used in the app."
+        description="Your message is on its way to our support team."
       />
 
       <div className="mb-6">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/70 px-3 py-1 text-xs font-medium text-muted-foreground">
-          Public support
-        </span>
-        <h2 className="mt-4 text-2xl font-bold text-foreground sm:text-3xl">Send a support request</h2>
+        <h2 className="text-2xl font-normal text-foreground sm:text-3xl">Send us a message</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">

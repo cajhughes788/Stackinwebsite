@@ -26,47 +26,30 @@ export function FeatureSection({
   columns = 4,
 }: FeatureSectionProps) {
   const gridCols = {
-    2: "sm:grid-cols-2 max-w-2xl",
-    3: "sm:grid-cols-2 lg:grid-cols-3 max-w-5xl",
+    2: "sm:grid-cols-2 max-w-3xl",
+    3: "sm:grid-cols-2 lg:grid-cols-3 max-w-6xl",
     4: "sm:grid-cols-2 lg:grid-cols-4 max-w-7xl",
   };
 
   return (
-    <section id={id} className="relative z-10 scroll-mt-24 py-16 lg:py-24">
+    <section id={id} className="scroll-mt-16 border-t border-border py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="eyebrow mb-4 inline-block">
-            {label}
-          </span>
-          <h2 className="mb-4 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+          <span className="eyebrow mb-4 inline-block">{label}</span>
+          <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
             <span className="text-balance">{title}</span>
           </h2>
-          <p className="text-muted-foreground">{description}</p>
+          <p className="text-lg text-muted-foreground">{description}</p>
         </div>
 
-        {/* Feature Cards */}
-        <div className={`mx-auto grid gap-4 ${gridCols[columns]}`}>
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="group relative rounded-2xl border border-border bg-card/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-card/80"
-            >
-              {/* Icon */}
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                <feature.icon className="h-5 w-5 text-primary" />
-              </div>
-
-              {/* Content */}
-              <h3 className="mb-2 text-base font-semibold text-foreground">
-                {feature.title}
-              </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {feature.description}
-              </p>
-
-              {/* Hover Glow */}
-              <div className="pointer-events-none absolute -inset-px rounded-2xl bg-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
+        <div
+          className={`mx-auto grid gap-px overflow-hidden rounded-2xl border border-border bg-border ${gridCols[columns]}`}
+        >
+          {features.map((feature) => (
+            <div key={feature.title} className="bg-background p-8">
+              <feature.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
+              <h3 className="mb-2 text-base font-medium text-foreground">{feature.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
             </div>
           ))}
         </div>

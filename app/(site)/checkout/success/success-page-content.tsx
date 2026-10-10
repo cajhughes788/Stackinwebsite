@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import BrandLoaderWeb from "@/components/brand-loader-web";
+import { APP_STORE_URL } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import type { AppSource } from "@/lib/app-source";
 import { getAppSource } from "@/lib/app-source";
@@ -28,7 +29,7 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
             isIosAppSource ? "max-w-2xl gap-6 sm:gap-8" : "flex-1 gap-8 sm:gap-10"
           }`}
         >
-          <h1 className="w-full max-w-[18rem] text-balance text-3xl font-bold tracking-tight text-primary sm:max-w-2xl sm:text-4xl md:max-w-3xl md:text-5xl lg:max-w-4xl">
+          <h1 className="w-full max-w-[18rem] text-balance text-3xl font-normal text-foreground sm:max-w-2xl sm:text-4xl md:max-w-3xl md:text-5xl lg:max-w-4xl">
             {isIosAppSource ? "Your account is ready." : "Your checkout is complete."}
           </h1>
 
@@ -67,7 +68,7 @@ export function CheckoutSuccessPageContent({ source }: SuccessPageContentProps) 
                   className="w-full bg-primary text-primary-foreground hover:bg-primary/90 sm:w-auto"
                 >
                   <a
-                    href="https://apps.apple.com/us/app/stack-in/id6764385326"
+                    href={APP_STORE_URL}
                     target="_blank"
                     rel="noreferrer"
                   >

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Maximize2, X } from "lucide-react";
+import { Play, X } from "lucide-react";
 
-export function ReelPreview() {
+// Opens the promo reel full screen. The iframe only loads once someone asks for it.
+export function ReelTour() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -37,28 +38,16 @@ export function ReelPreview() {
 
   return (
     <>
-      <div className="relative">
-        <div className="absolute -inset-4 rounded-3xl bg-primary/20 blur-2xl" />
-
-        <div className="relative rounded-3xl border border-border bg-card/80 p-3 shadow-2xl backdrop-blur-xl">
-          <button
-            type="button"
-            onClick={() => setIsFullscreen(true)}
-            className="absolute right-5 top-5 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/70 text-foreground backdrop-blur-sm transition-colors hover:bg-background"
-            aria-label="View reel full screen"
-          >
-            <Maximize2 className="h-4 w-4" />
-          </button>
-
-          <div className="relative aspect-[1242/2147] overflow-hidden rounded-[1.65rem] bg-[#121b1c]">
-            <iframe
-              src="/reel/"
-              title="521 promo reel"
-              className="absolute inset-0 h-full w-full border-0"
-            />
-          </div>
-        </div>
-      </div>
+      <button
+        type="button"
+        onClick={() => setIsFullscreen(true)}
+        className="group inline-flex items-center gap-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-border transition-colors group-hover:border-foreground/40">
+          <Play className="h-3.5 w-3.5 translate-x-px fill-current" />
+        </span>
+        Watch the tour
+      </button>
 
       {isFullscreen &&
         createPortal(
@@ -75,7 +64,7 @@ export function ReelPreview() {
 
             <iframe
               src="/reel/"
-              title="521 promo reel, full screen"
+              title="521 tour"
               className="h-full w-full border-0"
             />
           </div>,

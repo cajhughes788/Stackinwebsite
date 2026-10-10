@@ -52,7 +52,7 @@ export function LegalTermsContent() {
   return (
     <>
       <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary">Terms</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground">
+      <h1 className="mt-4 text-4xl font-normal text-foreground">
         {TERMS_PAGE_TITLE}
       </h1>
       <p className="mt-4 text-base leading-7 text-muted-foreground">{TERMS_PAGE_INTRO}</p>
@@ -82,7 +82,7 @@ export function LegalPrivacyContent() {
   return (
     <>
       <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary">Privacy</p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground">
+      <h1 className="mt-4 text-4xl font-normal text-foreground">
         {PRIVACY_PAGE_TITLE}
       </h1>
       <p className="mt-4 text-base leading-7 text-muted-foreground">{PRIVACY_PAGE_INTRO}</p>

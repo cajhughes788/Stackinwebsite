@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { Eye, EyeOff, X } from "lucide-react";
 import { LegalPrivacyContent, LegalTermsContent } from "@/components/legal-content";
+import { AuthLogo, AuthSecurityNote } from "@/components/auth-brand";
 import { Button } from "@/components/ui/button";
 import { ProcessingOverlay } from "@/components/processing-overlay";
 import { getAppSource, withAppSource } from "@/lib/app-source";
@@ -335,17 +336,18 @@ function SignupPageContent() {
   }
 
   return (
-    <main className="min-h-screen bg-background px-4 py-24">
-      <div className="relative mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
+    <main className="min-h-screen bg-background px-4 py-16">
+      <AuthLogo />
+      <div className="relative mx-auto max-w-md rounded-2xl border border-border bg-card p-8">
         <ProcessingOverlay
           open={loading}
           label="Signing you up..."
           description="Creating your 521 account and getting your pricing options ready."
         />
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
+          <h1 className="text-3xl font-normal text-foreground">Create your account</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign up for 521, then choose the plan that fits how you work.
+            One account for all your income. You&apos;ll choose a plan next.
           </p>
         </div>
 
@@ -496,6 +498,7 @@ function SignupPageContent() {
           </Link>
         </p>
       </div>
+      <AuthSecurityNote />
 
       {legalModalOpen ? (
         <div
@@ -556,12 +559,13 @@ function SignupPageContent() {
 
 function SignupPageFallback() {
   return (
-    <main className="min-h-screen bg-background px-4 py-24">
-      <div className="relative mx-auto max-w-md rounded-3xl border border-border bg-card/60 p-8 backdrop-blur-sm">
+    <main className="min-h-screen bg-background px-4 py-16">
+      <AuthLogo />
+      <div className="relative mx-auto max-w-md rounded-2xl border border-border bg-card p-8">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-foreground">Create your account</h1>
+          <h1 className="text-3xl font-normal text-foreground">Create your account</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign up for 521, then choose the plan that fits how you work.
+            One account for all your income. You&apos;ll choose a plan next.
           </p>
         </div>
       </div>

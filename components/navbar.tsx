@@ -23,10 +23,8 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border"
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 border-b bg-background/90 backdrop-blur-xl transition-colors duration-300 ${
+        isScrolled ? "border-border" : "border-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -58,6 +56,12 @@ export function Navbar() {
               Support
             </Link>
             <Link
+              href="/#security"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Security
+            </Link>
+            <Link
               href="/#pricing"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -74,14 +78,14 @@ export function Navbar() {
                 size="sm"
                 className="text-muted-foreground hover:text-foreground"
               >
-                <Link href="/login">Log In</Link>
+                <Link href="/login">Log in</Link>
               </Button>
               <Button
                 asChild
                 size="sm"
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                <Link href="/signup">Get Started</Link>
+                <Link href="/signup">Get started</Link>
               </Button>
             </div>
           ) : null}
@@ -89,6 +93,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             className="md:hidden text-foreground"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -122,6 +127,13 @@ export function Navbar() {
               Support
             </Link>
             <Link
+              href="/#security"
+              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Security
+            </Link>
+            <Link
               href="/#pricing"
               className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -131,10 +143,10 @@ export function Navbar() {
             {showAuthCtas ? (
               <div className="flex flex-col gap-3 pt-4">
                 <Button asChild variant="ghost" size="sm" className="w-full text-muted-foreground">
-                  <Link href="/login">Log In</Link>
+                  <Link href="/login">Log in</Link>
                 </Button>
                 <Button asChild size="sm" className="w-full bg-primary text-primary-foreground">
-                  <Link href="/signup">Get Started</Link>
+                  <Link href="/signup">Get started</Link>
                 </Button>
               </div>
             ) : null}
