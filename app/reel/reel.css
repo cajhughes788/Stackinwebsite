@@ -1,14 +1,14 @@
   :root {
-    --ink: #121b1c;
-    --ink-2: #182224;
-    --ink-3: #1e292b;
+    --ink: #070a10;
+    --ink-2: #0d121b;
+    --ink-3: #141b26;
     --paper: #ecebe6;
-    --paper-dim: #9ca5a4;
-    --paper-faint: rgba(236,235,230,0.14);
+    --paper-dim: #8b95a5;
+    --paper-faint: rgba(236,235,230,0.12);
     --emerald: #1f7a4a;
     --emerald-bright: #2fa866;
     --brass: #c9cfcd;
-    --rule: rgba(236,235,230,0.14);
+    --rule: rgba(236,235,230,0.12);
     --logo-img: url("/images/521-logo.svg");
   }
 

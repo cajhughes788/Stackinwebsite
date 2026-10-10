@@ -143,8 +143,8 @@ export default function BrandLoaderWeb({
   showLabel = true,
   size = 260,
   background = "transparent",
-  cardBackground = "#121B1C",
-  textColor = "#9CA5A4",
+  cardBackground = "#070a10",
+  textColor = "#8b95a5",
 }: BrandLoaderWebProps) {
   return (
     <div

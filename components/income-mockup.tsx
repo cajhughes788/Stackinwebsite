@@ -14,12 +14,12 @@ const streams: { name: string; detail: string; amount: string; share: number; ma
 export function IncomeMockup() {
   return (
     <div className="relative mx-auto w-full max-w-[340px]" aria-label="521 app showing total income across five payment streams" role="img">
-      <div className="rounded-[2.75rem] border border-border bg-[#0c1416] p-2.5 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)]">
+      <div className="rounded-[2.75rem] border border-border bg-[#04070b] p-2.5 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)]">
         <div className="overflow-hidden rounded-[2.25rem] bg-background px-5 pb-6 pt-4">
           {/* Status bar */}
           <div className="mb-5 flex items-center justify-between text-[11px] font-medium text-foreground/80">
             <span>9:41</span>
-            <span className="h-5 w-20 rounded-full bg-[#0c1416]" />
+            <span className="h-5 w-20 rounded-full bg-[#04070b]" />
             <span className="tracking-widest">•••</span>
           </div>
 
