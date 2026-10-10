@@ -217,10 +217,6 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
             </div>
           ))}
         </div>
-
-        <p className="mt-10 text-center text-xs text-muted-foreground">
-          Already subscribed? W-2 is now Essential, Independent is now Pro, and Hybrid is now Complete.
-        </p>
       </div>
     </section>
   );

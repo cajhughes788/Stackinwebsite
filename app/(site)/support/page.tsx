@@ -34,11 +34,6 @@ const faqs = [
     answer:
       "Request deletion in the app or by emailing us. Without an active paid plan, your data is deleted promptly. With one, deletion happens when your current paid period ends.",
   },
-  {
-    question: "I subscribed to W-2, Independent, or Hybrid. What changed?",
-    answer:
-      "Only the names. W-2 is now Essential, Independent is now Pro, and Hybrid is now Complete. Your features and price stay the same.",
-  },
 ];
 
 export default function SupportPage() {
