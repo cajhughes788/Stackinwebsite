@@ -51,7 +51,7 @@ export function ReelTour() {
 
       {isFullscreen &&
         createPortal(
-          <div className="fixed inset-0 z-[100] bg-[#070a10]">
+          <div className="fixed inset-0 z-[100] bg-[#161b1e]">
             <button
               type="button"
               onClick={() => setIsFullscreen(false)}
