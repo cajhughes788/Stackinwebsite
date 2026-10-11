@@ -57,10 +57,10 @@ const WalletGlyph = (
 // x/y are fractions of the pinned screen; depth < 1 starts an icon smaller,
 // dimmer, and softly blurred, as if further away, and it sharpens as it travels.
 const streams: { label: string; mark: ReactNode; x: number; y: number; depth: number }[] = [
-  { label: "Bank", mark: BankGlyph, x: 0.13, y: 0.24, depth: 1 },
-  { label: "Venmo", mark: PeerGlyph, x: 0.86, y: 0.17, depth: 0.78 },
-  { label: "Cash", mark: CashGlyph, x: 0.09, y: 0.62, depth: 0.85 },
-  { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 1 },
+  { label: "Bank", mark: BankGlyph, x: 0.13, y: 0.24, depth: 0.8 },
+  { label: "Venmo", mark: PeerGlyph, x: 0.86, y: 0.17, depth: 1 },
+  { label: "Cash", mark: CashGlyph, x: 0.09, y: 0.62, depth: 1 },
+  { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 0.78 },
   { label: "Apple Cash", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 0.72 },
 ];
 
@@ -101,22 +101,25 @@ export function FiveToOne() {
       };
     };
 
-    let frame = 0;
-    const render = () => {
-      frame = 0;
+    // Scroll sets a target; the drawn progress eases toward it each frame, so
+    // wheel steps glide instead of jumping.
+    const target = () => {
       const scrollable = track.offsetHeight - window.innerHeight;
-      const p = scrollable > 0 ? clamp01(-track.getBoundingClientRect().top / scrollable) : 0;
+      return scrollable > 0 ? clamp01(-track.getBoundingClientRect().top / scrollable) : 0;
+    };
+    let current = target();
 
-      track.style.setProperty("--fade", String(clamp01(p / 0.55)));
-      // ONE lights up as the icons travel toward it (they leave at ~6% and
-      // land at ~86%), then --merge adds the final bloom once they arrive.
-      track.style.setProperty("--glow", String(clamp01((p - 0.06) / 0.8)));
-      track.style.setProperty("--merge", String(easeInOut(clamp01((p - 0.55) / 0.35))));
+    const draw = (p: number) => {
+      track.style.setProperty("--fade", String(clamp01(p / 0.6)));
+      // Icons leave at 4% and the last lands at 92%. ONE lights up along the
+      // way, and --merge adds the final bloom, finishing as the pin releases.
+      track.style.setProperty("--glow", String(clamp01((p - 0.04) / 0.88)));
+      track.style.setProperty("--merge", String(easeInOut(clamp01((p - 0.62) / 0.36))));
       track.style.setProperty("--cue", String(1 - clamp01(p * 10)));
 
       iconRefs.current.forEach((icon, i) => {
         if (!icon) return;
-        const t = easeInOut(clamp01((p - 0.06 - i * 0.05) / 0.6));
+        const t = easeInOut(clamp01((p - 0.04 - i * 0.05) / 0.68));
         const { x: sx, y: sy } = geo.starts[i];
         const depth = streams[i].depth;
         const x = sx + (geo.ox - sx) * t;
@@ -124,23 +127,33 @@ export function FiveToOne() {
         // Far icons come into focus over the first half of the trip.
         const near = depth + (1 - depth) * clamp01(t * 2);
         const scale = near * (1 - 0.6 * t);
-        icon.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`;
-        icon.style.filter = near < 1 ? `blur(${(1 - near) * 6}px)` : "";
+        icon.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${scale})`;
+        icon.style.filter = near < 1 ? `blur(${((1 - near) * 6).toFixed(2)}px)` : "";
         icon.style.opacity = String((0.4 + 0.6 * near) * (1 - clamp01((t - 0.8) / 0.2)));
         // Labels read at rest, then fade as soon as the icon starts to travel.
         icon.style.setProperty("--label", String(1 - clamp01(t / 0.2)));
       });
     };
+
+    let frame = 0;
+    const tick = () => {
+      const goal = target();
+      current += (goal - current) * 0.16;
+      if (Math.abs(goal - current) < 0.0005) current = goal;
+      draw(current);
+      frame = current === goal ? 0 : requestAnimationFrame(tick);
+    };
     const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(render);
+      if (!frame) frame = requestAnimationFrame(tick);
     };
     const onResize = () => {
       measure();
+      draw(current);
       schedule();
     };
 
     measure();
-    render();
+    draw(current);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", onResize);
     document.fonts?.ready.then(onResize);
@@ -159,7 +172,7 @@ export function FiveToOne() {
       <div ref={screenRef} className="sticky top-16 flex h-[calc(100svh-4rem)] flex-col items-center justify-center overflow-hidden px-4 text-center">
         <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
         <p ref={stageRef} className="relative flex flex-col items-center" aria-label="Five income streams to one app">
-          <span aria-hidden="true" className="block" style={{ opacity: "calc(1 - var(--fade, 0) * 0.65)" }}>
+          <span aria-hidden="true" className="block will-change-[opacity]" style={{ opacity: "calc(1 - var(--fade, 0) * 0.65)" }}>
             <span className={`statement-in brand-aura block ${word}`}>FIVE</span>
           </span>
           <span aria-hidden="true" className="mt-5 block" style={{ opacity: "calc(1 - var(--fade, 0) * 0.5)" }}>
@@ -170,17 +183,18 @@ export function FiveToOne() {
           <span aria-hidden="true" className="statement-in brand-aura my-8 font-statement text-2xl font-medium leading-none tracking-[0.04em] sm:my-10 sm:text-4xl" style={{ animationDelay: "0.6s" }}>
             TO
           </span>
+          {/* ONE: a plain layer plus two glow copies whose opacity follows the
+              scroll. Fading opacity is cheap; redrawing shadows every frame is not. */}
           <span
             ref={oneRef}
             aria-hidden="true"
-            className="block"
-            style={{
-              transform: "scale(calc(1 + var(--merge, 0) * 0.05))",
-              filter: "drop-shadow(0 0 calc(var(--merge, 0) * 36px) rgb(47 168 102 / calc(var(--merge, 0) * 0.55)))",
-            }}
+            className="block will-change-transform"
+            style={{ transform: "scale(calc(1 + var(--merge, 0) * 0.05))" }}
           >
-            <span className={`statement-in one-glow block ${word}`} style={{ animationDelay: "0.95s" }}>
+            <span className={`statement-in relative block ${word}`} style={{ animationDelay: "0.95s" }}>
               ONE
+              <span className="one-glow absolute inset-0">ONE</span>
+              <span className="one-bloom absolute inset-0">ONE</span>
             </span>
           </span>
           <span aria-hidden="true" className="statement-in eyebrow mt-5 block text-[0.7rem] sm:text-xs" style={{ animationDelay: "1.2s" }}>
@@ -194,7 +208,7 @@ export function FiveToOne() {
                 iconRefs.current[i] = el;
               }}
               aria-hidden="true"
-              className="stream-orbit pointer-events-none absolute left-0 top-0"
+              className="stream-orbit pointer-events-none absolute left-0 top-0 will-change-transform"
             >
               <span className="orbit-float block" style={{ animationDelay: `${i * -0.7}s` }}>
                 <span className="statement-in flex flex-col items-center gap-2.5" style={{ animationDelay: `${1.4 + i * 0.1}s` }}>

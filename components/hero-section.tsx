@@ -17,9 +17,10 @@ export function HeroSection() {
     <section className="relative overflow-x-clip pt-16">
       <FiveToOne />
 
-      <div id="overview" className="relative mx-auto max-w-7xl scroll-mt-16 px-4 sm:px-6 lg:px-8">
-        <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-20 py-28 lg:flex-row lg:gap-24">
+      {/* Pulled up under the pinned opener so it rises into view as the
+          streams land in ONE, with no empty scroll in between. */}
+      <div id="overview" className="relative mx-auto -mt-[18svh] max-w-7xl scroll-mt-16 px-4 sm:px-6 lg:px-8">
+        <div className="relative flex flex-col items-center gap-20 pb-28 lg:flex-row lg:gap-24">
           <div className="flex-1 text-center lg:text-left">
             <h1 className="mb-8 flex flex-col gap-2 text-[2.3rem] font-normal leading-[1.02] text-foreground sm:gap-3 sm:text-6xl lg:text-7xl">
               <span className="text-balance">Simpler tracking.</span>
@@ -28,8 +29,10 @@ export function HeroSection() {
 
             <span className="brand-rule mx-auto mb-10 lg:mx-0" />
 
-            <p className="mx-auto mb-12 max-w-md text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              Paychecks, Venmo, Zelle, and cash, together in one clear view.
+            <p className="mx-auto mb-12 max-w-lg text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              For anyone paid more than one way: a paycheck plus personal cash, a side gig, freelance work, or a
+              small business, with income arriving from different platforms. 521 brings every income stream into one
+              place, so you can track your income and expenses in one simple view.
             </p>
 
             <div className="mb-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">

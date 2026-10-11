@@ -166,15 +166,28 @@
   }
 }
 
-/* ONE in the opener: the same aura as .brand-aura, scaled by --glow, which
-   FiveToOne raises as the streams merge in. Static (no JS or reduced motion)
-   shows it fully lit. */
+/* ONE in the opener: glow layers stacked on the plain word. FiveToOne raises
+   --glow as the streams travel in and --merge for the final bloom. Static (no
+   JS or reduced motion) shows ONE lit. */
 @layer components {
+  .one-glow,
+  .one-bloom {
+    pointer-events: none;
+    will-change: opacity;
+  }
   .one-glow {
+    opacity: var(--glow, 0);
     text-shadow:
-      0 0 8px rgb(47 168 102 / calc(0.9 * var(--glow, 0))),
-      0 0 24px rgb(47 168 102 / calc(0.6 * var(--glow, 0))),
-      0 0 56px rgb(47 168 102 / calc(0.35 * var(--glow, 0)));
+      0 0 8px rgb(47 168 102 / 0.9),
+      0 0 24px rgb(47 168 102 / 0.6),
+      0 0 56px rgb(47 168 102 / 0.35);
+  }
+  .one-bloom {
+    opacity: var(--merge, 0);
+    text-shadow:
+      0 0 16px rgb(47 168 102 / 0.8),
+      0 0 48px rgb(47 168 102 / 0.55),
+      0 0 96px rgb(47 168 102 / 0.4);
   }
   html:not([data-js]) .one-glow {
     --glow: 1;
@@ -239,7 +252,7 @@
   }
   /* Pinned for a stretch of scroll so the streams can merge into ONE. */
   [data-js] .statement-track {
-    height: calc(200svh - 4rem);
+    height: calc(180svh - 4rem);
   }
   .stream-orbit {
     display: none;
@@ -251,7 +264,7 @@
   .orbit-chip {
     background:
       radial-gradient(120% 120% at 50% 0%, rgb(236 235 230 / 0.07), transparent 60%),
-      rgb(14 18 20 / 0.72);
+      rgb(14 18 20 / 0.92);
     border: 1px solid transparent;
     background-clip: padding-box;
     box-shadow:
@@ -259,7 +272,6 @@
       0 0 0 1px rgb(236 235 230 / 0.09),
       0 18px 40px -12px rgb(0 0 0 / 0.7),
       0 0 32px -10px rgb(47 168 102 / 0.35);
-    backdrop-filter: blur(10px);
   }
   .orbit-float {
     animation: orbit-float 6s ease-in-out infinite;
