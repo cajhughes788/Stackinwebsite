@@ -53,45 +53,49 @@ const WalletGlyph = (
   </Glyph>
 );
 
-// The five streams from the app mockup, placed around FIVE (degrees, 90 = straight up).
-const streams: { label: string; mark: ReactNode; angle: number }[] = [
-  { label: "Bank", mark: BankGlyph, angle: 195 },
-  { label: "Venmo", mark: PeerGlyph, angle: 140 },
-  { label: "Cash", mark: CashGlyph, angle: 90 },
-  { label: "Zelle®", mark: InstantGlyph, angle: 40 },
-  { label: "Apple Cash", mark: WalletGlyph, angle: -15 },
+// The five streams from the app mockup, scattered toward the screen edges.
+// x/y are fractions of the pinned screen; depth < 1 starts an icon smaller,
+// dimmer, and softly blurred, as if further away, and it sharpens as it travels.
+const streams: { label: string; mark: ReactNode; x: number; y: number; depth: number }[] = [
+  { label: "Bank", mark: BankGlyph, x: 0.13, y: 0.24, depth: 1 },
+  { label: "Venmo", mark: PeerGlyph, x: 0.86, y: 0.17, depth: 0.78 },
+  { label: "Cash", mark: CashGlyph, x: 0.09, y: 0.62, depth: 0.85 },
+  { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 1 },
+  { label: "Apple Cash", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 0.72 },
 ];
 
 const clamp01 = (n: number) => Math.min(Math.max(n, 0), 1);
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 // Opening statement: FIVE income streams TO ONE app. While the screen is pinned,
-// scrolling pulls the five stream icons out of orbit around FIVE and merges them
+// scrolling pulls the five stream icons in from the screen edges and merges them
 // into ONE. Without JS or with reduced motion, it is a static statement.
 export function FiveToOne() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const fiveRef = useRef<HTMLSpanElement>(null);
+  const screenRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLParagraphElement>(null);
   const oneRef = useRef<HTMLSpanElement>(null);
   const iconRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
     const track = trackRef.current;
-    const five = fiveRef.current;
+    const screen = screenRef.current;
+    const stage = stageRef.current;
     const one = oneRef.current;
-    if (!track || !five || !one || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!track || !screen || !stage || !one || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // Centers of FIVE and ONE inside the stage. Offsets ignore transforms, so the
-    // intro animation does not skew the measurement.
-    let geo = { fx: 0, fy: 0, rx: 0, ry: 0, ox: 0, oy: 0 };
+    // Everything in stage coordinates. Offsets ignore transforms, so the intro
+    // animation does not skew the measurement.
+    let geo = { starts: [] as { x: number; y: number }[], ox: 0, oy: 0 };
     const measure = () => {
-      // Wide orbit: well clear of FIVE, but inside the screen edge on phones.
-      const gapX = Math.min(Math.max(window.innerWidth * 0.12, 28), 180);
-      const gapY = Math.min(Math.max(window.innerHeight * 0.08, 56), 110);
+      const w = screen.clientWidth;
+      const h = screen.clientHeight;
+      const margin = Math.min(64, w * 0.13); // keeps chip and label on screen
       geo = {
-        fx: five.offsetLeft + five.offsetWidth / 2,
-        fy: five.offsetTop + five.offsetHeight / 2,
-        rx: Math.min(five.offsetWidth / 2 + gapX, window.innerWidth / 2 - 48),
-        ry: five.offsetHeight / 2 + gapY,
+        starts: streams.map((s) => ({
+          x: Math.min(Math.max(s.x * w, margin), w - margin) - stage.offsetLeft,
+          y: s.y * h - stage.offsetTop,
+        })),
         ox: one.offsetLeft + one.offsetWidth / 2,
         oy: one.offsetTop + one.offsetHeight / 2,
       };
@@ -110,13 +114,16 @@ export function FiveToOne() {
       iconRefs.current.forEach((icon, i) => {
         if (!icon) return;
         const t = easeInOut(clamp01((p - 0.06 - i * 0.05) / 0.6));
-        const rad = (streams[i].angle * Math.PI) / 180;
-        const sx = geo.fx + Math.cos(rad) * geo.rx;
-        const sy = geo.fy - Math.sin(rad) * geo.ry;
+        const { x: sx, y: sy } = geo.starts[i];
+        const depth = streams[i].depth;
         const x = sx + (geo.ox - sx) * t;
         const y = sy + (geo.oy - sy) * t;
-        icon.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${1 - 0.6 * t})`;
-        icon.style.opacity = String(1 - clamp01((t - 0.8) / 0.2));
+        // Far icons come into focus over the first half of the trip.
+        const near = depth + (1 - depth) * clamp01(t * 2);
+        const scale = near * (1 - 0.6 * t);
+        icon.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`;
+        icon.style.filter = near < 1 ? `blur(${(1 - near) * 6}px)` : "";
+        icon.style.opacity = String((0.4 + 0.6 * near) * (1 - clamp01((t - 0.8) / 0.2)));
         // Labels read at rest, then fade as soon as the icon starts to travel.
         icon.style.setProperty("--label", String(1 - clamp01(t / 0.2)));
       });
@@ -142,14 +149,14 @@ export function FiveToOne() {
   }, []);
 
   const word =
-    "brand-aura font-display text-[5.5rem] font-normal leading-none tracking-[-0.03em] sm:text-[8rem] lg:text-[10rem]";
+    "brand-aura font-statement text-[3rem] font-bold leading-none tracking-[-0.02em] sm:text-[4.25rem] lg:text-[5.5rem]";
 
   return (
     <div ref={trackRef} className="statement-track relative">
-      <div className="sticky top-16 flex h-[calc(100svh-4rem)] flex-col items-center justify-center overflow-hidden px-4 text-center">
+      <div ref={screenRef} className="sticky top-16 flex h-[calc(100svh-4rem)] flex-col items-center justify-center overflow-hidden px-4 text-center">
         <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-        <p className="relative flex flex-col items-center" aria-label="Five income streams to one app">
-          <span ref={fiveRef} aria-hidden="true" className="block" style={{ opacity: "calc(1 - var(--fade, 0) * 0.65)" }}>
+        <p ref={stageRef} className="relative flex flex-col items-center" aria-label="Five income streams to one app">
+          <span aria-hidden="true" className="block" style={{ opacity: "calc(1 - var(--fade, 0) * 0.65)" }}>
             <span className={`statement-in block ${word}`}>FIVE</span>
           </span>
           <span aria-hidden="true" className="mt-5 block" style={{ opacity: "calc(1 - var(--fade, 0) * 0.5)" }}>
@@ -157,7 +164,7 @@ export function FiveToOne() {
               Income streams
             </span>
           </span>
-          <span aria-hidden="true" className="statement-in brand-aura my-8 font-display text-3xl font-light leading-none tracking-[0.08em] sm:my-10 sm:text-5xl" style={{ animationDelay: "0.6s" }}>
+          <span aria-hidden="true" className="statement-in brand-aura my-8 font-statement text-2xl font-medium leading-none tracking-[0.04em] sm:my-10 sm:text-4xl" style={{ animationDelay: "0.6s" }}>
             TO
           </span>
           <span
