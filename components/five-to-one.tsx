@@ -108,6 +108,9 @@ export function FiveToOne() {
       const p = scrollable > 0 ? clamp01(-track.getBoundingClientRect().top / scrollable) : 0;
 
       track.style.setProperty("--fade", String(clamp01(p / 0.55)));
+      // ONE lights up as the icons travel toward it (they leave at ~6% and
+      // land at ~86%), then --merge adds the final bloom once they arrive.
+      track.style.setProperty("--glow", String(clamp01((p - 0.06) / 0.8)));
       track.style.setProperty("--merge", String(easeInOut(clamp01((p - 0.55) / 0.35))));
       track.style.setProperty("--cue", String(1 - clamp01(p * 10)));
 
@@ -149,7 +152,7 @@ export function FiveToOne() {
   }, []);
 
   const word =
-    "brand-aura font-statement text-[3rem] font-bold leading-none tracking-[-0.02em] sm:text-[4.25rem] lg:text-[5.5rem]";
+    "font-statement text-[3rem] font-bold leading-none tracking-[-0.02em] sm:text-[4.25rem] lg:text-[5.5rem]";
 
   return (
     <div ref={trackRef} className="statement-track relative">
@@ -157,7 +160,7 @@ export function FiveToOne() {
         <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
         <p ref={stageRef} className="relative flex flex-col items-center" aria-label="Five income streams to one app">
           <span aria-hidden="true" className="block" style={{ opacity: "calc(1 - var(--fade, 0) * 0.65)" }}>
-            <span className={`statement-in block ${word}`}>FIVE</span>
+            <span className={`statement-in brand-aura block ${word}`}>FIVE</span>
           </span>
           <span aria-hidden="true" className="mt-5 block" style={{ opacity: "calc(1 - var(--fade, 0) * 0.5)" }}>
             <span className="statement-in eyebrow block text-[0.7rem] sm:text-xs" style={{ animationDelay: "0.25s" }}>
@@ -176,7 +179,7 @@ export function FiveToOne() {
               filter: "drop-shadow(0 0 calc(var(--merge, 0) * 36px) rgb(47 168 102 / calc(var(--merge, 0) * 0.55)))",
             }}
           >
-            <span className={`statement-in block ${word}`} style={{ animationDelay: "0.95s" }}>
+            <span className={`statement-in one-glow block ${word}`} style={{ animationDelay: "0.95s" }}>
               ONE
             </span>
           </span>

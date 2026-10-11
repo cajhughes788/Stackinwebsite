@@ -166,6 +166,26 @@
   }
 }
 
+/* ONE in the opener: the same aura as .brand-aura, scaled by --glow, which
+   FiveToOne raises as the streams merge in. Static (no JS or reduced motion)
+   shows it fully lit. */
+@layer components {
+  .one-glow {
+    text-shadow:
+      0 0 8px rgb(47 168 102 / calc(0.9 * var(--glow, 0))),
+      0 0 24px rgb(47 168 102 / calc(0.6 * var(--glow, 0))),
+      0 0 56px rgb(47 168 102 / calc(0.35 * var(--glow, 0)));
+  }
+  html:not([data-js]) .one-glow {
+    --glow: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .one-glow {
+      --glow: 1;
+    }
+  }
+}
+
 /* Short green rule that sits under brand headlines. */
 @utility brand-rule {
   display: block;
