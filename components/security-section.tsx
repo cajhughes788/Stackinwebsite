@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SpotlightGrid } from "./spotlight-grid";
 import { KeyRound, Lock, EyeOff, Unplug } from "lucide-react";
 
 // Every point here mirrors the Data security and third-party sections of the
@@ -28,11 +29,11 @@ const points = [
 
 export function SecuritySection() {
   return (
-    <section id="security" className="scroll-mt-16 border-t border-border py-24 lg:py-32">
-      <div className="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:px-8">
+    <section id="security" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
+      <div className="mx-auto grid max-w-7xl gap-20 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:gap-24 lg:px-8">
         <div>
-          <span className="eyebrow mb-4 inline-block">02 / Security</span>
-          <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
+          <span className="eyebrow section-label mb-8">02 / Security</span>
+          <h2 className="mb-6 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance">Built to be trusted with your money</span>
           </h2>
           <span className="brand-rule mb-6" />
@@ -45,15 +46,15 @@ export function SecuritySection() {
           </Link>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
+        <SpotlightGrid className="grid gap-px self-start overflow-hidden rounded-lg border border-border sm:grid-cols-2">
           {points.map((point) => (
-            <div key={point.title} className="bg-background p-8">
+            <div key={point.title} className="p-8">
               <point.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
               <h3 className="mb-2 text-base font-medium text-foreground">{point.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{point.description}</p>
             </div>
           ))}
-        </div>
+        </SpotlightGrid>
       </div>
     </section>
   );

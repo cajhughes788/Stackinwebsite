@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SpotlightGrid } from "./spotlight-grid";
 import { Landmark, Upload, Sparkles, PieChart, ArrowRight } from "lucide-react";
 
 const features = [
@@ -26,29 +27,29 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="scroll-mt-16 border-t border-border py-24 lg:py-32">
+    <section id="features" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="eyebrow mb-4 inline-block">01 / Platform</span>
-          <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
+        <div className="mx-auto mb-20 max-w-3xl text-center lg:mb-28">
+          <span className="eyebrow section-label mb-8">01 / Platform</span>
+          <h2 className="mb-6 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance">Every way you get paid, in one view</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="mx-auto max-w-xl text-lg text-muted-foreground">
             521 brings your deposits, transfers, and cash together, so you always know where you stand.
           </p>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+        <SpotlightGrid className="grid gap-px overflow-hidden rounded-lg border border-border sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
-            <div key={feature.title} className="bg-background p-8">
+            <div key={feature.title} className="p-8">
               <feature.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
               <h3 className="mb-2 text-lg font-medium text-foreground">{feature.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
             </div>
           ))}
-        </div>
+        </SpotlightGrid>
 
-        <div className="mt-10 flex flex-col items-center justify-center gap-6 sm:flex-row">
+        <div className="mt-14 flex flex-col items-center justify-center gap-6 sm:flex-row">
           <Link
             href="/features#paychecks"
             className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground"

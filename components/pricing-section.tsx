@@ -151,7 +151,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
   }
 
   return (
-    <section id="pricing" className="scroll-mt-16 border-t border-border py-24 lg:py-32">
+    <section id="pricing" className="scroll-mt-16 border-t border-border pb-32 pt-48 lg:pb-48 lg:pt-72">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ProcessingOverlay
           open={activeTier !== null}
@@ -159,12 +159,12 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
           fullscreen
         />
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-2xl text-center">
-          <span className="eyebrow mb-4 inline-block">03 / Pricing</span>
-          <h2 className="mb-4 text-3xl font-normal text-foreground sm:text-4xl">
+        <div className="mx-auto mb-20 max-w-3xl text-center lg:mb-28">
+          <span className="eyebrow section-label mb-8">03 / Pricing</span>
+          <h2 className="mb-6 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance">Simple, transparent pricing</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="mx-auto max-w-xl text-lg text-muted-foreground">
             Start with your paychecks. Add your business when you&apos;re ready. No hidden fees.
           </p>
           {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}

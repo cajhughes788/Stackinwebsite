@@ -31,7 +31,7 @@ const footerColumns = [
 export function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-24 lg:px-8">
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="inline-flex items-center">
@@ -75,9 +75,15 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-16 border-t border-border pt-8">
+        <div className="mt-16 space-y-3 border-t border-border pt-8">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} {COMPANY_NAME}. 521 is a product of {COMPANY_NAME}. All rights reserved.
+          </p>
+          <p className="max-w-3xl text-[11px] leading-relaxed text-muted-foreground/70">
+            Venmo is a registered trademark of PayPal, Inc. Zelle® and the Zelle® related marks are wholly owned by
+            Early Warning Services, LLC. Apple Cash is a trademark of Apple Inc. All other trademarks are the property of
+            their respective owners. 521 is not affiliated with, authorized, endorsed, or sponsored by PayPal, Inc., Early
+            Warning Services, LLC, or Apple Inc.
           </p>
         </div>
       </div>

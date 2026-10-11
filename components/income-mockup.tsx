@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowUpRight, Banknote, Landmark, Smartphone } from "lucide-react";
-import { useLayoutEffect, useRef, type ReactNode, type RefObject } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 // Illustrative numbers; the five streams add up to the total shown.
 const streams: { name: string; detail: string; amount: string; share: number; mark: ReactNode }[] = [
@@ -17,36 +17,59 @@ const TOTAL = 3482.17;
 const formatUsd = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
-// Counts the total up from zero on first paint, unless the viewer prefers
-// reduced motion. Writes straight to the DOM so React renders once and the
-// server-rendered final value never flashes first (layout effect).
-function useCountUp(ref: RefObject<HTMLElement | null>, target: number, durationMs: number) {
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let frame = 0;
-    const start = performance.now();
-    el.textContent = formatUsd(0);
-    const tick = (now: number) => {
-      const t = Math.min((now - start) / durationMs, 1);
-      el.textContent = formatUsd(target * (1 - Math.pow(1 - t, 3)));
-      if (t < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(frame);
-      el.textContent = formatUsd(target);
-    };
-  }, [ref, target, durationMs]);
+// Odometer: each digit is a strip of 0-9 twice that rolls to its digit once
+// the mockup is in view (CSS keyed on `.is-playing`). Without JS it renders
+// the final value. Right-hand digits spin a touch longer, like a real counter.
+function Odometer({ value }: { value: string }) {
+  const digits = value.replace(/\D/g, "").length;
+  let seen = 0;
+  return (
+    <span className="inline-flex" aria-label={value}>
+      {value.split("").map((char, i) => {
+        if (!/\d/.test(char)) return <span key={i} aria-hidden="true">{char}</span>;
+        const fromRight = digits - ++seen;
+        return (
+          <span key={i} aria-hidden="true" className="inline-block h-[1em] overflow-hidden leading-none">
+            <span
+              className="odo-col flex flex-col"
+              style={{
+                ["--to" as string]: `${-(10 + Number(char)) * 5}%`,
+                transitionDuration: `${1.3 + fromRight * 0.12}s`,
+              }}
+            >
+              {Array.from({ length: 20 }, (_, n) => (
+                <span key={n} className="h-[1em]">{n % 10}</span>
+              ))}
+            </span>
+          </span>
+        );
+      })}
+    </span>
+  );
 }
 
 export function IncomeMockup() {
-  const totalRef = useRef<HTMLParagraphElement>(null);
-  useCountUp(totalRef, TOTAL, 1600);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Start the count and the stream animations when the phone scrolls into view.
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("is-playing");
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="relative mx-auto w-full max-w-[340px]" aria-label="521 app showing total income across five payment streams" role="img">
+    <div ref={rootRef} className="mockup relative mx-auto w-full max-w-[340px]" aria-label="521 app showing total income across five payment streams" role="img">
       <div className="rounded-[2.75rem] border border-border bg-[#0e1214] p-2.5 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)]">
         <div className="overflow-hidden rounded-[2.25rem] bg-background px-5 pb-6 pt-4">
           {/* Status bar */}
@@ -62,8 +85,8 @@ export function IncomeMockup() {
           <div className="mb-6 rounded-xl border border-border bg-card px-4 py-4">
             <p className="text-xs text-muted-foreground">Total income · this month</p>
             <div className="mt-1 flex items-end justify-between">
-              <p ref={totalRef} className="font-[family-name:var(--font-display)] text-3xl tabular-nums tracking-tight text-foreground">
-                {formatUsd(TOTAL)}
+              <p className="font-[family-name:var(--font-display)] text-3xl leading-none tabular-nums tracking-tight text-foreground">
+                <Odometer value={formatUsd(TOTAL)} />
               </p>
               <p className="mb-1 flex items-center gap-0.5 text-xs font-medium text-primary">
                 <ArrowUpRight className="h-3.5 w-3.5" />

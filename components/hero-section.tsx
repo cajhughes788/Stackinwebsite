@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Lock, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FiveToOne } from "./five-to-one";
 import { IncomeMockup } from "./income-mockup";
 import { ReelTour } from "./reel-tour";
 import { APP_STORE_URL } from "@/lib/site";
@@ -13,23 +14,21 @@ const pillars = [
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-16">
-      <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-16 py-20 lg:flex-row lg:gap-20">
-          <div className="flex-1 text-center lg:text-left">
-            <p className="brand-aura mb-10 text-sm font-medium uppercase tracking-[0.3em] text-foreground sm:text-lg lg:mb-12 lg:text-xl">
-              All your income. One place.
-            </p>
+    <section className="relative overflow-x-clip pt-16">
+      <FiveToOne />
 
-            <h1 className="mb-6 flex flex-col gap-2 text-[2.3rem] font-normal leading-[1.02] text-foreground sm:gap-3 sm:text-6xl lg:text-7xl">
+      <div id="overview" className="relative mx-auto max-w-7xl scroll-mt-16 px-4 sm:px-6 lg:px-8">
+        <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-20 py-28 lg:flex-row lg:gap-24">
+          <div className="flex-1 text-center lg:text-left">
+            <h1 className="mb-8 flex flex-col gap-2 text-[2.3rem] font-normal leading-[1.02] text-foreground sm:gap-3 sm:text-6xl lg:text-7xl">
               <span className="text-balance">Simpler tracking.</span>
               <span className="text-balance">Smarter decisions.</span>
             </h1>
 
-            <span className="brand-rule mx-auto mb-8 lg:mx-0" />
+            <span className="brand-rule mx-auto mb-10 lg:mx-0" />
 
-            <p className="mx-auto mb-10 max-w-md text-lg leading-relaxed text-muted-foreground lg:mx-0">
+            <p className="mx-auto mb-12 max-w-md text-lg leading-relaxed text-muted-foreground lg:mx-0">
               Paychecks, Venmo, Zelle, and cash, together in one clear view.
             </p>
 
@@ -43,7 +42,7 @@ export function HeroSection() {
                 </a>
               </Button>
             </div>
-            <p className="mb-12 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+            <p className="mb-16 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
               On iPhone and the web. Android coming soon.
             </p>
 
@@ -60,7 +59,7 @@ export function HeroSection() {
             </ul>
           </div>
 
-          <div className="flex w-full flex-1 flex-col items-center gap-8">
+          <div className="flex w-full flex-1 flex-col items-center gap-10">
             <IncomeMockup />
             <ReelTour />
           </div>
