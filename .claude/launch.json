@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "trackd-website",
+      "runtimeExecutable": "/Users/cajetanhughes/.nvm/versions/node/v20.20.2/bin/node",
+      "runtimeArgs": [
+        "node_modules/next/dist/bin/next",
+        "dev"
+      ],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "trackd-website-node20",
+      "runtimeExecutable": "/Users/cajetanhughes/.nvm/versions/node/v20.20.2/bin/node",
+      "runtimeArgs": [
+        "node_modules/next/dist/bin/next",
+        "dev"
+      ],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}
