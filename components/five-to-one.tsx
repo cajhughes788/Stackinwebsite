@@ -57,11 +57,11 @@ const WalletGlyph = (
 // x/y are fractions of the pinned screen; depth < 1 starts an icon smaller,
 // dimmer, and softly blurred, as if further away, and it sharpens as it travels.
 const streams: { label: string; mark: ReactNode; x: number; y: number; depth: number }[] = [
-  { label: "Bank", mark: BankGlyph, x: 0.13, y: 0.24, depth: 0.9 },
+  { label: "Bank", mark: BankGlyph, x: 0.13, y: 0.24, depth: 1 },
   { label: "Venmo", mark: PeerGlyph, x: 0.86, y: 0.17, depth: 1 },
   { label: "Cash", mark: CashGlyph, x: 0.09, y: 0.62, depth: 1 },
-  { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 0.9 },
-  { label: "Apple Cash", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 0.85 },
+  { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 1 },
+  { label: "Apple Cash", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 1 },
 ];
 
 const clamp01 = (n: number) => Math.min(Math.max(n, 0), 1);
