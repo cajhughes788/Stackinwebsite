@@ -260,18 +260,21 @@
   [data-js] .stream-orbit {
     display: block;
   }
-  /* Glass chip with a hairline edge that catches light from above. */
+  /* Brushed gunmetal tile: a fine horizontal grain, a diagonal light-dark-light
+     sweep like polished metal, a specular hotspot near the top, and a bevel
+     (bright top edge, dark bottom edge). */
   .orbit-chip {
     background:
-      radial-gradient(120% 120% at 50% 0%, rgb(236 235 230 / 0.07), transparent 60%),
-      rgb(14 18 20 / 0.92);
-    border: 1px solid transparent;
-    background-clip: padding-box;
+      repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.025) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 70% at 30% 0%, rgb(255 255 255 / 0.2), transparent 55%),
+      linear-gradient(135deg, #4b565c 0%, #2c3539 32%, #20272b 52%, #3b464b 74%, #262f34 100%);
     box-shadow:
-      inset 0 1px 0 rgb(236 235 230 / 0.12),
-      0 0 0 1px rgb(236 235 230 / 0.09),
-      0 18px 40px -12px rgb(0 0 0 / 0.7),
-      0 0 32px -10px rgb(47 168 102 / 0.35);
+      inset 0 1px 0 rgb(255 255 255 / 0.38),
+      inset 0 -1px 0 rgb(0 0 0 / 0.55),
+      inset 0 0 0 1px rgb(255 255 255 / 0.06),
+      0 0 0 1px rgb(0 0 0 / 0.45),
+      0 18px 40px -12px rgb(0 0 0 / 0.75),
+      0 0 32px -10px rgb(47 168 102 / 0.3);
   }
   .orbit-float {
     animation: orbit-float 6s ease-in-out infinite;

@@ -57,11 +57,11 @@ const WalletGlyph = (
 // x/y are fractions of the pinned screen; depth < 1 starts an icon smaller,
 // dimmer, and softly blurred, as if further away, and it sharpens as it travels.
 const streams: { label: string; mark: ReactNode; x: number; y: number; depth: number }[] = [
-  { label: "Bank", mark: BankGlyph, x: 0.13, y: 0.24, depth: 0.8 },
+  { label: "Bank", mark: BankGlyph, x: 0.13, y: 0.24, depth: 0.9 },
   { label: "Venmo", mark: PeerGlyph, x: 0.86, y: 0.17, depth: 1 },
   { label: "Cash", mark: CashGlyph, x: 0.09, y: 0.62, depth: 1 },
-  { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 0.78 },
-  { label: "Apple Cash", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 0.72 },
+  { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 0.9 },
+  { label: "Apple Cash", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 0.85 },
 ];
 
 const clamp01 = (n: number) => Math.min(Math.max(n, 0), 1);
@@ -132,7 +132,7 @@ export function FiveToOne() {
         // Depth (blur and dimming) applies to the chip only, and the label is
         // scaled back up, so every name stays crisp and the same size at rest.
         icon.style.setProperty("--near", near.toFixed(3));
-        icon.style.setProperty("--chip-blur", near < 1 ? `${((1 - near) * 6).toFixed(2)}px` : "0px");
+        icon.style.setProperty("--chip-blur", near < 1 ? `${((1 - near) * 4).toFixed(2)}px` : "0px");
         // Labels read at rest, then fade as soon as the icon starts to travel.
         icon.style.setProperty("--label", String(1 - clamp01(t / 0.2)));
       });
@@ -216,7 +216,7 @@ export function FiveToOne() {
               <span className="orbit-float block" style={{ animationDelay: `${i * -0.7}s` }}>
                 <span className="statement-in flex flex-col items-center gap-2.5" style={{ animationDelay: `${1.4 + i * 0.1}s` }}>
                   <span
-                    className="orbit-chip flex h-14 w-14 items-center justify-center rounded-[0.95rem] text-foreground sm:h-[4.5rem] sm:w-[4.5rem] sm:rounded-[1.25rem]"
+                    className="orbit-chip flex h-14 w-14 items-center justify-center rounded-[0.95rem] text-primary sm:h-[4.5rem] sm:w-[4.5rem] sm:rounded-[1.25rem]"
                     style={{ filter: "blur(var(--chip-blur, 0px))", opacity: "calc(0.4 + 0.6 * var(--near, 1))" }}
                   >
                     {stream.mark}
