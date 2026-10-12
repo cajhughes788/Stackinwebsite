@@ -12,7 +12,7 @@ const Glyph = ({ children }: { children: ReactNode }) => (
     strokeWidth={2.25}
     strokeLinecap="square"
     strokeLinejoin="miter"
-    className="h-5 w-5 sm:h-6 sm:w-6"
+    className="h-6 w-6 sm:h-7 sm:w-7"
   >
     {children}
   </svg>
@@ -128,8 +128,11 @@ export function FiveToOne() {
         const near = depth + (1 - depth) * clamp01(t * 2);
         const scale = near * (1 - 0.6 * t);
         icon.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${scale})`;
-        icon.style.filter = near < 1 ? `blur(${((1 - near) * 6).toFixed(2)}px)` : "";
-        icon.style.opacity = String((0.4 + 0.6 * near) * (1 - clamp01((t - 0.8) / 0.2)));
+        icon.style.opacity = String(1 - clamp01((t - 0.8) / 0.2));
+        // Depth (blur and dimming) applies to the chip only, and the label is
+        // scaled back up, so every name stays crisp and the same size at rest.
+        icon.style.setProperty("--near", near.toFixed(3));
+        icon.style.setProperty("--chip-blur", near < 1 ? `${((1 - near) * 6).toFixed(2)}px` : "0px");
         // Labels read at rest, then fade as soon as the icon starts to travel.
         icon.style.setProperty("--label", String(1 - clamp01(t / 0.2)));
       });
@@ -212,12 +215,15 @@ export function FiveToOne() {
             >
               <span className="orbit-float block" style={{ animationDelay: `${i * -0.7}s` }}>
                 <span className="statement-in flex flex-col items-center gap-2.5" style={{ animationDelay: `${1.4 + i * 0.1}s` }}>
-                  <span className="orbit-chip flex h-12 w-12 items-center justify-center rounded-[0.85rem] text-foreground sm:h-16 sm:w-16 sm:rounded-[1.1rem]">
+                  <span
+                    className="orbit-chip flex h-14 w-14 items-center justify-center rounded-[0.95rem] text-foreground sm:h-[4.5rem] sm:w-[4.5rem] sm:rounded-[1.25rem]"
+                    style={{ filter: "blur(var(--chip-blur, 0px))", opacity: "calc(0.4 + 0.6 * var(--near, 1))" }}
+                  >
                     {stream.mark}
                   </span>
                   <span
-                    className="whitespace-nowrap font-mono text-[0.55rem] uppercase tracking-[0.18em] text-foreground/60 sm:text-[0.65rem] sm:tracking-[0.22em]"
-                    style={{ opacity: "var(--label, 1)" }}
+                    className="origin-top whitespace-nowrap font-mono text-[0.55rem] uppercase tracking-[0.18em] text-foreground/60 sm:text-[0.65rem] sm:tracking-[0.22em]"
+                    style={{ opacity: "var(--label, 1)", transform: "scale(calc(1 / var(--near, 1)))" }}
                   >
                     {stream.label}
                   </span>
