@@ -235,7 +235,7 @@ export function FiveToOne() {
 
         <span
           aria-hidden="true"
-          className="absolute bottom-8 hidden [@media(min-height:820px)]:block"
+          className="absolute bottom-6 hidden sm:bottom-8 [@media(min-height:520px)]:block"
           style={{ opacity: "var(--cue, 1)" }}
         >
           <span
@@ -243,7 +243,7 @@ export function FiveToOne() {
             style={{ animationDelay: "1.9s" }}
           >
             Scroll
-            <span className="scroll-cue h-10 w-px bg-gradient-to-b from-muted-foreground to-transparent" />
+            <span className="scroll-cue h-8 w-px sm:h-10 bg-gradient-to-b from-muted-foreground to-transparent" />
           </span>
         </span>
       </div>
