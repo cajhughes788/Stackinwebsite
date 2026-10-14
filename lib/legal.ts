@@ -1,5 +1,5 @@
 export const LEGAL_TERMS_VERSION = "2026-04-27";
-export const LEGAL_PRIVACY_VERSION = "2026-09-06";
+export const LEGAL_PRIVACY_VERSION = "2026-10-13";
 export const LEGAL_CONSENT_VERSION = "2026-04-27";
 
 export const LEGAL_EFFECTIVE_DATE = "04/27/2026";
@@ -10,7 +10,7 @@ export const LEGAL_LAST_UPDATED = "04/27/2026";
 // itself hasn't changed. Sharing one displayed date between both documents
 // would have implied the Terms changed too.
 export const PRIVACY_EFFECTIVE_DATE = "09/06/2026";
-export const PRIVACY_LAST_UPDATED = "09/06/2026";
+export const PRIVACY_LAST_UPDATED = "10/13/2026";
 export const LEGAL_OWNER = "Optivium AI Solutions LLC";
 export const LEGAL_CONSENT_SOURCE = "web-signup";
 
@@ -242,7 +242,7 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
     paragraphs: [
       "We collect information you provide directly when you use 521, including your email address, phone number, account and workspace identifiers, subscription details, support messages, and other content you choose to enter into the app.",
       "Because 521 is designed for income and tax-related recordkeeping, we collect financial information you enter, such as income, expenses, deductions, tax profile information, pay period details, and related bookkeeping records.",
-      "If you connect a bank account using Plaid, Plaid transmits certain account and transaction information to us on your behalf — such as account balances, transaction history, and merchant and category details — so that 521 can help you review and categorize that activity. We do not receive or store your online banking username or password; those credentials are entered directly with Plaid or your financial institution and are never shared with us. Plaid's own use of your information is governed by Plaid's End User Privacy Policy, available at plaid.com/legal.",
+      "If you connect a bank account using Plaid, Plaid transmits certain account and transaction information to us on your behalf — such as account balances, transaction history, and merchant and category details — so that 521 can help you review and categorize that activity. We do not receive or store your online banking username or password; those credentials are entered directly with Plaid or your financial institution and are never shared with us. Plaid's own use of your information is governed by Plaid's End User Privacy Policy, available at plaid.com/legal. When we can’t otherwise suggest a category for a bank transaction, we may send the merchant’s business name and the bank’s category label to an AI service provider to suggest one; we do not send amounts, dates, account details, or information that identifies you.",
       "If you use receipt capture or upload features, we collect the photos you provide and information extracted from them (such as merchant name, date, and amount) to help create or organize expense records. Receipt images are processed using a third-party optical character recognition service to extract this information.",
       "If you subscribe to a paid plan, our payment processor collects and processes your payment card details directly; we do not receive or store your full card number.",
       "If you enable location-based features, reminders, or workplace tools, we collect precise location information and related saved location details, such as workplace coordinates or addresses, and link that information to your account or workspace.",
@@ -278,6 +278,7 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
       "Payment processing providers (including Stripe) — to process subscription payments and billing.",
       "Cloud infrastructure providers (including Google Cloud Platform and Firebase) — for hosting, databases, authentication, file storage, and push notification delivery.",
       "Optical character recognition and document-processing providers (including Amazon Web Services) — to extract information from receipt images you upload.",
+      "AI service providers (including Anthropic) — to suggest expense categories for bank transactions, using only the merchant’s business name and the bank’s category label.",
       "Email delivery providers (including SendGrid) — to send account, billing, and support-related emails.",
       "We may also disclose information when required by law, to respond to valid legal requests, to enforce our terms, or to protect the rights, safety, and security of 521, our users, or others.",
     ],
