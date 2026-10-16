@@ -10,7 +10,7 @@ const streams: { name: string; detail: string; amount: string; share: number; ma
   { name: "Venmo", detail: "Client payments", amount: "$756.20", share: 22, mark: "V" },
   { name: "Cash", detail: "Logged in app", amount: "$504.77", share: 14, mark: <Banknote className="h-4 w-4" /> },
   { name: "Zelle", detail: "Via your bank", amount: "$402.10", share: 12, mark: "Z" },
-  { name: "Apple Cash", detail: "Via your bank", amount: "$277.10", share: 8, mark: <Smartphone className="h-4 w-4" /> },
+  { name: "Apple Pay", detail: "Via your bank", amount: "$277.10", share: 8, mark: <Smartphone className="h-4 w-4" /> },
 ];
 
 const TOTAL = 3482.17;

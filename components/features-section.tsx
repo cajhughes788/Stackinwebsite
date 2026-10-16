@@ -6,7 +6,7 @@ const features = [
   {
     icon: Landmark,
     title: "Connect your bank once",
-    description: "Paychecks, Zelle, and Apple Cash deposits arrive on their own through Plaid.",
+    description: "Paychecks, Zelle, and Apple Pay deposits arrive on their own through Plaid.",
   },
   {
     icon: Upload,

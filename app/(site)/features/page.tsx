@@ -51,7 +51,7 @@ const incomeFeatures = [
   {
     icon: CreditCard,
     title: "Every payment type",
-    description: "Cash, card, Venmo, Apple Cash, Zelle, and POS, all in one ledger.",
+    description: "Cash, card, Venmo, Apple Pay, Zelle, and POS, all in one ledger.",
   },
   {
     icon: Repeat,

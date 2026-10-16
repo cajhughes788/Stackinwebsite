@@ -45,7 +45,7 @@ const InstantGlyph = (
     <path d="M13.5 2.5 5 13.5h6.5l-1 8 8.5-11H12.5l1-8Z" />
   </Glyph>
 );
-// Phone wallet (Apple Cash): a phone holding a card.
+// Phone wallet (Apple Pay): a phone holding a card.
 const WalletGlyph = (
   <Glyph>
     <path d="M6.5 2.5h11v19h-11z" />
@@ -61,7 +61,7 @@ const streams: { label: string; mark: ReactNode; x: number; y: number; depth: nu
   { label: "Venmo", mark: PeerGlyph, x: 0.86, y: 0.17, depth: 1 },
   { label: "Cash", mark: CashGlyph, x: 0.09, y: 0.62, depth: 1 },
   { label: "Zelle®", mark: InstantGlyph, x: 0.89, y: 0.55, depth: 1 },
-  { label: "Apple Cash", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 1 },
+  { label: "Apple Pay", mark: WalletGlyph, x: 0.8, y: 0.86, depth: 1 },
 ];
 
 const clamp01 = (n: number) => Math.min(Math.max(n, 0), 1);

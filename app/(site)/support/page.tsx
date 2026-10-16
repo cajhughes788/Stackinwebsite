@@ -22,7 +22,7 @@ const faqs = [
   {
     question: "Which payment sources does 521 bring together?",
     answer:
-      "Connect your bank through Plaid to pull in deposits automatically, including paychecks, Zelle, and Apple Cash transfers that land in your account. You can import Venmo history with a CSV upload and log cash in the app.",
+      "Connect your bank through Plaid to pull in deposits automatically, including paychecks, Zelle, and Apple Pay transfers that land in your account. You can import Venmo history with a CSV upload and log cash in the app.",
   },
   {
     question: "How do I disconnect my bank?",

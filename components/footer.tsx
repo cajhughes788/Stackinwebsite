@@ -81,7 +81,7 @@ export function Footer() {
           </p>
           <p className="max-w-3xl text-[11px] leading-relaxed text-muted-foreground/70">
             Venmo is a registered trademark of PayPal, Inc. Zelle® and the Zelle® related marks are wholly owned by
-            Early Warning Services, LLC. Apple Cash is a trademark of Apple Inc. All other trademarks are the property of
+            Early Warning Services, LLC. Apple Pay is a trademark of Apple Inc. All other trademarks are the property of
             their respective owners. 521 is not affiliated with, authorized, endorsed, or sponsored by PayPal, Inc., Early
             Warning Services, LLC, or Apple Inc.
           </p>
