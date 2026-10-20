@@ -1,5 +1,5 @@
 export const LEGAL_TERMS_VERSION = "2026-04-27";
-export const LEGAL_PRIVACY_VERSION = "2026-10-13";
+export const LEGAL_PRIVACY_VERSION = "2026-10-19";
 export const LEGAL_CONSENT_VERSION = "2026-04-27";
 
 export const LEGAL_EFFECTIVE_DATE = "04/27/2026";
@@ -10,7 +10,7 @@ export const LEGAL_LAST_UPDATED = "04/27/2026";
 // itself hasn't changed. Sharing one displayed date between both documents
 // would have implied the Terms changed too.
 export const PRIVACY_EFFECTIVE_DATE = "09/06/2026";
-export const PRIVACY_LAST_UPDATED = "10/13/2026";
+export const PRIVACY_LAST_UPDATED = "10/19/2026";
 export const LEGAL_OWNER = "Optivium AI Solutions LLC";
 export const LEGAL_CONSENT_SOURCE = "web-signup";
 
@@ -245,6 +245,9 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
       "If you connect a bank account using Plaid, Plaid transmits certain account and transaction information to us on your behalf — such as account balances, transaction history, and merchant and category details — so that 521 can help you review and categorize that activity. We do not receive or store your online banking username or password; those credentials are entered directly with Plaid or your financial institution and are never shared with us. Plaid's own use of your information is governed by Plaid's End User Privacy Policy, available at plaid.com/legal. When we can’t otherwise suggest a category for a bank transaction, we may send the merchant’s business name and the bank’s category label to an AI service provider to suggest one; we do not send amounts, dates, account details, or information that identifies you.",
       "If you use receipt capture or upload features, we collect the photos you provide and information extracted from them (such as merchant name, date, and amount) to help create or organize expense records. Receipt images are processed using a third-party optical character recognition service to extract this information.",
       "If you subscribe to a paid plan, our payment processor collects and processes your payment card details directly; we do not receive or store your full card number.",
+      "If you use invoicing, we collect the information you enter about your clients, such as their names, email addresses, phone numbers, and billing details, along with your invoices, line items, payment terms, policies, and the branding you add, such as your logo and colors. We use this information to create your invoices, deliver them and any payment reminders you set up by email or text message, and show your clients an invoice page where they can review and pay.",
+      "Invoice payments by card or bank transfer are processed by Stripe through your own connected Stripe account. Stripe collects your clients' card and bank details directly; we do not receive or store them. Stripe shares payment details with us, such as amounts, dates, tips, processing fees, refunds, and disputes, so that 521 can update your invoices and record the income and fees in your books. Your relationship with Stripe is governed by Stripe's own terms and privacy policy.",
+      "If you have connected a bank account, we compare incoming bank transactions with your open invoices so that 521 can suggest when a payment, such as a Venmo, Zelle, or check deposit, has paid an invoice. A payment is marked as paid only after you confirm it.",
       "If you enable location-based features, reminders, or workplace tools, we collect precise location information and related saved location details, such as workplace coordinates or addresses, and link that information to your account or workspace.",
       "To deliver push notifications (such as alerts about new bank transactions to review), we collect a device notification token tied to your device and account.",
       "We automatically collect limited technical and usage information, such as app version, device type, and error or crash information, to help us maintain and improve the service.",
@@ -253,15 +256,15 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
   {
     title: "How we use information",
     paragraphs: [
-      "We use collected information to provide the core functionality of 521, including account authentication, workspace management, income and expense tracking, bank transaction review, pay and tax estimate features, receipt storage and processing, reminders, and customer support.",
+      "We use collected information to provide the core functionality of 521, including account authentication, workspace management, income and expense tracking, invoicing and invoice payments, bank transaction review, pay and tax estimate features, receipt storage and processing, reminders, and customer support.",
       "We also use information to maintain security, detect and prevent misuse, troubleshoot issues, process user requests, send service-related notifications, and operate, improve, and support the reliability of the service.",
     ],
   },
   {
     title: "How data is linked to you",
     paragraphs: [
-      "The information described in this policy may be linked to your identity through your account, workspace, or user identifier so that 521 can provide app functionality such as sign-in, saved records, bank transaction review, reminders, receipt management, support, and account recovery.",
-      "We do not use the data described in this policy for third-party advertising tracking. We do not share your precise location, email address, financial information, bank transaction data, receipt uploads, or support content with data brokers for targeted advertising.",
+      "The information described in this policy may be linked to your identity through your account, workspace, or user identifier so that 521 can provide app functionality such as sign-in, saved records, invoices, bank transaction review, reminders, receipt management, support, and account recovery.",
+      "We do not use the data described in this policy for third-party advertising tracking. We do not share your precise location, email address, financial information, bank transaction data, receipt uploads, client information, or support content with data brokers for targeted advertising.",
     ],
   },
   {
@@ -275,11 +278,11 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
     paragraphs: [
       "We share information with the following categories of service providers, only as needed for them to perform their function on our behalf and under obligations to protect your information:",
       "Plaid Inc. — to enable bank account connectivity and retrieve transaction and account data you authorize us to access.",
-      "Payment processing providers (including Stripe) — to process subscription payments and billing.",
+      "Payment processing providers (including Stripe) — to process subscription payments and billing, and to process the invoice payments your clients make through your own connected Stripe account.",
       "Cloud infrastructure providers (including Google Cloud Platform and Firebase) — for hosting, databases, authentication, file storage, and push notification delivery.",
       "Optical character recognition and document-processing providers (including Amazon Web Services) — to extract information from receipt images you upload.",
       "AI service providers (including Anthropic) — to suggest expense categories for bank transactions, using only the merchant’s business name and the bank’s category label.",
-      "Email delivery providers (including SendGrid) — to send account, billing, and support-related emails.",
+      "Email and text message delivery providers (including SendGrid) — to send account, billing, and support-related emails, and to deliver the invoices and payment reminders you send to your clients by email or text message.",
       "We may also disclose information when required by law, to respond to valid legal requests, to enforce our terms, or to protect the rights, safety, and security of 521, our users, or others.",
     ],
   },
