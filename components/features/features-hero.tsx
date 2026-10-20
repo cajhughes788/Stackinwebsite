@@ -11,7 +11,7 @@ export function FeaturesHero() {
         <span className="brand-rule mx-auto mb-6" />
 
         <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
-          From your paycheck to your business, 521 brings it together and keeps it clear.
+          From your paycheck to the invoices you send, 521 brings it together and keeps it clear.
         </p>
       </div>
     </section>

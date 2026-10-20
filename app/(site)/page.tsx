@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/hero-section";
 import { FeaturesSection } from "@/components/features-section";
+import { InvoicingSection } from "@/components/invoicing-section";
 import { SecuritySection } from "@/components/security-section";
 import { PricingSection } from "@/components/pricing-section";
 import { Footer } from "@/components/footer";
@@ -13,6 +14,9 @@ export default function HomePage() {
       <HeroSection />
       <Reveal>
         <FeaturesSection />
+      </Reveal>
+      <Reveal>
+        <InvoicingSection />
       </Reveal>
       <Reveal>
         <SecuritySection />

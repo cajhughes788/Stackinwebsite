@@ -50,6 +50,12 @@ export function Navbar() {
               Features
             </Link>
             <Link
+              href="/#invoicing"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Invoicing
+            </Link>
+            <Link
               href="/support"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -118,6 +124,13 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Features
+            </Link>
+            <Link
+              href="/#invoicing"
+              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Invoicing
             </Link>
             <Link
               href="/support"

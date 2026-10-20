@@ -32,14 +32,14 @@ export function SecuritySection() {
     <section id="security" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
       <div className="mx-auto grid max-w-7xl gap-20 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:gap-24 lg:px-8">
         <div>
-          <span className="eyebrow section-label mb-8">02 / Security</span>
+          <span className="eyebrow section-label mb-8">03 / Security</span>
           <h2 className="mb-6 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance">Built to be trusted with your money</span>
           </h2>
           <span className="brand-rule mb-6" />
           <p className="mb-6 max-w-md text-lg text-muted-foreground">
-            521 reads your transactions to organize them. Payments for your plan are handled by Stripe, so we
-            never store your full card number.
+            521 reads your transactions to organize them. Payments for your plan, and the invoices your clients pay,
+            are handled by Stripe, so we never store a full card number.
           </p>
           <Link href="/privacy" className="text-sm font-medium text-foreground underline-offset-4 hover:underline">
             Read our privacy policy

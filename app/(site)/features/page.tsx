@@ -25,6 +25,14 @@ import {
   Layers,
   MapPin,
   Bell,
+  Palette,
+  Send,
+  Wallet,
+  HandCoins,
+  ScanSearch,
+  BookCheck,
+  Percent,
+  RotateCcw,
 } from "lucide-react";
 
 const incomeFeatures = [
@@ -57,6 +65,54 @@ const incomeFeatures = [
     icon: Repeat,
     title: "Recurring transactions",
     description: "Mark income or expenses as repeating and 521 logs them for you.",
+  },
+];
+
+const invoicingFeatures = [
+  {
+    icon: Palette,
+    title: "Branded invoices in a minute",
+    description: "Add your logo, colors, payment details, and policies once. Every invoice looks like you.",
+  },
+  {
+    icon: Send,
+    title: "Send it your way",
+    description: "Email it from 521, text it, or share a link or PDF.",
+  },
+  {
+    icon: Wallet,
+    title: "Card or bank transfer",
+    description: "Clients open a clean invoice page and pay through Stripe's secure checkout.",
+  },
+  {
+    icon: HandCoins,
+    title: "Deposits and tips",
+    description: "Ask for a deposit up front with its own due date, and offer an optional tip at the end.",
+  },
+  {
+    icon: ScanSearch,
+    title: "Venmo, Zelle, and checks, matched",
+    description: "521 recognizes an invoice payment when it lands in your connected bank. Confirm it with one tap.",
+  },
+  {
+    icon: BookCheck,
+    title: "Booked automatically",
+    description: "Every payment becomes income, dated the day the money actually arrived.",
+  },
+  {
+    icon: Percent,
+    title: "Fees and deposits, handled",
+    description: "Stripe fees are recorded as business expenses, and a deposit that pays an invoice is never counted twice.",
+  },
+  {
+    icon: BellRing,
+    title: "Reminders and paid alerts",
+    description: "Friendly reminders before and after the due date, and a notification the moment a client pays.",
+  },
+  {
+    icon: RotateCcw,
+    title: "Refunds and disputes, tracked",
+    description: "Refunds, deposits, and card disputes are recorded right on the invoice.",
   },
 ];
 
@@ -150,8 +206,17 @@ export default function FeaturesPage() {
       />
 
       <FeatureSection
+        id="invoicing"
+        label="02 / Invoicing"
+        title="Invoicing, built into your books"
+        description="Bill clients, get paid, and keep your profit, goals, and tax numbers accurate without any spreadsheet work."
+        features={invoicingFeatures}
+        columns={3}
+      />
+
+      <FeatureSection
         id="paychecks"
-        label="02 / Paychecks"
+        label="03 / Paychecks"
         title="Paychecks, explained"
         description="See what you earned, what was withheld, and what you actually take home."
         features={paycheckFeatures}
@@ -160,7 +225,7 @@ export default function FeaturesPage() {
 
       <FeatureSection
         id="business"
-        label="03 / Business"
+        label="04 / Business"
         title="Run your business with clarity"
         description="Expenses, receipts, and profit, organized for tax time and every day before it."
         features={businessFeatures}
@@ -169,7 +234,7 @@ export default function FeaturesPage() {
 
       <FeatureSection
         id="organize"
-        label="04 / Organization"
+        label="05 / Organization"
         title="Organized your way"
         description="Workspaces and reminders that keep everything current without extra effort."
         features={organizeFeatures}

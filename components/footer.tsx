@@ -7,6 +7,7 @@ const footerColumns = [
     heading: "Product",
     links: [
       { label: "Features", href: "/features" },
+      { label: "Invoicing", href: "/#invoicing" },
       { label: "Security", href: "/#security" },
       { label: "Pricing", href: "/#pricing" },
       { label: "Download for iPhone", href: APP_STORE_URL, external: true },

@@ -46,6 +46,7 @@ const plans = [
       "Expense tracking with receipt uploads",
       "Advanced analytics",
       "Monthly, quarterly, and yearly P&Ls",
+      "Branded invoices with card and bank payments",
     ],
     cta: "Choose Pro",
     recommended: false,
@@ -160,7 +161,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
         />
         {/* Section Header */}
         <div className="mx-auto mb-20 max-w-3xl text-center lg:mb-28">
-          <span className="eyebrow section-label mb-8">03 / Pricing</span>
+          <span className="eyebrow section-label mb-8">04 / Pricing</span>
           <h2 className="mb-6 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance">Simple, transparent pricing</span>
           </h2>
