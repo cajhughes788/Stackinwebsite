@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { SpotlightGrid } from "./spotlight-grid";
-import { InvoiceMockup } from "./invoice-mockup";
 import { ArrowRight, BellRing, BookCheck, Palette, ScanSearch } from "lucide-react";
 
 const points = [
@@ -41,19 +40,15 @@ export function InvoicingSection() {
           </p>
         </div>
 
-        <div className="grid items-center gap-20 lg:grid-cols-[1fr_1.2fr] lg:gap-24">
-          <InvoiceMockup />
-
-          <SpotlightGrid className="grid gap-px overflow-hidden rounded-lg border border-border sm:grid-cols-2">
-            {points.map((point) => (
-              <div key={point.title} className="p-8">
-                <point.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
-                <h3 className="mb-2 text-base font-medium text-foreground">{point.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{point.description}</p>
-              </div>
-            ))}
-          </SpotlightGrid>
-        </div>
+        <SpotlightGrid className="grid gap-px overflow-hidden rounded-lg border border-border sm:grid-cols-2 lg:grid-cols-4">
+          {points.map((point) => (
+            <div key={point.title} className="p-8">
+              <point.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
+              <h3 className="mb-2 text-lg font-medium text-foreground">{point.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{point.description}</p>
+            </div>
+          ))}
+        </SpotlightGrid>
 
         <div className="mt-14 flex justify-center">
           <Link
