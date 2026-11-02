@@ -47,6 +47,8 @@ const plans = [
       "Advanced analytics",
       "Monthly, quarterly, and yearly P&Ls",
       "Branded invoices with card and bank payments",
+      "Take card payments with a QR code",
+      "Online booking with deposits and reminders",
     ],
     cta: "Choose Pro",
     recommended: false,
