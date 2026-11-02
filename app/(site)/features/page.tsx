@@ -33,6 +33,17 @@ import {
   BookCheck,
   Percent,
   RotateCcw,
+  QrCode,
+  BellDot,
+  ReceiptText,
+  Settings2,
+  CalendarRange,
+  Link2,
+  Globe,
+  CalendarPlus,
+  ShieldCheck,
+  RefreshCw,
+  CalendarSync,
 } from "lucide-react";
 
 const incomeFeatures = [
@@ -113,6 +124,112 @@ const invoicingFeatures = [
     icon: RotateCcw,
     title: "Refunds and disputes, tracked",
     description: "Refunds, deposits, and card disputes are recorded right on the invoice.",
+  },
+];
+
+const chargeFeatures = [
+  {
+    icon: QrCode,
+    title: "Show a QR code, get paid",
+    description: "Type an amount, tap Show QR, and your customer pays on their own phone. No card reader needed.",
+  },
+  {
+    icon: Wallet,
+    title: "Card, Apple Pay, or Google Pay",
+    description: "Customers pay through Stripe's secure checkout, right from their phone.",
+  },
+  {
+    icon: HandCoins,
+    title: "Tips built in",
+    description: "Customers can choose 15%, 20%, 25%, or a custom tip. Turn it off for any charge.",
+  },
+  {
+    icon: BellDot,
+    title: "Watch it land",
+    description: "Your screen goes from Waiting for payment to Paid the moment they pay, with the amount and tip.",
+  },
+  {
+    icon: Send,
+    title: "Or send a link",
+    description: "Text or share the payment link instead of showing the QR code.",
+  },
+  {
+    icon: ReceiptText,
+    title: "They'll pay later? Make it an invoice",
+    description: "Turn the charge into an invoice with the same link, a due date, and automatic reminders if it's late.",
+  },
+  {
+    icon: Landmark,
+    title: "Paid straight to you",
+    description: "Money goes into your own connected Stripe account, and 521 never holds it. Set it up once in Invoice settings.",
+  },
+  {
+    icon: BookCheck,
+    title: "In your books automatically",
+    description: "Every charge is recorded as income, with the tip and Stripe fee included. No manual entry.",
+  },
+];
+
+const bookingFeatures = [
+  {
+    icon: Settings2,
+    title: "Services your way",
+    description: "Set a price, length, buffer time, and optional deposit for each service, and choose which ones clients can book online.",
+  },
+  {
+    icon: CalendarRange,
+    title: "Hours, days off, and rules",
+    description: "Weekly hours with more than one block per day, days off, minimum notice, how far ahead clients can book, and slot length.",
+  },
+  {
+    icon: Link2,
+    title: "Your booking link and QR code",
+    description: "Your own page at app.the521app.com/book, plus a printable QR code. Shared links show your logo.",
+  },
+  {
+    icon: Globe,
+    title: "A Book now button for your site",
+    description: "Pick the text and color, copy the code, and follow the steps for Squarespace, Wix, or Shopify. See which bookings came from your site.",
+  },
+  {
+    icon: CalendarPlus,
+    title: "Book clients yourself",
+    description: "Pick the client, service, and time. They get a confirmation link by email, or a text ready to send from your phone.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Deposits with automatic refunds",
+    description: "Clients pay a deposit by card to confirm. Cancel before your cutoff and it's refunded automatically. After it, you keep it.",
+  },
+  {
+    icon: BellRing,
+    title: "Reminders that cut no-shows",
+    description: "Up to two email reminders, from a week to an hour before, showing the deposit paid, balance due, and free-cancel deadline.",
+  },
+  {
+    icon: RefreshCw,
+    title: "Cancel and reschedule, handled",
+    description: "Clients can cancel or move their appointment from their own page. You can change any time, and double-booking is blocked.",
+  },
+  {
+    icon: BellDot,
+    title: "Notified at every step",
+    description: "A push notification for every new booking, confirmation, cancellation, and reschedule. Clients are emailed automatically too.",
+  },
+  {
+    icon: BookCheck,
+    title: "Finish & get paid",
+    description: "Add extras or a discount, and the deposit is subtracted. Collect by QR code, cash, or invoice, and it's recorded as income.",
+  },
+  {
+    icon: CalendarDays,
+    title: "Calendar and list views",
+    description: "A week strip and day timeline show your appointments. Tap an empty time to book it.",
+  },
+  {
+    icon: CalendarSync,
+    title: "Works with your calendar",
+    description: "Block busy times from up to three Google, Apple, or Outlook calendars, and subscribe to your 521 appointments there.",
   },
 ];
 
@@ -215,8 +332,26 @@ export default function FeaturesPage() {
       />
 
       <FeatureSection
+        id="charge"
+        label="03 / Charge"
+        title="Take a payment on the spot"
+        description="Show a QR code and your customer pays on their own phone. It lands in your books with the tip and fee included."
+        features={chargeFeatures}
+        columns={4}
+      />
+
+      <FeatureSection
+        id="booking"
+        label="04 / Booking"
+        title="Booking that gets you paid"
+        description="A booking page clients can use any time, with deposits, automatic reminders, and one-tap checkout, all connected to your books."
+        features={bookingFeatures}
+        columns={3}
+      />
+
+      <FeatureSection
         id="paychecks"
-        label="03 / Paychecks"
+        label="05 / Paychecks"
         title="Paychecks, explained"
         description="See what you earned, what was withheld, and what you actually take home."
         features={paycheckFeatures}
@@ -225,7 +360,7 @@ export default function FeaturesPage() {
 
       <FeatureSection
         id="business"
-        label="04 / Business"
+        label="06 / Business"
         title="Run your business with clarity"
         description="Expenses, receipts, and profit, organized for tax time and every day before it."
         features={businessFeatures}
@@ -234,7 +369,7 @@ export default function FeaturesPage() {
 
       <FeatureSection
         id="organize"
-        label="05 / Organization"
+        label="07 / Organization"
         title="Organized your way"
         description="Workspaces and reminders that keep everything current without extra effort."
         features={organizeFeatures}

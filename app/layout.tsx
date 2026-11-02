@@ -35,6 +35,8 @@ export const metadata: Metadata = {
     'bank sync income tracker',
     'invoicing app for freelancers',
     'send invoices and get paid',
+    'QR code card payments',
+    'appointment booking app with deposits',
   ],
   alternates: {
     canonical: '/',

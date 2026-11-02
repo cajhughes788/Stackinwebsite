@@ -2,6 +2,8 @@ import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/hero-section";
 import { FeaturesSection } from "@/components/features-section";
 import { InvoicingSection } from "@/components/invoicing-section";
+import { ChargeSection } from "@/components/charge-section";
+import { BookingSection } from "@/components/booking-section";
 import { SecuritySection } from "@/components/security-section";
 import { PricingSection } from "@/components/pricing-section";
 import { Footer } from "@/components/footer";
@@ -17,6 +19,12 @@ export default function HomePage() {
       </Reveal>
       <Reveal>
         <InvoicingSection />
+      </Reveal>
+      <Reveal>
+        <ChargeSection />
+      </Reveal>
+      <Reveal>
+        <BookingSection />
       </Reveal>
       <Reveal>
         <SecuritySection />

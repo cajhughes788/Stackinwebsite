@@ -56,6 +56,12 @@ export function Navbar() {
               Invoicing
             </Link>
             <Link
+              href="/#booking"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Booking
+            </Link>
+            <Link
               href="/support"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -131,6 +137,13 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Invoicing
+            </Link>
+            <Link
+              href="/#booking"
+              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Booking
             </Link>
             <Link
               href="/support"
