@@ -34,7 +34,7 @@ export function PhoneShot({ shot, className = "" }: { shot: Screenshot; classNam
       />
 
       {isPhone ? (
-        <div className="rounded-t-[2.75rem] border border-b-0 border-white/[0.09] bg-gradient-to-b from-[#232a2e] to-[#0e1214] p-2.5 pb-0 shadow-[0_50px_120px_-50px_rgba(0,0,0,0.9)] [mask-image:linear-gradient(to_bottom,#000_78%,transparent)]">
+        <div className="rounded-t-[2.75rem] border border-b-0 border-white/[0.09] bg-gradient-to-b from-[#232a2e] to-[#0e1214] p-2.5 pb-0 shadow-raised [mask-image:linear-gradient(to_bottom,#000_78%,transparent)]">
           <div className="overflow-hidden rounded-t-[2.25rem] bg-background">
             <div className="flex items-center justify-between px-6 pb-2 pt-3.5 text-[11px] font-medium tabular-nums text-foreground/80">
               <span>9:41</span>
@@ -47,7 +47,7 @@ export function PhoneShot({ shot, className = "" }: { shot: Screenshot; classNam
           </div>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-[1.75rem] border border-white/[0.09] bg-gradient-to-b from-[#20272b] to-[#14191c] p-2 shadow-[0_40px_100px_-45px_rgba(0,0,0,0.9)]">
+        <div className="overflow-hidden rounded-[1.75rem] border border-white/[0.09] bg-gradient-to-b from-[#20272b] to-[#14191c] p-2 shadow-raised">
           <div className="overflow-hidden rounded-[1.35rem]">{img}</div>
         </div>
       )}

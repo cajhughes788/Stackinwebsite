@@ -125,6 +125,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Glows behind the phones may spill past the screen edge; clip, don't scroll.
+     (clip, unlike hidden, keeps position: sticky working.) */
+  html,
+  body {
+    overflow-x: clip;
+  }
   h1, h2, h3 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
@@ -145,6 +151,11 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--muted-foreground);
+}
+
+/* The one deep shadow for raised objects: the phones and the glass card. */
+@utility shadow-raised {
+  box-shadow: 0 50px 120px -50px rgb(0 0 0 / 0.9);
 }
 
 /* Faint engineering grid that fades out from the center. */
@@ -285,33 +296,7 @@
   }
 }
 
-/* Spotlight cards (SpotlightGrid): --spot fades the light in on hover. */
-@property --spot {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
 @layer components {
-  .spotlight-grid {
-    --x: -999px;
-    --y: -999px;
-    background:
-      radial-gradient(280px circle at var(--x) var(--y), rgb(47 168 102 / calc(0.55 * var(--spot))), transparent 70%),
-      var(--border);
-    transition: --spot 0.4s ease;
-  }
-  .spotlight-grid > * {
-    background:
-      radial-gradient(420px circle at var(--x) var(--y), rgb(47 168 102 / calc(0.08 * var(--spot))), transparent 65%),
-      var(--background);
-  }
-  @media (hover: hover) {
-    .spotlight-grid:hover {
-      --spot: 1;
-    }
-  }
-
   /* Section label: a short rule, then the number and name. */
   .section-label {
     display: inline-flex;
@@ -322,7 +307,7 @@
     content: "";
     width: 1.5rem;
     height: 1px;
-    background: var(--primary);
+    background: rgb(236 235 230 / 0.3);
   }
 }
 

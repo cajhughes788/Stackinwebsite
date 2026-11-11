@@ -1,27 +1,22 @@
 import Link from "next/link";
-import { SpotlightGrid } from "./spotlight-grid";
-import { KeyRound, Lock, EyeOff, Unplug } from "lucide-react";
+import { OpenGrid } from "./open-grid";
 
 // Every point here mirrors the Data security and third-party sections of the
 // Privacy Policy (lib/legal.ts). Keep them in sync if either changes.
 const points = [
   {
-    icon: KeyRound,
     title: "Your bank login stays with your bank",
     description: "You connect through Plaid. 521 never sees or stores your banking username or password.",
   },
   {
-    icon: Lock,
     title: "Encrypted everywhere",
     description: "Data is encrypted in transit and at rest, with an extra layer on your bank connection.",
   },
   {
-    icon: EyeOff,
     title: "Never sold. Never used for ads.",
     description: "Your financial data isn't sold, shared with data brokers, or used for ad tracking.",
   },
   {
-    icon: Unplug,
     title: "You stay in control",
     description: "Disconnect a bank account and access is revoked immediately. Delete your account anytime.",
   },
@@ -45,16 +40,7 @@ export function SecuritySection() {
             Read our privacy policy
           </Link>
         </div>
-
-        <SpotlightGrid className="grid gap-px self-start overflow-hidden rounded-lg border border-border sm:grid-cols-2">
-          {points.map((point) => (
-            <div key={point.title} className="p-8">
-              <point.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
-              <h3 className="mb-2 text-base font-medium text-foreground">{point.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{point.description}</p>
-            </div>
-          ))}
-        </SpotlightGrid>
+        <OpenGrid items={points} columns={2} />
       </div>
     </section>
   );

@@ -181,7 +181,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
           {plans.map((plan) => (
             <div
               key={plan.tier}
-              className={`relative rounded-lg border bg-card p-8 ${
+              className={`relative rounded-2xl border bg-card p-8 ${
                 plan.recommended ? "border-primary" : "border-border"
               }`}
             >
@@ -215,7 +215,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
               <ul className="space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-foreground/40" />
                     {feature}
                   </li>
                 ))}

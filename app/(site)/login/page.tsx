@@ -93,7 +93,7 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen bg-background px-4 py-16">
       <AuthLogo />
-      <div className="mx-auto max-w-md rounded-lg border border-border bg-card p-8">
+      <div className="mx-auto max-w-md rounded-2xl border border-border bg-card p-8">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-normal text-foreground">Log in</h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -112,7 +112,7 @@ export default function LoginPage() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-primary"
+              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-primary"
               required
             />
           </div>
@@ -138,7 +138,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="Your password"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 pr-11 text-sm text-foreground outline-none transition focus:border-primary"
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 pr-11 text-sm text-foreground outline-none transition focus:border-primary"
                 required
               />
               <button

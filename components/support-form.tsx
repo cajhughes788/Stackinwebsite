@@ -177,7 +177,7 @@ export function SupportForm() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-lg border border-border bg-card p-6 sm:p-8">
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8">
       <ProcessingOverlay
         open={state === "submitting"}
         label="Sending your request..."
@@ -199,7 +199,7 @@ export function SupportForm() {
               return (
                 <label
                   key={supportKind.value}
-                  className={`flex cursor-pointer gap-3 rounded-lg border px-4 py-3 transition ${
+                  className={`flex cursor-pointer gap-3 rounded-xl border px-4 py-3 transition ${
                     active
                       ? "border-primary bg-primary/10 shadow-[0_0_0_1px_rgba(47,168,102,0.2)]"
                       : "border-border bg-background/70 hover:border-primary/40 hover:bg-card"
@@ -214,7 +214,7 @@ export function SupportForm() {
                     className="sr-only"
                   />
                   <div
-                    className={`mt-0.5 rounded-xl border p-2 ${
+                    className={`mt-0.5 rounded-lg border p-2 ${
                       active ? "border-primary/30 bg-primary/15 text-primary" : "border-border bg-card text-muted-foreground"
                     }`}
                   >
@@ -242,7 +242,7 @@ export function SupportForm() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="you@example.com"
-            className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-primary"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-primary"
             autoComplete="email"
             required
           />
@@ -257,7 +257,7 @@ export function SupportForm() {
             value={message}
             onChange={(event) => setMessage(event.target.value)}
             placeholder="Tell us what happened, what you expected, and anything else that would help."
-            className="min-h-40 w-full rounded-xl border border-border bg-background px-3 py-3 text-sm text-foreground outline-none transition focus:border-primary"
+            className="min-h-40 w-full rounded-lg border border-border bg-background px-3 py-3 text-sm text-foreground outline-none transition focus:border-primary"
             required
           />
           <p className="mt-2 text-xs text-muted-foreground">
@@ -266,14 +266,14 @@ export function SupportForm() {
         </div>
 
         {error ? (
-          <div className="flex items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-red-200">
+          <div className="flex items-start gap-3 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-red-200">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <p>{error}</p>
           </div>
         ) : null}
 
         {state === "success" ? (
-          <div className="flex items-start gap-3 rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-foreground">
+          <div className="flex items-start gap-3 rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm text-foreground">
             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
             <p>Your request has been sent. If we need more detail, we’ll follow up using the email you provided.</p>
           </div>

@@ -80,7 +80,7 @@ export function ChargeSection() {
             className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground"
           >
             How Charge works
-            <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="h-4 w-4 text-foreground/40 transition group-hover:translate-x-0.5 group-hover:text-foreground" />
           </Link>
         </div>
       </div>
