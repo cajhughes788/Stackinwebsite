@@ -16,6 +16,8 @@ interface FeatureSectionProps {
   description: string;
   features: Feature[];
   columns?: 2 | 3 | 4;
+  /** A real screen from the app, shown between the heading and the cards. */
+  screenshot?: { src: string; alt: string; width: number; height: number };
 }
 
 export function FeatureSection({
@@ -25,6 +27,7 @@ export function FeatureSection({
   description,
   features,
   columns = 4,
+  screenshot,
 }: FeatureSectionProps) {
   const gridCols = {
     2: "sm:grid-cols-2 max-w-3xl",
@@ -55,6 +58,22 @@ export function FeatureSection({
             </h2>
             <p className="text-lg text-muted-foreground">{description}</p>
           </div>
+
+          {screenshot ? (
+            <figure className="mx-auto mb-12 w-full max-w-[22rem] overflow-hidden rounded-[1.75rem] border border-border bg-card p-2 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)]">
+              {/* Static export: images are served as-is, so a plain img is right here. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={screenshot.src}
+                alt={screenshot.alt}
+                width={screenshot.width}
+                height={screenshot.height}
+                loading="lazy"
+                decoding="async"
+                className="h-auto w-full rounded-[1.25rem]"
+              />
+            </figure>
+          ) : null}
 
           <div
             className={`mx-auto grid gap-px overflow-hidden rounded-lg border border-border bg-border ${gridCols[columns]}`}
