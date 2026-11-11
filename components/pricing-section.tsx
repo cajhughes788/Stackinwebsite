@@ -197,8 +197,8 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
               </div>
 
               <div className="mb-8">
-                <span className="font-[family-name:var(--font-display)] text-4xl tracking-tight text-foreground">{plan.price}</span>
-                <span className="font-mono text-sm text-muted-foreground">{plan.period}</span>
+                <span className="font-[family-name:var(--font-display)] text-4xl tabular-nums tracking-tight text-foreground">{plan.price}</span>
+                <span className="ml-1 text-sm text-muted-foreground">{plan.period}</span>
               </div>
 
               <Button

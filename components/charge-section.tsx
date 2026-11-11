@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PhoneShot } from "./phone-shot";
-import { ArrowRight, BookCheck, HandCoins, Landmark, Smartphone } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const steps = [
   "Type the amount and tap Show QR.",
@@ -10,22 +10,18 @@ const steps = [
 
 const points = [
   {
-    icon: Smartphone,
     title: "No card reader needed",
     description: "Your customer's own phone is the terminal. Show a QR code or text them the link.",
   },
   {
-    icon: HandCoins,
     title: "Tips built in",
     description: "Customers can pick 15%, 20%, 25%, or a custom tip right at checkout.",
   },
   {
-    icon: Landmark,
     title: "Paid straight to you",
     description: "Money goes into your own connected Stripe account. 521 never holds it.",
   },
   {
-    icon: BookCheck,
     title: "Booked automatically",
     description: "The payment, tip, and Stripe fee are recorded for you. No manual entry.",
   },
@@ -57,11 +53,11 @@ export function ChargeSection() {
         <div className="grid items-center gap-14 lg:grid-cols-[1fr_auto_1fr] lg:gap-16">
           <ol className="mx-auto max-w-sm space-y-8 lg:mx-0 lg:justify-self-end">
             {steps.map((step, index) => (
-              <li key={step} className="flex gap-4">
-                <span className="font-mono text-2xl leading-none text-primary">
-                  {String(index + 1).padStart(2, "0")}
+              <li key={step} className="flex gap-5">
+                <span className="font-[family-name:var(--font-display)] text-3xl font-light leading-none tabular-nums text-foreground/30">
+                  {index + 1}
                 </span>
-                <p className="text-base leading-relaxed text-foreground">{step}</p>
+                <p className="pt-1 text-base leading-relaxed text-foreground">{step}</p>
               </li>
             ))}
           </ol>
@@ -70,12 +66,9 @@ export function ChargeSection() {
 
           <ul className="mx-auto max-w-sm space-y-7 lg:mx-0">
             {points.map((point) => (
-              <li key={point.title} className="flex gap-4">
-                <point.icon className="mt-0.5 h-5 w-5 flex-none text-primary" strokeWidth={1.5} />
-                <div>
-                  <h3 className="mb-1 text-base font-medium text-foreground">{point.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{point.description}</p>
-                </div>
+              <li key={point.title} className="border-l border-border pl-5">
+                <h3 className="mb-1 text-base font-medium text-foreground">{point.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{point.description}</p>
               </li>
             ))}
           </ul>
