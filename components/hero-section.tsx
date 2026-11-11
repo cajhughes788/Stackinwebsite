@@ -1,16 +1,9 @@
 import Link from "next/link";
-import { Lock, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FiveToOne } from "./five-to-one";
 import { IncomeMockup } from "./income-mockup";
 import { ReelTour } from "./reel-tour";
 import { APP_STORE_URL } from "@/lib/site";
-
-const pillars = [
-  { icon: ShieldCheck, title: "Reliable", copy: "Your income. Always accessible." },
-  { icon: Sparkles, title: "Simple", copy: "No clutter. No confusion." },
-  { icon: Lock, title: "Private", copy: "Encrypted. Never sold." },
-];
 
 export function HeroSection() {
   return (
@@ -29,12 +22,11 @@ export function HeroSection() {
 
             <span className="brand-rule mx-auto mb-10 lg:mx-0" />
 
-            <p className="mx-auto mb-12 max-w-lg text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              For anyone paid more than one way: a paycheck plus personal cash, a side gig, freelance work, or a
-              small business, with income arriving from different platforms. 521 brings every income stream into one
-              place, so you can track your income and expenses in one simple view.
+            <p className="mx-auto mb-5 max-w-lg text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              For anyone paid more than one way: a paycheck, cash tips, a side gig, or a small business. 521 puts
+              every income stream and expense in one simple view.
             </p>
-            <p className="mx-auto -mt-8 mb-12 max-w-lg text-sm leading-relaxed text-foreground/80 lg:mx-0">
+            <p className="mx-auto mb-10 max-w-lg text-sm leading-relaxed text-foreground/80 lg:mx-0">
               Made for stylists, barbers, nail techs, tattoo artists, servers, bartenders, freelancers, drivers, and
               anyone running a one-person business.
             </p>
@@ -49,21 +41,9 @@ export function HeroSection() {
                 </a>
               </Button>
             </div>
-            <p className="mb-16 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+            <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
               On iPhone and the web. Android coming soon.
             </p>
-
-            <ul className="mx-auto grid max-w-xl grid-cols-3 divide-x divide-border lg:mx-0">
-              {pillars.map((pillar) => (
-                <li key={pillar.title} className="flex flex-col items-center gap-2 px-2 text-center">
-                  <pillar.icon className="h-5 w-5 text-foreground" strokeWidth={1.5} />
-                  <span className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.18em] text-foreground">
-                    {pillar.title}
-                  </span>
-                  <span className="text-xs leading-snug text-muted-foreground">{pillar.copy}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="flex w-full flex-1 flex-col items-center gap-10">

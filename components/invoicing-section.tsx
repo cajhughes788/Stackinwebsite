@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { SpotlightGrid } from "./spotlight-grid";
+import { PhoneShot } from "./phone-shot";
+import { PointList } from "./point-list";
 import { ArrowRight, BellRing, BookCheck, Palette, ScanSearch } from "lucide-react";
 
 const points = [
@@ -25,40 +26,37 @@ const points = [
   },
 ];
 
+const shot = {
+  src: "/images/app/invoices.webp",
+  alt: "The 521 Invoices screen showing $14 waiting on clients, with one invoice overdue 8 days",
+  width: 720,
+  height: 888,
+};
+
 export function InvoicingSection() {
   return (
     <section id="invoicing" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-20 max-w-3xl text-center lg:mb-28">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-4 sm:px-6 lg:grid-cols-[auto_1fr] lg:gap-24 lg:px-8">
+        {/* Text first in the markup so phones read the heading before the screenshot. */}
+        <div className="lg:order-2">
           <span className="eyebrow section-label mb-8">02 / Invoicing</span>
           <h2 className="mb-6 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance">Invoicing, built into your books</span>
           </h2>
-          <p className="mx-auto max-w-xl text-lg text-muted-foreground">
+          <p className="mb-10 max-w-xl text-lg text-muted-foreground">
             Bill clients, get paid, and keep your books right, all in one place. No more juggling payment apps, notes,
             and a separate invoicing tool.
           </p>
-        </div>
-
-        <SpotlightGrid className="grid gap-px overflow-hidden rounded-lg border border-border sm:grid-cols-2 lg:grid-cols-4">
-          {points.map((point) => (
-            <div key={point.title} className="p-8">
-              <point.icon className="mb-6 h-6 w-6 text-primary" strokeWidth={1.5} />
-              <h3 className="mb-2 text-lg font-medium text-foreground">{point.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{point.description}</p>
-            </div>
-          ))}
-        </SpotlightGrid>
-
-        <div className="mt-14 flex justify-center">
+          <PointList points={points} />
           <Link
             href="/features#invoicing"
-            className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground"
+            className="group mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-foreground"
           >
             Everything invoicing can do
             <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
+        <PhoneShot shot={shot} className="mx-auto lg:order-1" />
       </div>
     </section>
   );

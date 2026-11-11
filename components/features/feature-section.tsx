@@ -2,6 +2,7 @@
 
 import { LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/reveal";
+import { PhoneShot, type Screenshot } from "@/components/phone-shot";
 
 interface Feature {
   icon: LucideIcon;
@@ -17,7 +18,7 @@ interface FeatureSectionProps {
   features: Feature[];
   columns?: 2 | 3 | 4;
   /** A real screen from the app, shown between the heading and the cards. */
-  screenshot?: { src: string; alt: string; width: number; height: number };
+  screenshot?: Screenshot;
 }
 
 export function FeatureSection({
@@ -59,26 +60,7 @@ export function FeatureSection({
             <p className="text-lg text-muted-foreground">{description}</p>
           </div>
 
-          {screenshot ? (
-            <figure className="mx-auto mb-12 w-full max-w-[22rem] overflow-hidden rounded-[1.75rem] border border-border bg-card p-2 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)]">
-              {/* Static export: images are served as-is, so a plain img is right here. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={screenshot.src}
-                alt={screenshot.alt}
-                // Each screenshot ships at 720px with a 360px twin ("-360"), so
-                // 1x screens fetch about a third of the bytes. The frame is at
-                // most 22rem wide, minus its padding and border.
-                srcSet={`${screenshot.src.replace(/\.webp$/, "-360.webp")} 360w, ${screenshot.src} 720w`}
-                sizes="(min-width: 384px) 334px, calc(100vw - 50px)"
-                width={screenshot.width}
-                height={screenshot.height}
-                loading="lazy"
-                decoding="async"
-                className="h-auto w-full rounded-[1.25rem]"
-              />
-            </figure>
-          ) : null}
+          {screenshot ? <PhoneShot shot={screenshot} className="mx-auto mb-12" /> : null}
 
           <div
             className={`mx-auto grid gap-px overflow-hidden rounded-lg border border-border bg-border ${gridCols[columns]}`}

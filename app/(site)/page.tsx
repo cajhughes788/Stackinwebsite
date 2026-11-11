@@ -6,6 +6,7 @@ import { ChargeSection } from "@/components/charge-section";
 import { BookingSection } from "@/components/booking-section";
 import { SecuritySection } from "@/components/security-section";
 import { PricingSection } from "@/components/pricing-section";
+import { FeaturesCTA } from "@/components/features/features-cta";
 import { Footer } from "@/components/footer";
 import { Reveal } from "@/components/reveal";
 
@@ -32,6 +33,7 @@ export default function HomePage() {
       <Reveal>
         <PricingSection />
       </Reveal>
+      <FeaturesCTA />
       <Footer />
     </main>
   );
