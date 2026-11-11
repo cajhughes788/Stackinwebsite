@@ -84,7 +84,7 @@ export const REEL_MARKUP = `
 
     <section class="scene" data-duration="7000" id="scene6">
       <div class="brand-logo brand-logo--cta" role="img" aria-label="521"></div>
-      <p class="tagline">Simpler tracking. Smarter decisions.</p>
+      <p class="tagline">Know what you made. Know what you keep.</p>
       <a class="cta-button" href="/#pricing" target="_top">Get started &rarr;</a>
       <button class="replay" id="replayBtn" type="button">&#8635; Watch again</button>
     </section>

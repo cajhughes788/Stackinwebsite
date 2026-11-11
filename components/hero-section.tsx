@@ -16,8 +16,8 @@ export function HeroSection() {
         <div className="relative flex flex-col items-center gap-20 pb-28 lg:flex-row lg:gap-24">
           <div className="flex-1 text-center lg:text-left">
             <h1 className="mb-8 flex flex-col gap-2 text-[2.3rem] font-normal leading-[1.02] text-foreground sm:gap-3 sm:text-6xl lg:text-7xl">
-              <span className="text-balance">Simpler tracking.</span>
-              <span className="text-balance">Smarter decisions.</span>
+              <span className="text-balance">Know what you made.</span>
+              <span className="text-balance">Know what you keep.</span>
             </h1>
 
             <span className="brand-rule mx-auto mb-10 lg:mx-0" />
