@@ -66,6 +66,11 @@ export function FeatureSection({
               <img
                 src={screenshot.src}
                 alt={screenshot.alt}
+                // Each screenshot ships at 720px with a 360px twin ("-360"), so
+                // 1x screens fetch about a third of the bytes. The frame is at
+                // most 22rem wide, minus its padding and border.
+                srcSet={`${screenshot.src.replace(/\.webp$/, "-360.webp")} 360w, ${screenshot.src} 720w`}
+                sizes="(min-width: 384px) 334px, calc(100vw - 50px)"
                 width={screenshot.width}
                 height={screenshot.height}
                 loading="lazy"

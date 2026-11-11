@@ -320,7 +320,7 @@ export default function FeaturesPage() {
         description="Bank deposits, Venmo, and cash come together in one ledger, sorted for you."
         features={incomeFeatures}
         columns={3}
-        screenshot={{ src: "/images/app/payment-streams.png", alt: "The 521 app showing a month of income split by Zelle, Venmo, cash, card, Apple Pay, and checks", width: 720, height: 1100 }}
+        screenshot={{ src: "/images/app/payment-streams.webp", alt: "The 521 app showing a month of income split by Zelle, Venmo, cash, card, Apple Pay, and checks", width: 720, height: 1100 }}
       />
 
       <FeatureSection
@@ -330,7 +330,7 @@ export default function FeaturesPage() {
         description="Bill clients, get paid, and keep your profit, goals, and tax numbers accurate without any spreadsheet work."
         features={invoicingFeatures}
         columns={3}
-        screenshot={{ src: "/images/app/invoices.png", alt: "The 521 Invoices screen showing $14 waiting on clients, with one invoice overdue 8 days", width: 720, height: 888 }}
+        screenshot={{ src: "/images/app/invoices.webp", alt: "The 521 Invoices screen showing $14 waiting on clients, with one invoice overdue 8 days", width: 720, height: 888 }}
       />
 
       <FeatureSection
@@ -340,7 +340,7 @@ export default function FeaturesPage() {
         description="Show a QR code and your customer pays on their own phone. It lands in your books with the tip and fee included."
         features={chargeFeatures}
         columns={4}
-        screenshot={{ src: "/images/app/charge.png", alt: "The 521 Charge screen set to $45 for an early check-in, with Ask for a tip turned on", width: 720, height: 786 }}
+        screenshot={{ src: "/images/app/charge.webp", alt: "The 521 Charge screen set to $45 for an early check-in, with Ask for a tip turned on", width: 720, height: 786 }}
       />
 
       <FeatureSection
@@ -350,7 +350,7 @@ export default function FeaturesPage() {
         description="A booking page clients can use any time, with deposits, automatic reminders, and one-tap checkout, all connected to your books."
         features={bookingFeatures}
         columns={3}
-        screenshot={{ src: "/images/app/booking.png", alt: "The 521 booking calendar with a haircut appointment on the day view", width: 720, height: 972 }}
+        screenshot={{ src: "/images/app/booking.webp", alt: "The 521 booking calendar with a haircut appointment on the day view", width: 720, height: 972 }}
       />
 
       <FeatureSection
@@ -360,7 +360,7 @@ export default function FeaturesPage() {
         description="See what you earned, what was withheld, and what you actually take home."
         features={paycheckFeatures}
         columns={4}
-        screenshot={{ src: "/images/app/paycheck.png", alt: "A 521 pay period showing $3,068.16 gross pay and about $1,518.44 take-home", width: 720, height: 340 }}
+        screenshot={{ src: "/images/app/paycheck.webp", alt: "A 521 pay period showing $3,068.16 gross pay and about $1,518.44 take-home", width: 720, height: 340 }}
       />
 
       <FeatureSection
@@ -370,7 +370,7 @@ export default function FeaturesPage() {
         description="Expenses, receipts, and profit, organized for tax time and every day before it."
         features={businessFeatures}
         columns={3}
-        screenshot={{ src: "/images/app/profit-and-loss.png", alt: "The 521 Profit & Loss screen with a monthly statement and business income by payment app for tax time", width: 720, height: 850 }}
+        screenshot={{ src: "/images/app/profit-and-loss.webp", alt: "The 521 Profit & Loss screen with a monthly statement and business income by payment app for tax time", width: 720, height: 850 }}
       />
 
       <FeatureSection
@@ -380,7 +380,7 @@ export default function FeaturesPage() {
         description="Workspaces and reminders that keep everything current without extra effort."
         features={organizeFeatures}
         columns={4}
-        screenshot={{ src: "/images/app/workspaces.png", alt: "The 521 home screen totaling a business and a day job in one monthly income figure", width: 720, height: 490 }}
+        screenshot={{ src: "/images/app/workspaces.webp", alt: "The 521 home screen totaling a business and a day job in one monthly income figure", width: 720, height: 490 }}
       />
 
       <FeaturesCTA />
