@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/auth-provider";
@@ -12,6 +13,10 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const showAuthCtas = !authLoading && !user;
+  // The Features page has its own, longer Invoicing and Booking sections, so
+  // keep visitors there instead of sending them back to the home page.
+  const onFeatures = usePathname()?.startsWith("/features") ?? false;
+  const featureHref = (id: string) => (onFeatures ? `/features#${id}` : `/#${id}`);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,13 +55,13 @@ export function Navbar() {
               Features
             </Link>
             <Link
-              href="/#invoicing"
+              href={featureHref("invoicing")}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               Invoicing
             </Link>
             <Link
-              href="/#booking"
+              href={featureHref("booking")}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               Booking
@@ -132,14 +137,14 @@ export function Navbar() {
               Features
             </Link>
             <Link
-              href="/#invoicing"
+              href={featureHref("invoicing")}
               className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Invoicing
             </Link>
             <Link
-              href="/#booking"
+              href={featureHref("booking")}
               className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
             >

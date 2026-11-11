@@ -40,9 +40,9 @@ const plans = [
     tier: "independent_basic",
     price: "$12.99",
     period: "/month",
-    description: "For freelancers and business owners",
+    description: "Your business income, without paycheck tracking",
     features: [
-      "Every income stream in one place",
+      "Business income from every way you get paid",
       "Expense tracking with receipt uploads",
       "Advanced analytics",
       "Monthly, quarterly, and yearly P&Ls",
@@ -58,9 +58,11 @@ const plans = [
     tier: "hybrid_plus",
     price: "$13.99",
     period: "/month",
-    description: "Paychecks and business income, side by side",
+    description: "Your paychecks and your business, side by side",
     features: [
-      "Everything in Essential and Pro",
+      "Everything in Pro",
+      "Plus paycheck tracking and net pay from Essential",
+      "W-2 and business income in one total",
       "Unlimited income sources",
       "Custom categories",
     ],
@@ -168,7 +170,8 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
             <span className="text-balance">Simple, transparent pricing</span>
           </h2>
           <p className="mx-auto max-w-xl text-lg text-muted-foreground">
-            Start with your paychecks. Add your business when you&apos;re ready. No hidden fees.
+            Start with your paychecks for free. Pro is for business income. Complete puts both in one place. No
+            hidden fees.
           </p>
           {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
         </div>

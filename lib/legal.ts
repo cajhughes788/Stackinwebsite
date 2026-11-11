@@ -1,16 +1,16 @@
-export const LEGAL_TERMS_VERSION = "2026-04-27";
-export const LEGAL_PRIVACY_VERSION = "2026-11-02";
+export const LEGAL_TERMS_VERSION = "2026-11-11";
+export const LEGAL_PRIVACY_VERSION = "2026-11-11";
 export const LEGAL_CONSENT_VERSION = "2026-04-27";
 
 export const LEGAL_EFFECTIVE_DATE = "04/27/2026";
-export const LEGAL_LAST_UPDATED = "04/27/2026";
+export const LEGAL_LAST_UPDATED = "11/11/2026";
 // Tracked separately from the Terms dates above — this revision only
 // rewrites the Privacy Policy (to disclose Plaid, Stripe, AWS Textract,
 // SendGrid, and the real data-retention mechanics), and the Terms text
 // itself hasn't changed. Sharing one displayed date between both documents
 // would have implied the Terms changed too.
 export const PRIVACY_EFFECTIVE_DATE = "09/06/2026";
-export const PRIVACY_LAST_UPDATED = "11/02/2026";
+export const PRIVACY_LAST_UPDATED = "11/11/2026";
 export const LEGAL_OWNER = "Optivium AI Solutions LLC";
 export const LEGAL_CONSENT_SOURCE = "web-signup";
 
@@ -50,8 +50,8 @@ export const TERMS_SECTIONS: LegalSection[] = [
   {
     title: "3. What 521 Does",
     paragraphs: [
-      "521 is a financial organization and income-tracking tool. Depending on your plan and device, features may include work-entry tracking, W-2 and independent income logging, expense tracking, receipt capture, OCR-assisted data extraction, profit and loss summaries, paycheck and withholding estimates, pay stub generation, reminders, workspace management, notifications, and premium features.",
-      "521 is designed to help you organize information. It is not represented as an official bookkeeping system of record, payroll processor, payroll administrator, employer, employer-of-record, consumer reporting agency, bank, lender, money transmitter, tax filing service, tax preparation service, or government reporting platform.",
+      "521 is a financial organization and income-tracking tool. Depending on your plan and device, features may include work-entry tracking, W-2 and independent income logging, bank transaction import, expense tracking, receipt capture, OCR-assisted data extraction, profit and loss summaries, paycheck and withholding estimates, pay stub generation, invoicing, in-person payments (Charge), online booking with deposits, calendar connections, reminders, workspace management, notifications, and premium features.",
+      "521 is designed to help you organize information and run your business. It is not represented as an official bookkeeping system of record, payroll processor, payroll administrator, employer, employer-of-record, consumer reporting agency, bank, lender, money transmitter, payment processor, tax filing service, tax preparation service, or government reporting platform. Payments you accept through 521 are processed by Stripe, not by us (see section 8).",
     ],
   },
   {
@@ -83,14 +83,24 @@ export const TERMS_SECTIONS: LegalSection[] = [
     ],
   },
   {
-    title: "8. Device Permissions, Notifications, and Location-Based Features",
+    title: "8. Invoicing, Charge, and Booking",
+    paragraphs: [
+      "Invoice payments, Charge payments, and booking deposits and balances are processed by Stripe, Inc. through a Stripe account that you connect and that belongs to you. To accept payments you must agree to Stripe's own terms, including the Stripe Connected Account Agreement, and your relationship with Stripe is governed by those terms. Funds are paid by your clients directly into your Stripe account; 521 never receives, holds, or transfers them, and we are not a party to any payment between you and your clients. Stripe's processing fees are set by Stripe.",
+      "You are the seller in every transaction you take through 521. You are solely responsible for the goods and services you provide, your prices, invoices, taxes, receipts, tips, refunds, chargebacks and disputes, customer service, and complying with the consumer protection, payment, tipping, and tax laws that apply to your business.",
+      "You set your own deposit amounts, cancellation cutoffs, and refund rules. 521 applies the rules you configure automatically, for example by refunding a deposit when a client cancels before your cutoff. You are responsible for making sure your policies are lawful, clearly disclosed to your clients, and set up the way you intend. We are not responsible for refunds issued or withheld because of the settings you chose.",
+      "When you add clients or a client books with you, you are responsible for having the right to share their contact details with us and to contact them. 521 sends invoices, payment reminders, booking confirmations, updates, and reminders by email on your behalf. Messages you text from 521 are sent from your own phone and number. You may not use these features to send marketing, spam, or messages your clients have not agreed to receive.",
+      "Suggestions that a bank deposit, such as a Venmo, Zelle, or check payment, has paid an invoice are suggestions only; an invoice is marked paid only after you confirm it. Availability shown on your booking page depends on the hours, rules, and calendar connections you set, and connected calendars may update with a delay. You are responsible for reviewing your bookings and records.",
+    ],
+  },
+  {
+    title: "9. Device Permissions, Notifications, and Location-Based Features",
     paragraphs: [
       "Certain features may request access to notifications, camera, photos, location, or other device permissions in order to provide receipt capture, reminders, geofence alerts, and similar functionality.",
       "If you enable those features, you authorize 521 to use the relevant permissions for those purposes. You acknowledge that reminders and location-based features may be delayed, inaccurate, incomplete, duplicated, or unavailable due to device settings, battery restrictions, operating system behavior, connectivity, third-party platform limitations, or disabled permissions. These features are convenience tools only and must not be relied on for safety-critical, payroll-critical, tax-critical, compliance-critical, or legal purposes.",
     ],
   },
   {
-    title: "9. Offline Use, Local Storage, and Sync",
+    title: "10. Offline Use, Local Storage, and Sync",
     paragraphs: [
       "Some 521 features may support caching, offline entry, delayed synchronization, or queued actions. Because of that, information shown on your device may temporarily differ from server data, and sync actions may be delayed, duplicated, partially applied, or fail altogether.",
       "You are responsible for confirming that important data has been entered, saved, and synchronized properly.",
@@ -98,19 +108,19 @@ export const TERMS_SECTIONS: LegalSection[] = [
     ],
   },
   {
-    title: "10. Accounts and Security",
+    title: "11. Accounts and Security",
     paragraphs: [
       "You are responsible for maintaining accurate account information, safeguarding your login credentials, and all activity that occurs under your account. You must notify us promptly if you suspect unauthorized use, credential compromise, or a security issue affecting your account or device. You may not share your account in a way that bypasses plan limits, security controls, or authorized-use restrictions.",
     ],
   },
   {
-    title: "11. Limited License",
+    title: "12. Limited License",
     paragraphs: [
       "Subject to your compliance with these terms, we grant you a limited, personal, non-exclusive, non-transferable, non-sublicensable, revocable license to use 521 for your internal lawful use during your authorized access period. 521 is licensed, not sold.",
     ],
   },
   {
-    title: "12. Subscriptions, Billing, Trials, and App Stores",
+    title: "13. Subscriptions, Billing, Trials, and App Stores",
     paragraphs: [
       "Certain features may require a paid subscription or paid upgrade. By subscribing, you authorize the charges, taxes, and renewal terms shown to you at purchase. Pricing, usage limits, feature availability, and renewal terms may vary by plan and may change prospectively as permitted by law.",
       "If your subscription renews automatically, it will continue until canceled in the applicable cancellation flow. Unless required by law or expressly stated by us, fees are non-refundable once charged, and canceling does not retroactively refund the current billing period. If you subscribe through Apple, Google, or another marketplace, billing and cancellation may be handled by that provider and may also be subject to its separate terms.",
@@ -118,91 +128,91 @@ export const TERMS_SECTIONS: LegalSection[] = [
     ],
   },
   {
-    title: "13. App Stores and Device Platforms",
+    title: "14. App Stores and Device Platforms",
     paragraphs: [
       "If you download or access 521 through Apple's App Store, Google Play, or another app marketplace or device platform, you acknowledge that the platform provider is not a party to these terms and is not responsible for 521, its content, maintenance, support, or claims relating to 521, except to the extent required by applicable law or mandatory platform terms.",
       "Your use of 521 must also comply with the applicable platform's usage rules, terms, and technical limitations. To the extent permitted by law, applicable platform providers are third-party beneficiaries of this section and may enforce it against you.",
     ],
   },
   {
-    title: "14. Privacy and Electronic Communications",
+    title: "15. Privacy and Electronic Communications",
     paragraphs: [
       "Your use of 521 is also subject to our Privacy Policy. By using the app, you consent to the collection, use, storage, and processing of information as described in that policy and as reasonably necessary to operate, secure, support, maintain, and improve 521.",
       "You also agree that we may send you service-related notices and other legally required communications electronically, including through the app, by email, or by other reasonable digital means. You are responsible for keeping your email address and other contact information current.",
     ],
   },
   {
-    title: "15. Your Content and Data",
+    title: "16. Your Content and Data",
     paragraphs: [
       "As between you and Optivium AI Solutions LLC, you retain ownership of the information and content you submit to 521. You grant us a worldwide, non-exclusive, royalty-free license to host, store, reproduce, process, format, transmit, and use that content only as necessary to operate, provide, secure, troubleshoot, support, improve, and enforce 521 and these terms.",
       "You represent that you have the rights, notices, and permissions needed to submit any data or content you provide, including information about other people, and that your submission and our permitted use of it will not violate any law or third-party rights.",
     ],
   },
   {
-    title: "16. Feedback",
+    title: "17. Feedback",
     paragraphs: [
       "If you send us suggestions, ideas, requests, or feedback about 521, you allow us to use that feedback without restriction or compensation to you.",
     ],
   },
   {
-    title: "17. Prohibited Uses",
+    title: "18. Prohibited Uses",
     paragraphs: [
-      "You may not use 521 for any unlawful, fraudulent, deceptive, abusive, harmful, or unauthorized purpose. This includes attempting to access another user's data, interfering with app operations, submitting false information, reverse engineering the app, bypassing security or usage limits, reselling unauthorized access, scraping data, uploading malicious code, infringing intellectual property rights, or using 521 in violation of tax, payroll, employment, privacy, consumer protection, sanctions, export, or financial recordkeeping laws. It also includes using 521 to fabricate, falsify, or deceptively alter pay stubs, income records, receipts, tax-related information, or other documents, or to mislead employers, workers, lenders, landlords, insurers, regulators, courts, or government agencies.",
+      "You may not use 521 for any unlawful, fraudulent, deceptive, abusive, harmful, or unauthorized purpose. This includes attempting to access another user's data, interfering with app operations, submitting false information, reverse engineering the app, bypassing security or usage limits, reselling unauthorized access, scraping data, uploading malicious code, infringing intellectual property rights, or using 521 in violation of tax, payroll, employment, privacy, consumer protection, sanctions, export, or financial recordkeeping laws. It also includes accepting payments or booking appointments for goods or services that are illegal or that Stripe prohibits, harassing your clients, and using 521 to fabricate, falsify, or deceptively alter pay stubs, income records, receipts, tax-related information, or other documents, or to mislead employers, workers, lenders, landlords, insurers, regulators, courts, or government agencies.",
     ],
   },
   {
-    title: "18. Third-Party Services and Content",
+    title: "19. Third-Party Services and Content",
     paragraphs: [
       "521 may rely on or integrate with third-party services such as authentication, cloud hosting, notifications, app stores, analytics, payment processing, maps, OCR, or other service providers. We are not responsible for the availability, accuracy, security, legality, or terms of any third-party services, content, or products. Those providers may change, suspend, or discontinue their services at any time.",
     ],
   },
   {
-    title: "19. Beta or Experimental Features",
+    title: "20. Beta or Experimental Features",
     paragraphs: [
       "We may offer beta, preview, early access, or experimental features from time to time. Those features may be incomplete, unstable, changed, or removed at any time and are provided on an as-is basis with no special guarantees.",
     ],
   },
   {
-    title: "20. Service Availability and Changes",
+    title: "21. Service Availability and Changes",
     paragraphs: [
       "We may modify, improve, restrict, suspend, or discontinue all or part of 521 at any time, with or without notice, to the extent permitted by law. We do not guarantee uninterrupted availability, continued support for any feature, or that 521 will be error-free, secure, or compatible with every device or operating system version.",
     ],
   },
   {
-    title: "21. Suspension, Termination, and Account Deletion",
+    title: "22. Suspension, Termination, and Account Deletion",
     paragraphs: [
       "We may suspend or terminate your access to 521, with or without notice, if we believe you violated these terms, created legal, financial, or security risk, failed to pay required fees, or used the app in a way that may harm us, other users, or third parties.",
       "You may request account deletion, subject to identity verification and any applicable legal, contractual, technical, fraud-prevention, billing, tax, security, or record-retention requirements. Deleting the app from your device does not necessarily cancel a subscription or delete your account or stored data.",
     ],
   },
   {
-    title: "22. Intellectual Property",
+    title: "23. Intellectual Property",
     paragraphs: [
       "521, including its software, code, design, branding, interfaces, text, graphics, underlying technology, and related intellectual property, is owned by Optivium AI Solutions LLC or its licensors and is protected by law. Except for the limited rights expressly granted in these terms, no rights are granted to you.",
     ],
   },
   {
-    title: "23. Disclaimer of Warranties",
+    title: "24. Disclaimer of Warranties",
     paragraphs: [
       "TO THE MAXIMUM EXTENT PERMITTED BY LAW, 521 IS PROVIDED \"AS IS\" AND \"AS AVAILABLE.\" WE DISCLAIM ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, ACCURACY, SECURITY, AVAILABILITY, AND QUIET ENJOYMENT.",
       "WITHOUT LIMITING THE FOREGOING, WE DO NOT WARRANT THAT ANY DATA, ESTIMATE, CLASSIFICATION, GENERATED DOCUMENT, REMINDER, RECEIPT EXTRACTION, LOCATION-BASED FEATURE, SUBSCRIPTION FEATURE, SYNC PROCESS, OR THIRD-PARTY INTEGRATION WILL BE ACCURATE, COMPLETE, CURRENT, ACCEPTED BY THIRD PARTIES, ERROR-FREE, SECURE, OR UNINTERRUPTED.",
     ],
   },
   {
-    title: "24. Limitation of Liability",
+    title: "25. Limitation of Liability",
     paragraphs: [
       "TO THE MAXIMUM EXTENT PERMITTED BY LAW, OPTIVIUM AI SOLUTIONS LLC AND ITS AFFILIATES, OFFICERS, MEMBERS, EMPLOYEES, CONTRACTORS, LICENSORS, AND SERVICE PROVIDERS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE, SAVINGS, TAX BENEFITS, BUSINESS OPPORTUNITY, GOODWILL, DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATING TO 521 OR THESE TERMS, WHETHER IN CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY, STATUTE, OR ANY OTHER LEGAL THEORY, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
       "TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS ARISING OUT OF OR RELATING TO 521 OR THESE TERMS WILL NOT EXCEED THE GREATER OF THE AMOUNT YOU PAID TO US FOR 521 IN THE TWELVE MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM OR USD $100.",
     ],
   },
   {
-    title: "25. Indemnification",
+    title: "26. Indemnification",
     paragraphs: [
       "You agree to defend, indemnify, and hold harmless Optivium AI Solutions LLC and its affiliates, officers, members, employees, contractors, licensors, and service providers from and against any claims, liabilities, damages, losses, judgments, fines, penalties, costs, and expenses, including reasonable attorneys' fees, arising out of or related to your use of 521, your data, your content, your violation of these terms, or your violation of any law or third-party rights.",
     ],
   },
   {
-    title: "26. Dispute Resolution; Arbitration; Class Action Waiver",
+    title: "27. Dispute Resolution; Arbitration; Class Action Waiver",
     paragraphs: [
       "To the maximum extent permitted by law, you and Optivium AI Solutions LLC agree to try to resolve disputes informally first. Except for disputes that qualify for small claims court, disputes that are not resolved informally will be resolved on an individual basis through binding arbitration instead of in court before a judge or jury. The Federal Arbitration Act and federal arbitration law govern the interpretation and enforcement of this section. Unless applicable law requires otherwise, the arbitration will be administered by the American Arbitration Association under its applicable consumer arbitration rules, as modified by these terms.",
       "You and we each waive any right to participate in a class action, class arbitration, private attorney general action, or other representative proceeding. If applicable law does not allow arbitration or class action waiver for a particular claim, that claim will proceed only to the extent required by law and the remainder of this section will still apply as far as permitted.",
@@ -210,28 +220,28 @@ export const TERMS_SECTIONS: LegalSection[] = [
     ],
   },
   {
-    title: "27. Governing Law",
+    title: "28. Governing Law",
     paragraphs: [
-      "Except to the extent preempted by applicable federal law or otherwise required by mandatory law, these terms are governed by the laws of the state in which Optivium AI Solutions LLC is organized, without regard to conflict-of-law rules. If a dispute is permitted to proceed in court rather than arbitration, you and we consent to the personal jurisdiction of the state and federal courts located in that state, subject to any non-waivable rights you may have under applicable law.",
+      "Except to the extent preempted by applicable federal law or otherwise required by mandatory law, these terms are governed by the laws of the State of Idaho, without regard to conflict-of-law rules. If a dispute is permitted to proceed in court rather than arbitration, you and we consent to the personal jurisdiction of the state and federal courts located in Idaho, subject to any non-waivable rights you may have under applicable law.",
     ],
   },
   {
-    title: "28. Updates to These Terms",
+    title: "29. Updates to These Terms",
     paragraphs: [
       "We may update these terms from time to time. If we make material changes, we may provide notice by updating the date above, posting updated terms in the app, emailing you, or using other reasonable means. Your continued use of 521 after updated terms become effective constitutes acceptance of the revised terms.",
     ],
   },
   {
-    title: "29. Miscellaneous",
+    title: "30. Miscellaneous",
     paragraphs: [
       "These terms, together with any incorporated policies or additional terms presented to you, form the entire agreement between you and us regarding 521. If any provision is held unenforceable, the remaining provisions will remain in effect. Our failure to enforce any provision is not a waiver. We may assign these terms in connection with a merger, acquisition, corporate reorganization, or sale of assets. Except as expressly stated in these terms, there are no third-party beneficiaries. Sections that by their nature should survive termination will survive termination.",
     ],
   },
   {
-    title: "30. Contact Information",
+    title: "31. Contact Information",
     paragraphs: [
       "Optivium AI Solutions LLC",
-      "For support, legal notices, or terms-related questions, please use the contact information provided through 521 or our official business contact channels, including the contact information we make available at the521app.com.",
+      "For support, legal notices, or terms-related questions, email support@the521app.com or use the form at the521app.com/support.",
     ],
   },
 ];
@@ -327,7 +337,7 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
   {
     title: "Contact",
     paragraphs: [
-      "If you have questions about this policy or your information, visit https://the521app.com/support.",
+      "If you have questions about this policy or your information, or want to exercise any of the choices above, email support@the521app.com or use the form at the521app.com/support.",
     ],
   },
 ];

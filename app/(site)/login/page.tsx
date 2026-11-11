@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FirebaseError } from "firebase/app";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { Eye, EyeOff } from "lucide-react";
 import { AuthLogo, AuthSecurityNote } from "@/components/auth-brand";
 import { Button } from "@/components/ui/button";
@@ -42,11 +42,43 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  const [resetting, setResetting] = useState(false);
+
+  // Same message whether or not the email has an account, so the reset form
+  // can't be used to find out who uses 521 (see getLoginErrorMessage).
+  async function handleForgotPassword() {
+    setError("");
+    setNotice("");
+    if (!email.trim()) {
+      setError("Enter your email above, then tap Forgot password again.");
+      return;
+    }
+    setResetting(true);
+    try {
+      await sendPasswordResetEmail(getAuthSafe(), email.trim());
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/invalid-email") {
+          setError("Please enter a valid email address.");
+          return;
+        }
+        if (error.code === "auth/too-many-requests") {
+          setError("Too many attempts. Please wait a few minutes before trying again.");
+          return;
+        }
+      }
+    } finally {
+      setResetting(false);
+    }
+    setNotice(`If ${email.trim()} has a 521 account, a reset link is on its way. Check your inbox and spam folder.`);
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setError("");
+    setNotice("");
 
     try {
       await signInWithEmailAndPassword(getAuthSafe(), email, password);
@@ -86,9 +118,19 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label htmlFor="password" className="mb-2 block text-sm font-medium text-foreground">
-              Password
-            </label>
+            <div className="mb-2 flex items-center justify-between">
+              <label htmlFor="password" className="block text-sm font-medium text-foreground">
+                Password
+              </label>
+              <button
+                type="button"
+                onClick={handleForgotPassword}
+                disabled={resetting}
+                className="text-sm text-primary underline-offset-4 hover:underline disabled:opacity-60"
+              >
+                {resetting ? "Sending..." : "Forgot password?"}
+              </button>
+            </div>
             <div className="relative">
               <input
                 id="password"
@@ -111,7 +153,8 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {error ? <p className="text-sm text-red-400">{error}</p> : null}
+          {error ? <p className="text-sm text-red-400" role="alert">{error}</p> : null}
+          {notice ? <p className="text-sm text-primary" role="status">{notice}</p> : null}
 
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Logging in..." : "Log in"}

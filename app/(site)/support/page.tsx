@@ -34,6 +34,26 @@ const faqs = [
     answer:
       "Request deletion in the app or by emailing us. Without an active paid plan, your data is deleted promptly. With one, deletion happens when your current paid period ends.",
   },
+  {
+    question: "Which plan do I need?",
+    answer:
+      "Essential is free and covers paychecks: hours, net pay after taxes, and pay periods. Pro is for business income, with expenses, P&Ls, invoicing, Charge, and booking. Complete is everything in Pro plus your paychecks, so W-2 and business income sit side by side.",
+  },
+  {
+    question: "Why do I import Venmo instead of connecting it?",
+    answer:
+      "Venmo payments that stay in your Venmo balance never reach your bank, so your bank connection can't see them. Download your Venmo statement as a CSV and upload it in 521 to bring that history in.",
+  },
+  {
+    question: "How do I get paid by card through 521?",
+    answer:
+      "Connect your own Stripe account once in Invoice settings. Invoice payments, Charge payments, and booking deposits go straight into that account. 521 never holds your money, and Stripe's processing fees are recorded as business expenses for you.",
+  },
+  {
+    question: "Is 521 on Android or the web?",
+    answer:
+      "521 is on iPhone and the web today, with the same account on both. Android is coming soon.",
+  },
 ];
 
 export default function SupportPage() {

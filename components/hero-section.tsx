@@ -34,6 +34,10 @@ export function HeroSection() {
               small business, with income arriving from different platforms. 521 brings every income stream into one
               place, so you can track your income and expenses in one simple view.
             </p>
+            <p className="mx-auto -mt-8 mb-12 max-w-lg text-sm leading-relaxed text-foreground/80 lg:mx-0">
+              Made for stylists, barbers, nail techs, tattoo artists, servers, bartenders, freelancers, drivers, and
+              anyone running a one-person business.
+            </p>
 
             <div className="mb-4 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
               <Button asChild size="lg" className="h-12 px-7 text-base">
