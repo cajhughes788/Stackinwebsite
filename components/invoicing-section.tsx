@@ -35,7 +35,7 @@ const shot = {
 
 export function InvoicingSection() {
   return (
-    <section id="invoicing" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
+    <section id="invoicing" className="scroll-mt-16 bg-surface py-32 lg:py-48">
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-4 sm:px-6 lg:grid-cols-[auto_1fr] lg:gap-24 lg:px-8">
         {/* Text first in the markup so phones read the heading before the screenshot. */}
         <div className="lg:order-2">

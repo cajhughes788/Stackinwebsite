@@ -24,7 +24,7 @@ const points = [
 
 export function SecuritySection() {
   return (
-    <section id="security" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
+    <section id="security" className="scroll-mt-16 py-32 lg:py-48">
       <div className="mx-auto grid max-w-7xl gap-20 px-4 sm:px-6 lg:grid-cols-[1fr_1.2fr] lg:gap-24 lg:px-8">
         <div>
           <span className="eyebrow section-label mb-8">05 / Security</span>

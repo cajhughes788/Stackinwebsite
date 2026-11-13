@@ -38,7 +38,7 @@ const shot = {
 // this section reads differently from the split sections around it.
 export function ChargeSection() {
   return (
-    <section id="charge" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
+    <section id="charge" className="scroll-mt-16 py-32 lg:py-48">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-16 max-w-3xl text-center lg:mb-20">
           <span className="eyebrow section-label mb-8">03 / Charge</span>

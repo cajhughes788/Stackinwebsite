@@ -35,7 +35,7 @@ const shot = {
 
 export function BookingSection() {
   return (
-    <section id="booking" className="scroll-mt-16 border-t border-border py-32 lg:py-48">
+    <section id="booking" className="scroll-mt-16 bg-surface py-32 lg:py-48">
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:gap-24 lg:px-8">
         <div>
           <span className="eyebrow section-label mb-8">04 / Booking</span>

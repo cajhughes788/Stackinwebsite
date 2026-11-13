@@ -8,6 +8,8 @@
   --background: #161b1e;
   --foreground: #ecebe6;
   --card: #1c2226;
+  /* Every other section sits on this slightly lifted tone, so topics read as bands. */
+  --surface: #1a2024;
   --card-foreground: #ecebe6;
   --popover: #1c2226;
   --popover-foreground: #ecebe6;
@@ -44,6 +46,8 @@
   --background: #161b1e;
   --foreground: #ecebe6;
   --card: #1c2226;
+  /* Every other section sits on this slightly lifted tone, so topics read as bands. */
+  --surface: #1a2024;
   --card-foreground: #ecebe6;
   --popover: #1c2226;
   --popover-foreground: #ecebe6;
@@ -83,6 +87,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-surface: var(--surface);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);

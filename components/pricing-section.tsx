@@ -156,7 +156,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
   }
 
   return (
-    <section id="pricing" className="scroll-mt-16 border-t border-border pb-32 pt-48 lg:pb-48 lg:pt-72">
+    <section id="pricing" className="scroll-mt-16 bg-surface pb-32 pt-48 lg:pb-48 lg:pt-72">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ProcessingOverlay
           open={activeTier !== null}
