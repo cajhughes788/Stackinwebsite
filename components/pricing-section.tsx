@@ -156,7 +156,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
   }
 
   return (
-    <section id="pricing" className="scroll-mt-16 bg-surface pb-32 pt-48 lg:pb-48 lg:pt-72">
+    <section id="pricing" className="scroll-mt-16 bg-surface py-24 lg:py-36">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ProcessingOverlay
           open={activeTier !== null}
@@ -165,7 +165,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
         />
         {/* Section Header */}
         <div className="mx-auto mb-20 max-w-3xl text-center lg:mb-28">
-          <span className="eyebrow section-label mb-8">06 / Pricing</span>
+          <span className="eyebrow section-label mb-8">03 / Pricing</span>
           <h2 className="mb-6 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance">Simple, transparent pricing</span>
           </h2>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FiveToOne } from "./five-to-one";
 import { IncomeMockup } from "./income-mockup";
@@ -44,6 +45,24 @@ export function HeroSection() {
             <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
               On iPhone and the web. Android coming soon.
             </p>
+
+            {/* Paths for each kind of earner, into the full Features page. */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 lg:justify-start">
+              <Link
+                href="/features#paychecks"
+                className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground"
+              >
+                Features for paychecks
+                <ArrowRight className="h-4 w-4 text-foreground/40 transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+              </Link>
+              <Link
+                href="/features#business"
+                className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground"
+              >
+                Features for your business
+                <ArrowRight className="h-4 w-4 text-foreground/40 transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+              </Link>
+            </div>
           </div>
 
           <div className="flex w-full flex-1 flex-col items-center gap-10">
