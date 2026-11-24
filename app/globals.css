@@ -316,6 +316,153 @@
   }
 }
 
+/* ---------- 3D ----------
+   Everything here reads the variables useDepth sets (components/use-depth.ts):
+   --p (1 entering, 0 centred, -1 leaving), --in (0..1 risen into view) and
+   --tx/--ty (mouse, -1..1). Their defaults are the resting pose, so without
+   JS or with reduced motion each piece shows flat and complete. */
+@layer components {
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Hero phone: a slab with real thickness that turns with the scroll. */
+  .phone-stage {
+    perspective: 1300px;
+  }
+  .phone-3d {
+    position: relative;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transform:
+      rotateX(calc(6deg + var(--p, 0) * 16deg - var(--ty, 0) * 9deg))
+      rotateY(calc(-14deg - var(--p, 0) * 16deg + var(--tx, 0) * 16deg));
+  }
+  /* Stacked plates behind the bezel read as the metal band; the last is the back. */
+  .phone-slab {
+    position: absolute;
+    inset: 0;
+    border-radius: 2.75rem;
+    transform: translateZ(calc(var(--z) * -2.25px));
+    background: linear-gradient(135deg, #59656b, #2a3337 45%, #48545a 70%, #262e32);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+  }
+  .phone-back {
+    background: #0b0f11;
+  }
+  /* The screen's layers float above the glass at different heights, so they
+     slide against each other as the phone turns. */
+  .depth-1 {
+    transform: translateZ(10px);
+  }
+  .depth-2 {
+    transform: translateZ(20px);
+  }
+  .depth-3 {
+    transform: translateZ(38px);
+  }
+  .phone-toast {
+    position: absolute;
+    /* Beside the status bar, clear of the total and the amounts. */
+    top: 1%;
+    right: -3%;
+    transform: translateZ(90px);
+    pointer-events: none;
+  }
+  @media (min-width: 640px) {
+    .phone-toast {
+      right: -18%;
+    }
+  }
+  .toast-in {
+    animation: toast-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both;
+  }
+  [data-js] .mockup:not(.is-playing) .toast-in {
+    animation-play-state: paused;
+  }
+  .toast-bob {
+    animation: toast-bob 5s ease-in-out infinite;
+  }
+  /* Soft shadow on the floor that slides opposite the lean. */
+  .phone-floor {
+    position: absolute;
+    inset: auto 8% -7% 8%;
+    height: 12%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(0 0 0 / 0.7), transparent);
+    filter: blur(10px);
+    transform: translateX(calc(var(--tx, 0) * -18px + var(--p, 0) * 14px));
+  }
+
+  /* Get paid: the phone swings away and the next one turns in. */
+  .paid-stage {
+    perspective: 1400px;
+  }
+  .paid-rig {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transform:
+      rotateX(calc(var(--p, 0) * 12deg - var(--ty, 0) * 6deg))
+      rotateY(calc(var(--p, 0) * -14deg + var(--tx, 0) * 12deg));
+  }
+  .paid-card {
+    transition:
+      transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  /* Security points fold upright as they rise into view, one after another. */
+  .fold-in {
+    --k: clamp(0, calc(var(--in, 1) * 1.3 - var(--i, 0) * 0.1), 1);
+    transform-origin: 50% 100%;
+    transform: perspective(900px) rotateX(calc((1 - var(--k)) * 65deg)) translateY(calc((1 - var(--k)) * 26px));
+    opacity: calc(0.1 + var(--k) * 0.9);
+  }
+
+  /* Pricing: the outer cards swing in from the sides and come into line; on
+     phones, where the cards stack, each folds up from below. */
+  .fan-in {
+    --s: 0;
+    --fold: 1;
+    --k: clamp(0, calc(var(--in, 1) * 1.2), 1);
+    --o: calc(1 - var(--k));
+    transform:
+      perspective(1600px)
+      translateX(calc(var(--s) * var(--o) * -10%))
+      translateZ(calc(var(--o) * -240px))
+      rotateY(calc(var(--s) * var(--o) * 42deg + var(--tx, 0) * 7deg))
+      rotateX(calc(var(--fold) * var(--o) * 40deg - var(--ty, 0) * 6deg));
+    opacity: calc(0.15 + var(--k) * 0.85);
+  }
+  @media (min-width: 768px) {
+    .fan-in {
+      --s: var(--side, 0);
+      --fold: 0;
+    }
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate3d(24px, 12px, 0) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes toast-bob {
+  0%,
+  100% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
 @keyframes statement-in {
   from {
     opacity: 0;
@@ -380,6 +527,8 @@
   }
   .stream-in,
   .bar-grow,
+  .toast-in,
+  .toast-bob,
   .statement-in,
   .scroll-cue,
   .orbit-float {
@@ -393,5 +542,8 @@
   }
   [data-js] .stream-orbit {
     display: none;
+  }
+  .paid-card {
+    transition: none;
   }
 }

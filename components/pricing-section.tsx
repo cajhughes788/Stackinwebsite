@@ -1,6 +1,7 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, type CSSProperties } from "react";
+import { Depth } from "@/components/depth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -178,10 +179,14 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
 
         {/* Pricing Cards */}
         <div className="grid items-start gap-6 md:grid-cols-3">
-          {plans.map((plan) => (
-            <div
+          {/* Each card swings in from its side (see .fan-in) and, on a mouse,
+              tilts toward the pointer. */}
+          {plans.map((plan, index) => (
+            <Depth
               key={plan.tier}
-              className={`relative rounded-2xl border bg-card p-8 ${
+              pointer
+              style={{ "--side": index - 1 } as CSSProperties}
+              className={`fan-in relative rounded-2xl border bg-card p-8 ${
                 plan.recommended ? "border-primary" : "border-border"
               }`}
             >
@@ -220,7 +225,7 @@ function PricingSectionContent({ source }: { source: AppSource | null }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Depth>
           ))}
         </div>
       </div>

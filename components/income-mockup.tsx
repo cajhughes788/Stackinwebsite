@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { ArrowUpRight, Banknote, Landmark, Smartphone } from "lucide-react";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { useDepth } from "./use-depth";
 
 // Illustrative numbers; the five streams add up to the total shown.
 const streams: { name: string; detail: string; amount: string; share: number; mark: ReactNode }[] = [
@@ -48,8 +49,14 @@ function Odometer({ value }: { value: string }) {
   );
 }
 
+// Layers behind the screen that give the phone its thickness (see .phone-slab).
+const SLABS = 8;
+
 export function IncomeMockup() {
   const rootRef = useRef<HTMLDivElement>(null);
+  // The phone turns to face you as it scrolls in, leans away as it leaves, and
+  // on a mouse leans toward the pointer.
+  useDepth(rootRef, { pointer: true });
 
   // Start the count and the stream animations when the phone scrolls into view.
   useEffect(() => {
@@ -69,9 +76,14 @@ export function IncomeMockup() {
   }, []);
 
   return (
-    <div ref={rootRef} className="mockup relative mx-auto w-full max-w-[340px]" aria-label="521 app showing total income across five payment streams" role="img">
-      <div className="rounded-[2.75rem] border border-border bg-[#0e1214] p-2.5 shadow-raised">
-        <div className="overflow-hidden rounded-[2.25rem] bg-background px-5 pb-6 pt-4">
+    <div ref={rootRef} className="mockup phone-stage relative mx-auto w-full max-w-[340px]" aria-label="521 app showing total income across five payment streams" role="img">
+      <div aria-hidden="true" className="phone-floor" />
+      <div className="phone-3d">
+        {Array.from({ length: SLABS }, (_, i) => (
+          <span key={i} aria-hidden="true" className={i === SLABS - 1 ? "phone-slab phone-back" : "phone-slab"} style={{ "--z": i + 1 } as CSSProperties} />
+        ))}
+      <div className="preserve-3d relative rounded-[2.75rem] border border-border bg-[#0e1214] p-2.5 shadow-raised">
+        <div className="preserve-3d rounded-[2.25rem] bg-background px-5 pb-6 pt-4">
           {/* Status bar */}
           <div className="mb-5 flex items-center justify-between text-[11px] font-medium text-foreground/80">
             <span>9:41</span>
@@ -79,10 +91,10 @@ export function IncomeMockup() {
             <span className="tracking-widest">•••</span>
           </div>
 
-          <Image src="/images/521-logo.svg" alt="" width={147} height={77} className="mb-5 h-6 w-auto" />
+          <Image src="/images/521-logo.svg" alt="" width={147} height={77} className="depth-1 mb-5 h-6 w-auto" />
 
           {/* Total */}
-          <div className="mb-6 rounded-xl border border-border bg-card px-4 py-4">
+          <div className="depth-3 mb-6 rounded-xl border border-border bg-card px-4 py-4 shadow-[0_18px_30px_-18px_rgb(0_0_0_/_0.9)]">
             <p className="text-xs text-muted-foreground">Total income · this month</p>
             <div className="mt-1 flex items-end justify-between">
               <p className="font-[family-name:var(--font-display)] text-3xl leading-none tabular-nums tracking-tight text-foreground">
@@ -96,7 +108,7 @@ export function IncomeMockup() {
           </div>
 
           <p className="mb-3 text-xs font-medium text-muted-foreground">Payment streams</p>
-          <ul className="space-y-3.5">
+          <ul className="depth-2 space-y-3.5">
             {streams.map((stream, index) => (
               <li
                 key={stream.name}
@@ -125,6 +137,20 @@ export function IncomeMockup() {
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+
+        {/* A payment arriving, floating in front of the glass. */}
+        <div aria-hidden="true" className="phone-toast">
+          <div className="toast-in">
+            <div className="toast-bob flex items-center gap-3 rounded-2xl border border-white/10 bg-[#161c1f] py-2.5 pl-2.5 pr-4 shadow-raised">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-primary-foreground">V</span>
+              <span className="leading-tight">
+                <span className="block text-[11px] text-muted-foreground">Venmo · just now</span>
+                <span className="block font-mono text-sm tabular-nums text-foreground">+$45.00</span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

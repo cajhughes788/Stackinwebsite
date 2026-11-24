@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Landmark, Lock, ShieldCheck, UserCheck } from "lucide-react";
+import type { CSSProperties } from "react";
+import { Depth } from "./depth";
 
 // Every point here mirrors the Data security and third-party sections of the
 // Privacy Policy (lib/legal.ts). Keep them in sync if either changes.
@@ -48,8 +50,8 @@ export function TrustStrip() {
         </div>
 
         <ul className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
-          {points.map(({ icon: Icon, title, description }) => (
-            <li key={title} className="flex gap-4 lg:block">
+          {points.map(({ icon: Icon, title, description }, i) => (
+            <Depth as="li" key={title} className="fold-in flex gap-4 lg:block" style={{ "--i": i } as CSSProperties}>
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20 lg:mb-4">
                 <Icon className="h-[18px] w-[18px]" strokeWidth={2} aria-hidden="true" />
               </span>
@@ -57,7 +59,7 @@ export function TrustStrip() {
                 <h3 className="mb-1 text-base font-normal leading-snug text-foreground">{title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
               </div>
-            </li>
+            </Depth>
           ))}
         </ul>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent } from "react";
+import { useDepth } from "./use-depth";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PhoneShot, type Screenshot } from "./phone-shot";
@@ -105,7 +106,10 @@ const tools: Tool[] = [
 export function GetPaidSection() {
   const [active, setActive] = useState(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const stageRef = useRef<HTMLDivElement>(null);
   const tool = tools[active];
+  // The phone tilts with the scroll and, on a mouse, toward the pointer.
+  useDepth(stageRef, { pointer: true });
 
   // Arrow keys move between tabs, as screen reader users expect.
   function onKeyDown(event: KeyboardEvent) {
@@ -170,20 +174,28 @@ export function GetPaidSection() {
           aria-labelledby={`tab-${tool.id}`}
           className="mt-10 grid items-center gap-12 lg:mt-16 lg:grid-cols-[auto_1fr] lg:gap-20"
         >
-          {/* All three phones share one spot and cross-fade, so the layout never jumps.
-              On phones the copy comes first, so a tab tap changes what's right below it. */}
-          <div className="order-2 grid lg:order-1">
-            {tools.map((item, index) => (
-              <div
-                key={item.id}
-                aria-hidden={index !== active}
-                className={`[grid-area:1/1] transition-opacity duration-500 ${
-                  index === active ? "opacity-100" : "pointer-events-none opacity-0"
-                }`}
-              >
-                <PhoneShot shot={item.shot} className="mx-auto" />
-              </div>
-            ))}
+          {/* All three phones share one spot, so the layout never jumps. A tab
+              switch swings the current phone away in 3D and turns the next one
+              in from the side it sits on. On phones the copy comes first, so a
+              tab tap changes what's right below it. */}
+          <div ref={stageRef} className="paid-stage order-2 lg:order-1">
+            <div className="paid-rig grid">
+              {tools.map((item, index) => {
+                const o = Math.sign(index - active);
+                return (
+                  <div
+                    key={item.id}
+                    aria-hidden={index !== active}
+                    className={`paid-card [grid-area:1/1] ${o === 0 ? "opacity-100" : "pointer-events-none opacity-0"}`}
+                    style={{
+                      transform: o === 0 ? "none" : `translateX(${o * 34}%) translateZ(-220px) rotateY(${o * -58}deg)`,
+                    }}
+                  >
+                    <PhoneShot shot={item.shot} className="mx-auto" />
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Keyed so the copy fades in fresh on each switch. */}
