@@ -156,7 +156,10 @@ export function InvoicingSection() {
         </div>
       </div>
 
-      <SceneMark name="invoicing-end" />
+      {/* Desktop: the stamp and the fold play over the card, with the text stepped aside. */}
+      <div className="hidden lg:block">
+        <SceneMark name="invoicing-end" />
+      </div>
       <AlsoIncluded
         className="mt-14 lg:mt-20"
         items={[
@@ -168,6 +171,13 @@ export function InvoicingSection() {
           "Deposits never counted twice",
         ]}
       />
+      {/* Phones: the copy sits over the middle of the scene, so the stamp landing
+          and the invoice folding into a plane each get open space below the card. */}
+      <div className="lg:hidden">
+        <div aria-hidden="true" className="scene-gap" />
+        <SceneMark name="invoicing-end" />
+        <div aria-hidden="true" className="scene-gap scene-gap-xl" />
+      </div>
     </SectionShell>
   );
 }

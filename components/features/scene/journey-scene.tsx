@@ -162,6 +162,8 @@ export function JourneyScene() {
     const measure = () => {
       markY.clear();
       document.querySelectorAll<HTMLElement>("[data-scene-mark]").forEach((el) => {
+        // A mark can exist twice, one per layout (phones / desktop); the hidden one doesn't count.
+        if (!el.getClientRects().length) return;
         markY.set(el.dataset.sceneMark!, el.getBoundingClientRect().top + window.scrollY);
       });
       sizeFrame();

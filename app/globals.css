@@ -676,6 +676,9 @@
 .scene-on .scene-gap-lg {
   height: 30svh;
 }
+.scene-on .scene-gap-xl {
+  height: 60svh;
+}
 /* Step aside (journey-scene.tsx): as a piece of a screenshot lifts into the
    scene, its phone fades with the scroll (set inline) and the section's text
    closes in on the centre. The closing-in is desktop only; on phones the
