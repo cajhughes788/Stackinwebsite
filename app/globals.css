@@ -695,6 +695,22 @@
   .scene-on [data-aside-grid][data-aside="1"] > .aside-col {
     transform: translate3d(var(--aside-x, 0), 0, 0);
   }
+  /* Charge's steps and points close in over the QR in the scene: a dark panel
+     behind them keeps the words readable. Outside the box, so nothing shifts. */
+  .scene-on .aside-backed {
+    position: relative;
+    isolation: isolate;
+  }
+  .scene-on .aside-backed::before {
+    content: "";
+    position: absolute;
+    inset: -1.5rem -1.75rem;
+    z-index: -1;
+    border-radius: 1.25rem;
+    background: rgb(14 18 20 / 0.88);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.05), 0 10px 40px rgb(0 0 0 / 0.35);
+    pointer-events: none;
+  }
 }
 /* When the journey ends, the sections take their colours back gently. */
 .section-shell {
@@ -767,13 +783,6 @@
   .scene-on .section-head::before {
     display: none;
   }
-}
-
-/* Phones: the journey's stills (JourneyStill in components/features/blocks.tsx)
-   fade into the section on every side, so no edge of the render shows. */
-.journey-still img {
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%);
 }
 
 /* The voice orb keeps swirling (journey-scene.tsx): its core turns, a fainter copy

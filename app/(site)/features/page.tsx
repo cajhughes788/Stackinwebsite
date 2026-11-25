@@ -34,9 +34,9 @@ export default function FeaturesPage() {
       <PaychecksSection />
       <OrganizeSection />
       <VoiceSection />
-      {/* The voice orb keeps swirling behind the close of the page; this keeps the
-          words above the scene (section-shell gives them its halo). */}
-      <div className="section-shell relative z-10">
+      {/* The close of the page is solid black: it rises over the scene, so the voice
+          orb is gone from "All your income. One place." down. */}
+      <div className="relative z-10 bg-background">
         <FeaturesCTA />
         <Footer />
       </div>

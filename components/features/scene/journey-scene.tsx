@@ -235,6 +235,7 @@ export function JourneyScene() {
 
     /* ---- Videos: load ahead; seek without piling up seeks ---- */
     const loaded = new Set<number>();
+    const touch = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
     const load = (clip: number) => {
       if (clip < 1 || clip > CLIPS || loaded.has(clip)) return;
       const v = videos[clip - 1];
@@ -242,8 +243,18 @@ export function JourneyScene() {
       loaded.add(clip);
       v.src = media(`/media/journey/c${clip}${small.matches || lite ? "-m" : ""}.mp4`);
       v.load();
-      // iOS only lets a muted inline video seek after it has played once.
-      v.play().then(() => v.pause()).catch(() => {});
+      // iOS only lets a muted inline video seek after it has played once. Only
+      // touch screens need it: on a first, uncached visit the play runs until the
+      // file has buffered, so the clip would play on its own, ahead of the scroll
+      // and the morphs. Wherever it runs, it stops on its first frame and goes
+      // back to where the scroll wants it.
+      if (touch) {
+        v.addEventListener("playing", () => {
+          v.pause();
+          schedule();
+        }, { once: true });
+        v.play().catch(() => {});
+      }
     };
     // Once the scene is showing, fetch the rest ahead of the reader, one at a time.
     let prefetching = false;
@@ -266,7 +277,14 @@ export function JourneyScene() {
       if (Math.abs(v.currentTime - target) > 1 / 60) v.currentTime = target;
     };
     videos.forEach((v) => v?.addEventListener("seeked", () => { const t = want.get(v); if (t !== undefined) seek(v, t); }));
-    videos.forEach((v) => v?.addEventListener("loadeddata", () => { const t = want.get(v); if (t !== undefined) seek(v, t); schedule(); }));
+    // Once a clip can show a frame, the next draw seeks it to where the scroll is.
+    videos.forEach((v) => v?.addEventListener("loadeddata", () => schedule()));
+    // A clip is ready to show once it's paused on the frame the scroll wants.
+    const onFrame = (v: HTMLVideoElement) => {
+      const t = want.get(v);
+      return v.readyState >= 2 && v.paused && !v.seeking && t !== undefined && Math.abs(v.currentTime - Math.min(t, v.duration - 0.04)) < 0.12;
+    };
+    videos.forEach((v) => v?.addEventListener("seeked", () => schedule()));
 
     /* ---- Cues, holds and captions ---- */
     const parseAt = (s: string) => {
@@ -457,9 +475,10 @@ export function JourneyScene() {
       layer.dataset.seg = live.before ? "before" : live.seg.id;
       const v = videos[clip - 1];
       if (v) {
-        if (v.duration) seek(v, ct * v.duration); else want.set(v, ct);
-        // Swap only once the new clip has a frame to show, so nothing flashes.
-        if (shown !== clip && v.readyState >= 2) {
+        if (v.duration) seek(v, ct * v.duration);
+        // Swap only once the new clip shows the frame the scroll wants, so nothing
+        // flashes and nothing runs ahead of the morphs.
+        if (shown !== clip && onFrame(v)) {
           videos.forEach((o, i) => o?.classList.toggle("is-shown", i === clip - 1));
           shown = clip;
         }

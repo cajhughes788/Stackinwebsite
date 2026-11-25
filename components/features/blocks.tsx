@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Check, Mic } from "lucide-react";
 import { Reveal } from "@/components/reveal";
-import { media } from "@/lib/media";
 import { SceneMark } from "./scene/journey-scene";
 
 export type Highlight = { title: string; description: string };
@@ -38,46 +37,6 @@ export function SectionShell({
       </Reveal>
       {endMark ? <SceneMark name={endMark} only={endMarkDesktopOnly ? "desktop" : undefined} /> : null}
     </section>
-  );
-}
-
-/** Phones and tablets: the Features journey's finished picture for this section
- *  (a still from its clip, public/images/journey, 720 wide), since the scene plays
- *  only on laptops. It fades into the section on every side; real text is the caption. */
-export function JourneyStill({
-  src,
-  alt,
-  height = 648,
-  caption,
-  strong = false,
-}: {
-  src: string;
-  alt: string;
-  height?: number;
-  caption?: string;
-  strong?: boolean;
-}) {
-  return (
-    <figure className="journey-still mx-auto mt-10 w-full max-w-md lg:hidden">
-      {/* eslint-disable-next-line @next/next/no-img-element -- a static export; stills are pre-sized WebP */}
-      <img
-        src={media(src)}
-        alt={alt}
-        width={720}
-        height={height}
-        loading="lazy"
-        decoding="async"
-        draggable={false}
-        className="block h-auto w-full select-none"
-      />
-      {caption ? (
-        <figcaption
-          className={`-mt-8 text-center font-mono text-[11px] uppercase tracking-[0.22em] ${strong ? "text-primary" : "text-foreground/70"}`}
-        >
-          {caption}
-        </figcaption>
-      ) : null}
-    </figure>
   );
 }
 
