@@ -234,6 +234,10 @@ export function JourneyScene() {
     };
 
     /* ---- Videos: load ahead; seek without piling up seeks ---- */
+    // Every listener on the videos goes when the scene unmounts (dev mounts it
+    // twice; a stale copy would keep seeking and swapping the same videos).
+    const off = new AbortController();
+    const signal = off.signal;
     const loaded = new Set<number>();
     const touch = window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
     const load = (clip: number) => {
@@ -252,7 +256,7 @@ export function JourneyScene() {
         v.addEventListener("playing", () => {
           v.pause();
           schedule();
-        }, { once: true });
+        }, { once: true, signal });
         v.play().catch(() => {});
       }
     };
@@ -265,7 +269,7 @@ export function JourneyScene() {
         while (c <= CLIPS && loaded.has(c)) c++;
         if (c > CLIPS) return;
         load(c);
-        videos[c - 1]?.addEventListener("canplaythrough", next, { once: true });
+        videos[c - 1]?.addEventListener("canplaythrough", next, { once: true, signal });
       };
       next();
     };
@@ -276,15 +280,25 @@ export function JourneyScene() {
       const target = Math.min(t, v.duration - 0.04);
       if (Math.abs(v.currentTime - target) > 1 / 60) v.currentTime = target;
     };
-    videos.forEach((v) => v?.addEventListener("seeked", () => { const t = want.get(v); if (t !== undefined) seek(v, t); }));
+    videos.forEach((v) => v?.addEventListener("seeked", () => { const t = want.get(v); if (t !== undefined) seek(v, t); }, { signal }));
     // Once a clip can show a frame, the next draw seeks it to where the scroll is.
-    videos.forEach((v) => v?.addEventListener("loadeddata", () => schedule()));
-    // A clip is ready to show once it's paused on the frame the scroll wants.
+    videos.forEach((v) => v?.addEventListener("loadeddata", () => schedule(), { signal }));
+    // A clip is ready to show once it's paused and has followed the scroll at
+    // least once (or already sits where the scroll wants it). Only that first
+    // landing is waited for: while the reader keeps scrolling the target moves
+    // every frame, so "exactly on the frame" would hold a clip back to its end.
+    const settled = new Set<HTMLVideoElement>();
+    // A landed clip keeps its last frame on screen while it seeks on, so it can
+    // show then even though the browser reports it as not ready mid-seek (which,
+    // while the reader scrolls, is nearly always).
     const onFrame = (v: HTMLVideoElement) => {
+      if (settled.has(v)) return true;
+      if (v.readyState < 2 || !v.paused || v.seeking) return false;
       const t = want.get(v);
-      return v.readyState >= 2 && v.paused && !v.seeking && t !== undefined && Math.abs(v.currentTime - Math.min(t, v.duration - 0.04)) < 0.12;
+      return t !== undefined && Math.abs(v.currentTime - Math.min(t, v.duration - 0.04)) < 0.12;
     };
-    videos.forEach((v) => v?.addEventListener("seeked", () => schedule()));
+    videos.forEach((v) => v?.addEventListener("seeked", () => { settled.add(v); schedule(); }, { signal }));
+    videos.forEach((v) => v?.addEventListener("emptied", () => settled.delete(v), { signal }));
 
     /* ---- Cues, holds and captions ---- */
     const parseAt = (s: string) => {
@@ -657,6 +671,7 @@ export function JourneyScene() {
     ro.observe(layer);
 
     return () => {
+      off.abort();
       cancelAnimationFrame(frameId);
       wakeEvents.forEach((e) => window.removeEventListener(e, wake));
       window.removeEventListener("scroll", schedule);
