@@ -1,20 +1,99 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/auth-provider";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
+
+// Sections listed under Features in the nav. Booking, Invoicing and Voice are
+// sections of the Features page; Security and Pricing live on the home page.
+const FEATURE_LINKS = [
+  { label: "Booking", href: "/features#booking" },
+  { label: "Invoicing", href: "/features#invoicing" },
+  { label: "Voice", href: "/features#voice" },
+  { label: "Security", href: "/#security" },
+  { label: "Pricing", href: "/#pricing" },
+];
+
+// "Features" opens a small menu: on hover with a mouse, or by click / keyboard.
+function FeaturesMenu() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onBlur={(e) => {
+        if (!ref.current?.contains(e.relatedTarget as Node)) setOpen(false);
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        onClick={() => setOpen((o) => !o)}
+        className={`flex items-center gap-1 text-sm transition-colors hover:text-foreground ${open ? "text-foreground" : "text-muted-foreground"}`}
+      >
+        Features
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      {/* pt-3 bridges the gap, so the menu stays open while the mouse moves down to it. */}
+      <div className={`absolute left-1/2 top-full -translate-x-1/2 pt-3 ${open ? "" : "pointer-events-none invisible"}`}>
+        <div
+          className={`w-48 rounded-xl border border-border bg-card/95 p-1.5 shadow-raised backdrop-blur-xl transition duration-150 ${
+            open ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"
+          }`}
+        >
+          <Link
+            href="/features"
+            onClick={() => setOpen(false)}
+            className="block rounded-lg px-3 py-2 text-sm text-foreground transition-colors hover:bg-white/[0.05]"
+          >
+            All features
+          </Link>
+          <div className="mx-3 my-1 h-px bg-border" />
+          {FEATURE_LINKS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className="block rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Navbar() {
   const { user, authLoading } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const showAuthCtas = !authLoading && !user;
-  // The home page shows Invoicing and Booking as tabs; the full sections live
-  // on the Features page, so nav links always go there.
-  const featureHref = (id: string) => `/features#${id}`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,47 +125,12 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden items-center gap-8 md:flex">
-            <Link
-              href="/features"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Features
-            </Link>
-            <Link
-              href={featureHref("invoicing")}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Invoicing
-            </Link>
-            <Link
-              href={featureHref("booking")}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Booking
-            </Link>
+            <FeaturesMenu />
             <Link
               href="/support"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               Support
-            </Link>
-            <Link
-              href="/features#voice"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Voice
-            </Link>
-            <Link
-              href="/#security"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Security
-            </Link>
-            <Link
-              href="/#pricing"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Pricing
             </Link>
           </div>
 
@@ -140,47 +184,24 @@ export function Navbar() {
             >
               Features
             </Link>
-            <Link
-              href={featureHref("invoicing")}
-              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Invoicing
-            </Link>
-            <Link
-              href={featureHref("booking")}
-              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Booking
-            </Link>
+            <div className="space-y-3 border-l border-border pl-4">
+              {FEATURE_LINKS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block text-sm text-muted-foreground/80 transition-colors hover:text-foreground"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
             <Link
               href="/support"
               className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Support
-            </Link>
-            <Link
-              href="/features#voice"
-              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Voice
-            </Link>
-            <Link
-              href="/#security"
-              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Security
-            </Link>
-            <Link
-              href="/#pricing"
-              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Pricing
             </Link>
             {showAuthCtas ? (
               <div className="flex flex-col gap-3 pt-4">

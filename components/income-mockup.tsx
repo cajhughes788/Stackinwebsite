@@ -72,7 +72,7 @@ export function IncomeMockup() {
   return (
     // Wider than its column on purpose: the clip's edges fade into the page,
     // and the phone itself is about 70% of the clip's width.
-    <div ref={rootRef} className="mockup relative w-[min(480px,112vw)] shrink-0">
+    <div ref={rootRef} className="mockup relative w-[min(480px,92vw)] shrink-0">
       <SwayPhone bg="161b1e" label="521 app showing total income across five payment streams">
         <div className="px-5 pb-6 pt-1">
           <StatusBar className="-mx-5 mb-3" />

@@ -140,6 +140,9 @@ export function JourneyScene() {
     const ghostScene = ghostSceneRef.current;
     if (!layer || !frame || !shadow || !ghostLayer || !ghostScene) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Phones and tablets get the plain page: on a narrow screen the scene sits
+    // behind the copy and the pieces flying in cover the text.
+    if (window.matchMedia("(max-width: 1023px)").matches) return;
 
     const root = document.documentElement;
     // The journey plays once, for readers who scroll down from the top. Once

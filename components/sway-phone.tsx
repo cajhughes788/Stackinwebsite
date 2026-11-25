@@ -8,8 +8,10 @@ import { SWAY } from "@/lib/sway-track";
 // corners were tracked in every frame (work/phone/build.py writes them to
 // lib/sway-track.ts); here the screen is laid out at a fixed design size and
 // mapped onto that frame's corners with a perspective matrix, so the UI stays
-// sharp HTML while the phone around it moves. The clip's background is baked
-// to the page colour it sits on (`bg`), one encode per colour.
+// sharp HTML while the phone around it moves. The clip's background is black and
+// it is blended with `lighten` over a box filled with the page colour, so the
+// background is exactly the page in every browser (decoders shift dark video
+// colours by a shade or two, which showed as a faint box).
 //
 // The video only plays while on screen. With reduced motion it holds the first
 // frame, which faces straight on.
@@ -43,7 +45,7 @@ export function SwayPhone({
   className = "",
   children,
 }: {
-  /** Page colour behind the phone; picks the matching encode ("161b1e" or "1a2024"). */
+  /** Page colour behind the phone (hex without #). */
   bg: "161b1e" | "1a2024";
   /** Accessible description of what the screen shows. */
   label?: string;
@@ -117,23 +119,23 @@ export function SwayPhone({
       ref={boxRef}
       role={label ? "img" : undefined}
       aria-label={label}
-      className={`relative isolate w-full overflow-hidden ${className}`}
-      style={{ aspectRatio: `${SWAY.width} / ${SWAY.height}` }}
+      className={`relative isolate w-full ${className}`}
+      style={{ aspectRatio: `${SWAY.width} / ${SWAY.height}`, background: `#${bg}` }}
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-[10%] top-[20%] -z-10 h-[60%] rounded-full bg-primary/[0.12] blur-[70px]"
+        className="pointer-events-none absolute inset-x-[22%] top-[25%] h-[50%] rounded-full bg-primary/[0.12] blur-[60px]"
       />
       <video
         ref={videoRef}
-        src={`/media/phone/sway-${bg}.mp4`}
-        poster={`/media/phone/sway-${bg}.webp`}
+        src={`/media/phone/sway.mp4?v=${SWAY.version}`}
+        poster={`/media/phone/sway.webp?v=${SWAY.version}`}
         muted
         loop
         playsInline
         preload="auto"
         aria-hidden="true"
-        className="sway-fade absolute inset-0 h-full w-full"
+        className="absolute inset-0 h-full w-full mix-blend-lighten"
       />
       <div
         ref={screenRef}

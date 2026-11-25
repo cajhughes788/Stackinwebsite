@@ -176,7 +176,7 @@ export function GetPaidSection() {
               so the layout never jumps. On phones the copy comes first, so a tab
               tap changes what's right below it. */}
           <div className="order-2 flex justify-center lg:order-1">
-            <div className="w-[min(480px,112vw)] shrink-0 lg:-mx-16">
+            <div className="w-[min(480px,92vw)] shrink-0 lg:-mx-16">
               <SwayPhone bg="1a2024" label={tool.shot.alt}>
                 <StatusBar />
                 {tools.map((item, index) => (
