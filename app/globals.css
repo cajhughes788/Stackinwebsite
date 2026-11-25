@@ -712,6 +712,15 @@
   [data-sway="css"] .sway-stage {
     animation: sway-rock 3s ease-in-out -1.5s infinite alternate;
   }
+  /* Blend modes don't survive 3D transforms, so the video's black background
+     would tilt into view; rock a cut-out still of the phone instead. */
+  .sway-still,
+  [data-sway="css"] .sway-video {
+    display: none;
+  }
+  [data-sway="css"] .sway-still {
+    display: block;
+  }
 }
 @keyframes sway-rock {
   from {

@@ -203,7 +203,7 @@ export function SwayPhone({
         className="pointer-events-none absolute inset-x-[22%] top-[25%] h-[50%] rounded-full bg-primary/[0.12] blur-[60px]"
       />
       {/* Blended with lighten as a group, so the black background takes the page colour. */}
-      <div className="sway-stage absolute inset-0 mix-blend-lighten">
+      <div className="sway-video sway-stage absolute inset-0 mix-blend-lighten">
         <video
           ref={videoRef}
           src={`/media/phone/sway.mp4?v=${SWAY.version}`}
@@ -212,6 +212,17 @@ export function SwayPhone({
           loop
           playsInline
           preload="auto"
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full"
+        />
+      </div>
+      {/* The CSS fallback rotates in 3D, where the blend above stops working and the
+          video's black box would show; it swaps in this cut-out still instead. */}
+      <div className="sway-still sway-stage absolute inset-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`/media/phone/sway-still.webp?v=${SWAY.version}`}
+          alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full"
         />
