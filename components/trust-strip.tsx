@@ -36,7 +36,7 @@ export function TrustStrip() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="eyebrow section-label mb-4">03 / Security</span>
+            <span className="eyebrow section-label mb-4">02 / Security</span>
             <h2 className="text-2xl font-normal leading-tight text-foreground sm:text-3xl">
               Built to be trusted with your money
             </h2>

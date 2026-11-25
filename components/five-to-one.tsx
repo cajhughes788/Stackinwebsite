@@ -133,8 +133,6 @@ export function FiveToOne() {
         // scaled back up, so every name stays crisp and the same size at rest.
         icon.style.setProperty("--near", near.toFixed(3));
         icon.style.setProperty("--chip-blur", near < 1 ? `${((1 - near) * 4).toFixed(2)}px` : "0px");
-        // Each tile spins like a coin on its way into ONE, one and a half turns.
-        icon.style.setProperty("--spin", `${(t * 540).toFixed(1)}deg`);
         // Labels read at rest, then fade as soon as the icon starts to travel.
         icon.style.setProperty("--label", String(1 - clamp01(t / 0.2)));
       });
@@ -219,11 +217,7 @@ export function FiveToOne() {
                 <span className="statement-in flex flex-col items-center gap-2.5" style={{ animationDelay: `${1.4 + i * 0.1}s` }}>
                   <span
                     className="orbit-chip flex h-14 w-14 items-center justify-center rounded-[0.95rem] text-primary sm:h-[4.5rem] sm:w-[4.5rem] sm:rounded-[1.25rem]"
-                    style={{
-                      filter: "blur(var(--chip-blur, 0px))",
-                      opacity: "calc(0.4 + 0.6 * var(--near, 1))",
-                      transform: "perspective(420px) rotateY(var(--spin, 0deg)) rotateX(calc(var(--spin, 0deg) * 0.06))",
-                    }}
+                    style={{ filter: "blur(var(--chip-blur, 0px))", opacity: "calc(0.4 + 0.6 * var(--near, 1))" }}
                   >
                     {stream.mark}
                   </span>

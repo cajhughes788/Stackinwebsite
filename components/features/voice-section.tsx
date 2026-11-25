@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import { SceneMark } from "./scene/journey-scene";
 import { CalendarClock, FileText, Mic, Receipt, Sparkles, Wallet } from "lucide-react";
-import { useDepth } from "./use-depth";
 
 type Field = { label: string; value: string };
 type Moment = {
@@ -108,7 +108,7 @@ function Waveform() {
 function VoiceCard({ m }: { m: Moment }) {
   const fieldCount = m.fields?.length ?? 1;
   return (
-    <div className="voice-card preserve-3d rounded-[1.6rem] border border-white/[0.09] bg-gradient-to-b from-[#1b2226] to-[#12171a] p-4 shadow-raised sm:p-6">
+    <div className="voice-card rounded-[1.6rem] border border-white/[0.09] bg-gradient-to-b from-[#1b2226] to-[#12171a] p-4 shadow-raised sm:p-6">
       <div className="mb-3 flex items-center justify-between sm:mb-4">
         <span className="flex items-center gap-2 text-sm font-medium text-foreground">
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/15 text-primary">{m.icon}</span>
@@ -128,7 +128,7 @@ function VoiceCard({ m }: { m: Moment }) {
       </p>
 
       {m.fields ? (
-        <dl className="preserve-3d space-y-2 sm:space-y-2.5">
+        <dl className="space-y-2 sm:space-y-2.5">
           {m.fields.map((f, j) => (
             <div
               key={f.label}
@@ -143,7 +143,7 @@ function VoiceCard({ m }: { m: Moment }) {
       ) : null}
 
       {m.answer ? (
-        <div className="voice-field preserve-3d rounded-xl border border-primary/25 bg-primary/[0.07] px-4 py-5" style={{ "--s": 0.5 } as CSSProperties}>
+        <div className="voice-field rounded-xl border border-primary/25 bg-primary/[0.07] px-4 py-5" style={{ "--s": 0.5 } as CSSProperties}>
           <p className="font-[family-name:var(--font-display)] text-4xl tabular-nums tracking-tight text-foreground">{m.answer.figure}</p>
           <p className="mt-1.5 text-sm text-muted-foreground">{m.answer.caption}</p>
         </div>
@@ -165,13 +165,13 @@ function VoiceCard({ m }: { m: Moment }) {
 // Voice: one sticky stage where each sentence is "said" word by word as you
 // scroll, and the form it fills rises out of a 3D deck of cards. Without JS or
 // with reduced motion, the five cards simply sit in a grid.
+// Features page, 08 / Voice: the journey's voice orb sits behind the heading
+// (its last marks are here), then the stage takes over.
 export function VoiceSection() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const deckRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
-  useDepth(deckRef, { pointer: true });
 
   useEffect(() => {
     const track = trackRef.current;
@@ -201,8 +201,8 @@ export function VoiceSection() {
         const card = cardRefs.current[i];
         if (card) {
           card.style.setProperty("--local", local.toFixed(3));
-          // Waiting cards sit below and behind; finished ones lift up and away.
-          card.style.transform = `translate3d(0, ${d * 26}%, ${-ad * 240}px) rotateX(${-d * 30}deg)`;
+          // The next card rises into place as the last one lifts away.
+          card.style.transform = `translate3d(0, ${d * 12}%, 0) scale(${(1 - Math.min(ad, 1) * 0.04).toFixed(3)})`;
           card.style.opacity = String(clamp01(1 - (ad - 0.15) * 1.25));
           card.style.zIndex = String(10 - Math.round(ad * 2));
         }
@@ -248,10 +248,10 @@ export function VoiceSection() {
   }, []);
 
   return (
-    <section id="voice" className="scroll-mt-16 pt-24 lg:pt-36">
+    <section id="voice" className="section-shell relative z-10 scroll-mt-32 pt-24 lg:pt-36">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow section-label mb-6">02 / Voice</span>
+          <span className="eyebrow section-label mb-6">08 / Voice</span>
           <h2 className="mb-5 text-4xl font-normal leading-[1.05] text-foreground sm:text-5xl">
             <span className="text-balance">Just say it</span>
           </h2>
@@ -259,11 +259,14 @@ export function VoiceSection() {
             Tap the mic and talk the way you would to a friend. 521 fills in the entry, the expense, the invoice or
             the booking, and nothing saves until you check it and tap.
           </p>
+          <SceneMark name="voice-start" />
         </div>
       </div>
+      {/* The journey fades out here, before the stage. */}
+      <SceneMark name="scene-end" />
 
       <div ref={trackRef} className="voice-track relative">
-        <div className="voice-stage mx-auto grid max-w-6xl content-center items-center gap-5 px-4 sm:gap-8 sm:px-6 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-16 lg:px-8">
+        <div className="voice-stage voice-under-tabs mx-auto grid max-w-6xl content-center items-center gap-5 px-4 sm:gap-8 sm:px-6 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-16 lg:px-8">
           {/* What's being said, word by word, over a live waveform. */}
           <div className="voice-said">
             <ol className="voice-steps mb-8 hidden gap-2 lg:flex lg:flex-col">
@@ -310,7 +313,7 @@ export function VoiceSection() {
           </div>
 
           {/* The forms, as a deck of cards in depth. */}
-          <div ref={deckRef} className="voice-deck-stage">
+          <div className="voice-deck-stage">
             <div className="voice-deck grid">
               {moments.map((m, i) => (
                 <div

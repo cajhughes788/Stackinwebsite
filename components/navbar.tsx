@@ -71,7 +71,7 @@ export function Navbar() {
               Support
             </Link>
             <Link
-              href="/#voice"
+              href="/features#voice"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               Voice
@@ -162,7 +162,7 @@ export function Navbar() {
               Support
             </Link>
             <Link
-              href="/#voice"
+              href="/features#voice"
               className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
               onClick={() => setIsMobileMenuOpen(false)}
             >

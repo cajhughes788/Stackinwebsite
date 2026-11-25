@@ -326,91 +326,6 @@
     transform-style: preserve-3d;
   }
 
-  /* Hero phone: a slab with real thickness that turns with the scroll. */
-  .phone-stage {
-    perspective: 1300px;
-  }
-  .phone-3d {
-    position: relative;
-    transform-style: preserve-3d;
-    will-change: transform;
-    transform:
-      rotateX(calc(6deg + var(--p, 0) * 16deg - var(--ty, 0) * 9deg))
-      rotateY(calc(-14deg - var(--p, 0) * 16deg + var(--tx, 0) * 16deg));
-  }
-  /* Stacked plates behind the bezel read as the metal band; the last is the back. */
-  .phone-slab {
-    position: absolute;
-    inset: 0;
-    border-radius: 2.75rem;
-    transform: translateZ(calc(var(--z) * -2.25px));
-    background: linear-gradient(135deg, #59656b, #2a3337 45%, #48545a 70%, #262e32);
-    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
-  }
-  .phone-back {
-    background: #0b0f11;
-  }
-  /* The screen's layers float above the glass at different heights, so they
-     slide against each other as the phone turns. */
-  .depth-1 {
-    transform: translateZ(10px);
-  }
-  .depth-2 {
-    transform: translateZ(20px);
-  }
-  .depth-3 {
-    transform: translateZ(38px);
-  }
-  .phone-toast {
-    position: absolute;
-    /* Beside the status bar, clear of the total and the amounts. */
-    top: 1%;
-    right: -3%;
-    transform: translateZ(90px);
-    pointer-events: none;
-  }
-  @media (min-width: 640px) {
-    .phone-toast {
-      right: -18%;
-    }
-  }
-  .toast-in {
-    animation: toast-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both;
-  }
-  [data-js] .mockup:not(.is-playing) .toast-in {
-    animation-play-state: paused;
-  }
-  .toast-bob {
-    animation: toast-bob 5s ease-in-out infinite;
-  }
-  /* Soft shadow on the floor that slides opposite the lean. */
-  .phone-floor {
-    position: absolute;
-    inset: auto 8% -7% 8%;
-    height: 12%;
-    border-radius: 50%;
-    background: radial-gradient(closest-side, rgb(0 0 0 / 0.7), transparent);
-    filter: blur(10px);
-    transform: translateX(calc(var(--tx, 0) * -18px + var(--p, 0) * 14px));
-  }
-
-  /* Get paid: the phone swings away and the next one turns in. */
-  .paid-stage {
-    perspective: 1400px;
-  }
-  .paid-rig {
-    transform-style: preserve-3d;
-    will-change: transform;
-    transform:
-      rotateX(calc(var(--p, 0) * 12deg - var(--ty, 0) * 6deg))
-      rotateY(calc(var(--p, 0) * -14deg + var(--tx, 0) * 12deg));
-  }
-  .paid-card {
-    transition:
-      transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-
   /* Security points fold upright as they rise into view, one after another. */
   .fold-in {
     --k: clamp(0, calc(var(--in, 1) * 1.3 - var(--i, 0) * 0.1), 1);
@@ -453,13 +368,7 @@
     top: 4rem;
     height: calc(100svh - 4rem);
   }
-  .voice-deck-stage {
-    perspective: 1400px;
-  }
-  .voice-deck {
-    transform-style: preserve-3d;
-    transform: rotateY(calc(-8deg + var(--tx, 0) * 10deg)) rotateX(calc(4deg - var(--ty, 0) * 6deg));
-  }
+
   .voice-slot {
     will-change: transform, opacity;
   }
@@ -469,12 +378,12 @@
   .voice-field {
     --f: clamp(0, calc((var(--local, 1) - var(--s, 0)) * 7), 1);
     opacity: var(--f);
-    transform: translateZ(calc(var(--f) * 22px)) translateY(calc((1 - var(--f)) * 10px));
+    transform: translateY(calc((1 - var(--f)) * 10px));
   }
   /* Rows show as an empty form first; their values arrive as they're said. */
   .voice-row {
     opacity: calc(0.28 + var(--f) * 0.72);
-    transform: translateZ(calc(var(--f) * 22px));
+    transform: none;
   }
   .voice-row > * {
     opacity: var(--f);
@@ -578,26 +487,7 @@
 }
 
 
-@keyframes toast-in {
-  from {
-    opacity: 0;
-    transform: translate3d(24px, 12px, 0) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
 
-@keyframes toast-bob {
-  0%,
-  100% {
-    transform: translateY(-5px);
-  }
-  50% {
-    transform: translateY(5px);
-  }
-}
 
 @keyframes statement-in {
   from {
@@ -663,8 +553,6 @@
   }
   .stream-in,
   .bar-grow,
-  .toast-in,
-  .toast-bob,
   .statement-in,
   .scroll-cue,
   .orbit-float {
@@ -678,9 +566,6 @@
   }
   [data-js] .stream-orbit {
     display: none;
-  }
-  .paid-card {
-    transition: none;
   }
   [data-js] .voice-track {
     height: auto;
@@ -813,4 +698,11 @@
 /* When the journey ends, the sections take their colours back gently. */
 .section-shell {
   transition: background-color 0.6s ease;
+}
+/* On Features the stage sits under the section tabs as well as the navbar. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-js] .voice-stage.voice-under-tabs {
+    top: 7.4rem;
+    height: calc(100svh - 7.4rem);
+  }
 }

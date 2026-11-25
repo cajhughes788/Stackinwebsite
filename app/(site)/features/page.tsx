@@ -5,12 +5,12 @@ import { Footer } from "@/components/footer";
 import { FeaturesHero } from "@/components/features/features-hero";
 import { FeaturesCTA } from "@/components/features/features-cta";
 import { SectionNav } from "@/components/features/section-nav";
-import { JourneyScene, SceneMark } from "@/components/features/scene/journey-scene";
+import { VoiceSection } from "@/components/features/voice-section";
+import { JourneyScene } from "@/components/features/scene/journey-scene";
 import {
   BookingSection,
   BusinessSection,
   ChargeSection,
-  FeaturesVoiceSection,
   IncomeSection,
   InvoicingSection,
   OrganizeSection,
@@ -33,8 +33,7 @@ export default function FeaturesPage() {
       <BusinessSection />
       <PaychecksSection />
       <OrganizeSection />
-      <FeaturesVoiceSection />
-      <SceneMark name="scene-end" />
+      <VoiceSection />
       <FeaturesCTA />
       <Footer />
     </main>

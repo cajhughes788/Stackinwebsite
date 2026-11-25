@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
 import { PhoneShot } from "@/components/phone-shot";
-import { AlsoIncluded, Highlights, SayIt, SectionHeader, SectionShell, Tile } from "./blocks";
+import { AlsoIncluded, Highlights, SectionHeader, SectionShell, Tile } from "./blocks";
 import { SceneMark } from "./scene/journey-scene";
 
 // The Features sections, in the order of a worker's week: a client books, you
@@ -570,55 +569,6 @@ export function OrganizeSection() {
         />
       </div>
 
-    </SectionShell>
-  );
-}
-
-/* ------------------------------------------------------------------- Voice */
-
-// Questions from the app's Ask 521 test sheet (scripts/voice-ask-cases.json).
-const askExamples = [
-  "How much did I make this week?",
-  "Who owes me money?",
-  "What's on tomorrow?",
-  "How much have I spent on gas this year?",
-  "What's my profit this quarter?",
-  "Show my October P&L",
-];
-const siriPhrases = ["Log my tips in 521", "Add an expense in 521", "Book in 521", "Ask 521"];
-
-export function FeaturesVoiceSection() {
-  return (
-    <SectionShell id="voice" tone="raised" size="sm">
-      <SectionHeader
-        label="08 / Voice"
-        title="Ask 521, or just ask Siri"
-        description="Ask about your money the way you'd ask a friend. 521 answers from your own numbers, with the same math as your screens, and can open the page you need."
-      />
-      <SceneMark name="voice-start" />
-
-      <ul className="mx-auto mt-10 grid max-w-3xl gap-2.5 sm:grid-cols-2">
-        {askExamples.map((question) => (
-          <li key={question}>
-            <SayIt text={question} label="Ask" className="w-full" />
-          </li>
-        ))}
-      </ul>
-
-      <div className="mx-auto mt-12 max-w-3xl text-center">
-        <p className="mb-4 text-sm text-muted-foreground">Or skip opening the app. Say it to Siri, or set it on the Action Button:</p>
-        <ul className="flex flex-wrap justify-center gap-2.5">
-          {siriPhrases.map((phrase) => (
-            <li key={phrase} className="rounded-full border border-white/[0.09] bg-white/[0.03] px-4 py-2 text-sm text-foreground">
-              &ldquo;{phrase}&rdquo;
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-xs text-muted-foreground">Siri and the Action Button need iOS 16 or later.</p>
-        <Link href="/#voice" className="mt-6 inline-block text-sm font-medium text-foreground underline-offset-4 hover:underline">
-          See voice fill in a form
-        </Link>
-      </div>
     </SectionShell>
   );
 }
