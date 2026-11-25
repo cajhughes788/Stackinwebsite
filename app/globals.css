@@ -721,7 +721,8 @@
 
 /* Features journey on phones and tablets: the copy stacks over the middle of the
    scene, so keep it clear. The clips are dimmed, a darker scrim sits behind the
-   words, and pieces flying out of the screenshots pass beneath the text. */
+   words, and the words sit on frosted panels. Pieces flying out of the
+   screenshots stay above the page, as on desktop, so they're seen leaving. */
 @media (max-width: 1023px) {
   .journey-frame {
     opacity: 0.55;
@@ -730,9 +731,6 @@
     background:
       linear-gradient(rgb(18 23 26 / 0.35), rgb(18 23 26 / 0.35)),
       radial-gradient(ellipse 80% 60% at 50% 50%, rgb(18 23 26 / 0) 0%, rgb(18 23 26 / 0.45) 75%, rgb(18 23 26 / 0.75) 100%);
-  }
-  .morph-layer {
-    z-index: 5;
   }
   /* No room to step aside on a phone, so the words sit on frosted panels and
      the scene shows around and between them. */
