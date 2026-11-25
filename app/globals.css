@@ -706,3 +706,52 @@
     height: calc(100svh - 7.4rem);
   }
 }
+
+/* Swaying phone fallback (components/sway-phone.tsx): when the video can't play,
+   the still phone and its screen rock together, a slow ease like the clip's. */
+@layer components {
+  [data-sway="css"] {
+    perspective: 1400px;
+  }
+  [data-sway="css"] .sway-stage {
+    animation: sway-rock 3s ease-in-out -1.5s infinite alternate;
+  }
+}
+@keyframes sway-rock {
+  from {
+    transform: rotateY(-9deg);
+  }
+  to {
+    transform: rotateY(9deg);
+  }
+}
+
+/* Features journey on phones and tablets: the copy stacks over the middle of the
+   scene, so keep it clear. The clips are dimmed, a darker scrim sits behind the
+   words, and pieces flying out of the screenshots pass beneath the text. */
+@media (max-width: 1023px) {
+  .journey-frame {
+    opacity: 0.55;
+  }
+  .journey-scrim {
+    background:
+      linear-gradient(rgb(18 23 26 / 0.35), rgb(18 23 26 / 0.35)),
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgb(18 23 26 / 0) 0%, rgb(18 23 26 / 0.45) 75%, rgb(18 23 26 / 0.75) 100%);
+  }
+  .morph-layer {
+    z-index: 5;
+  }
+  /* No room to step aside on a phone, so the words sit on frosted panels and
+     the scene shows around and between them. */
+  .scene-on :is(.section-head, .aside-col):not(.aside-col .section-head) {
+    border-radius: 1.25rem;
+    background: rgb(20 25 28 / 0.74);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.05);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    padding: 1.25rem 1.1rem;
+  }
+  .scene-on .section-head::before {
+    display: none;
+  }
+}

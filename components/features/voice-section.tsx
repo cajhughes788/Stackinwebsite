@@ -165,8 +165,8 @@ function VoiceCard({ m }: { m: Moment }) {
 // Voice: one sticky stage where each sentence is "said" word by word as you
 // scroll, and the form it fills rises out of a 3D deck of cards. Without JS or
 // with reduced motion, the five cards simply sit in a grid.
-// Features page, 08 / Voice: the journey's voice orb sits behind the heading
-// (its last marks are here), then the stage takes over.
+// Features page, 08 / Voice: the journey's voice orb arrives behind the heading
+// and holds behind the whole section, stage and Siri phrases included.
 export function VoiceSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -262,9 +262,6 @@ export function VoiceSection() {
           <SceneMark name="voice-start" />
         </div>
       </div>
-      {/* The journey fades out here, before the stage. */}
-      <SceneMark name="scene-end" />
-
       <div ref={trackRef} className="voice-track relative">
         <div className="voice-stage voice-under-tabs mx-auto grid max-w-6xl content-center items-center gap-5 px-4 sm:gap-8 sm:px-6 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-16 lg:px-8">
           {/* What's being said, word by word, over a live waveform. */}
@@ -351,6 +348,8 @@ export function VoiceSection() {
           </p>
         </div>
       </div>
+      {/* The journey's voice orb stays behind the whole section and fades out here. */}
+      <SceneMark name="scene-end" />
     </section>
   );
 }
