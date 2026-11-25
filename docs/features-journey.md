@@ -68,7 +68,7 @@ voice is never a beat of its own.
 - Every change is driven by scroll, starting from the first pixel. No timers, no holds, no pinned stretch where nothing moves.
 - The real app screenshots stay; the journey happens beside and in front of them, never in place of them.
 - The section text stays normal HTML on top, readable at every moment.
-- Phones get the same story, simplified (fewer ribbons, a smaller city), and never scroll sideways.
+- Phones and tablets (below 1024px) get the plain page, as with reduced motion: real screenshots on solid sections, no scene. Stacked, the scene could only play behind the cards, and iPhone Safari lags scrubbing it (recording, Nov 25 2026). Never scroll sideways.
 - With reduced motion turned on, each section shows its finished picture (cube, Paid, paid invoice, ledger, skyline, paystub, total) with no travel.
 
 ## How it's built (Nov 25, 2026)
@@ -95,3 +95,19 @@ voice is never a beat of its own.
   and each section heading gets a soft dark halo while it runs.
 - **Phones** see a wider crop of the same scene from the lighter encodes.
   **Reduced motion**: no scene, solid section backgrounds.
+- **Phone stills** (Nov 25, 2026): below 1024px the scene doesn't run; five
+  sections show its finished picture instead (`JourneyStill` in
+  `components/features/blocks.tsx`, 720-wide WebP in `public/images/journey/`,
+  cut from each clip's last frame): Charge (Paid · $45 + $9 tip), Invoicing
+  (the stamped invoice), Income ("One ledger"), Business ("Profit by month"),
+  Organization ("This month, together · $5,024.17"). Booking and Paychecks
+  have none: their clips' end frames say nothing without the motion.
+- **Invoicing pan** (desktop): the text column stays put and the scene glides
+  right during clip 4, so the Invoices screen lands where its phone was, beside
+  the words; it glides back as the plane flies on to Income (`panAt`). The
+  frame's side edges fade so the pan never shows where it ends.
+- **The orb keeps swirling**: from the end of clip 12 its core
+  (`orb-core.webp`, cut from the last frame) turns over the video, a fainter
+  copy turning the other way, rim left to the video. The journey ends at the
+  foot of the page (`scene-end` after the footer), so the orb stays behind Voice,
+  the closing section and the footer.

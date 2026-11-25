@@ -6,7 +6,7 @@ import { FeaturesHero } from "@/components/features/features-hero";
 import { FeaturesCTA } from "@/components/features/features-cta";
 import { SectionNav } from "@/components/features/section-nav";
 import { VoiceSection } from "@/components/features/voice-section";
-import { JourneyScene } from "@/components/features/scene/journey-scene";
+import { JourneyScene, SceneMark } from "@/components/features/scene/journey-scene";
 import {
   BookingSection,
   BusinessSection,
@@ -34,8 +34,14 @@ export default function FeaturesPage() {
       <PaychecksSection />
       <OrganizeSection />
       <VoiceSection />
-      <FeaturesCTA />
-      <Footer />
+      {/* The voice orb keeps swirling behind the close of the page; this keeps the
+          words above the scene (section-shell gives them its halo). */}
+      <div className="section-shell relative z-10">
+        <FeaturesCTA />
+        <Footer />
+      </div>
+      {/* The journey ends at the foot of the page, so it never finishes early. */}
+      <SceneMark name="scene-end" />
     </main>
   );
 }

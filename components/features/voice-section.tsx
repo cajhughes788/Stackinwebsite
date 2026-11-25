@@ -166,7 +166,7 @@ function VoiceCard({ m }: { m: Moment }) {
 // scroll, and the form it fills rises out of a 3D deck of cards. Without JS or
 // with reduced motion, the five cards simply sit in a grid.
 // Features page, 08 / Voice: the journey's voice orb arrives behind the heading
-// and holds behind the whole section, stage and Siri phrases included.
+// and keeps swirling behind the whole section and the close of the page.
 export function VoiceSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -348,8 +348,6 @@ export function VoiceSection() {
           </p>
         </div>
       </div>
-      {/* The journey's voice orb stays behind the whole section and fades out here. */}
-      <SceneMark name="scene-end" />
     </section>
   );
 }

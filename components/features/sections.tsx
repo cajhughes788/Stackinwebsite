@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { PhoneShot } from "@/components/phone-shot";
-import { AlsoIncluded, Highlights, SectionHeader, SectionShell, Tile } from "./blocks";
+import { AlsoIncluded, Highlights, JourneyStill, SectionHeader, SectionShell, Tile } from "./blocks";
 import { SceneMark } from "./scene/journey-scene";
 
 // The Features sections, in the order of a worker's week: a client books, you
@@ -36,6 +36,13 @@ export function IncomeSection() {
           </span>
         ))}
       </div>
+
+      <JourneyStill
+        src="/images/journey/one-ledger.webp"
+        alt="Eight glowing payment streams braiding into one phone showing the ledger"
+        height={498}
+        caption="One ledger"
+      />
 
       {/* Room for the chips to fly into the scene and the streams to pour, while it runs. */}
       <div aria-hidden="true" className="scene-gap scene-gap-lg" />
@@ -161,6 +168,8 @@ export function InvoicingSection() {
         </div>
       </div>
 
+      <JourneyStill src="/images/journey/invoice-paid.webp" alt="A paper invoice for $12.00 with a green Paid stamp" />
+
       {/* Desktop: the stamp and the fold play over the card, with the text stepped aside. */}
       <div className="hidden lg:block">
         <SceneMark name="invoicing-end" />
@@ -248,6 +257,8 @@ export function ChargeSection() {
           ))}
         </ul>
       </div>
+
+      <JourneyStill src="/images/journey/charge-paid.webp" alt="A glass card reading 521 Paid, $45.00 plus $9.00 tip" />
 
       <AlsoIncluded
         className="mt-14 lg:mt-20"
@@ -530,6 +541,12 @@ export function BusinessSection() {
         Plus custom categories, so your reports match how you work.
       </p>
 
+      <JourneyStill
+        src="/images/journey/profit-skyline.webp"
+        alt="Twelve glowing green bars rising month by month"
+        caption="Profit by month · last 12 months"
+      />
+
 
       <div className="mt-14 lg:mt-20">
         <PhoneShot
@@ -588,6 +605,13 @@ export function OrganizeSection() {
         />
       </div>
 
+      <JourneyStill
+        src="/images/journey/together-city.webp"
+        alt="Green business bars and white day-job bars standing side by side as one skyline"
+        height={540}
+        caption="This month, together · $5,024.17"
+        strong
+      />
     </SectionShell>
   );
 }

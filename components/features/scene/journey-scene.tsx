@@ -96,10 +96,13 @@ const PILLS: Rect[] = [
   [270, 455, 72, 94], [367, 451, 71, 94], [463, 447, 71, 94], [559, 452, 71, 94],
   [655, 455, 71, 94], [751, 456, 71, 94], [847, 457, 70, 94], [943, 459, 70, 94],
 ];
+// Invoicing keeps its words where they are and pans the scene instead (PAN below),
+// so the phone just fades as its screen lifts off; this is PHONE_FADE's stretch.
+const PHONE_FADE_INVOICING: [number, number] = [0, 0.42];
 const MORPHS: Morph[] = [
   { seg: "lift", t0: 0, t1: 1, shot: "booking", crop: [18.1, 81.1, 76.4, 12.3], src: "/images/app/booking.webp", to: [487, 327, 307, 67], radius: 7, lift: true, tint: "rgb(48, 168, 102)", fade: [0.14, 0.46] },
   { seg: "h2", t0: 0, t1: 1, shot: "charge", crop: [22.2, 35.9, 55.6, 50.9], src: "/images/app/charge-qr.webp", to: [481, 190, 318, 314], radius: 22, aside: "charge", out: [0.26, 0.42] },
-  { seg: "h4", t0: 0, t1: 1, shot: "invoicing", crop: [0, 0, 100, 100], src: "/images/app/invoices.webp", to: [485, 155.8, 310, 382.3], radius: 18, aside: "invoicing" },
+  { seg: "h4", t0: 0, t1: 1, shot: "invoicing", crop: [0, 0, 100, 100], src: "/images/app/invoices.webp", to: [485, 155.8, 310, 382.3], radius: 18, fade: PHONE_FADE_INVOICING },
   ...PILLS.map((to, i): Morph => ({ seg: "h7", t0: i * 0.04, t1: 0.72 + i * 0.04, chip: i, to, radius: 34, tint: "rgb(30, 92, 62)" })),
   { seg: "h8", t0: 0, t1: 1, shot: "income", crop: [0, 0, 100, 100], src: "/images/app/payment-streams.webp", to: [564.5, 371.6, 149, 227.7], radius: 14, aside: "income" },
 ];
@@ -115,6 +118,18 @@ const PHONE_FADE: [number, number] = [0, 0.42];
 const CLOSE_AT = 0.2;
 // How strongly the video shows (.journey-video.is-shown in globals.css).
 const SCENE_STRENGTH = 0.55;
+// The voice orb (clip 12's last frame), in frame pixels: where its swirling core
+// sits, and how far into the clip it starts to turn (as the orb settles).
+const ORB: Rect = [480, 204, 312, 312];
+const ORB_FROM = 0.85;
+// Invoicing on desktop: the single text column can't step aside of a screen that
+// lands mid-frame (the words sat right on the Invoices screen), so the scene pans
+// instead. It glides right while clip 4 turns Paid into the Invoices screen, so that
+// screen lands where its phone was, beside the words; it holds through the stamp
+// and the fold, and glides back as the paper plane flies on to Income.
+const PAN_TARGET: Rect = [485, 155.8, 310, 382.3];
+const panAt = (id: string, t: number) =>
+  id === "c4" ? easeOut(t) : id === "h4" || id === "c5" ? 1 : id === "c6" ? 1 - easeOut(t) : 0;
 
 const clamp01 = (n: number) => Math.min(Math.max(n, 0), 1);
 const range = (t: number, a: number, b: number) => clamp01((t - a) / (b - a || 1));
@@ -146,6 +161,7 @@ export function JourneyScene() {
   const ghostLayerRef = useRef<HTMLDivElement>(null);
   const ghostSceneRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const orbRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const layer = layerRef.current;
@@ -153,8 +169,15 @@ export function JourneyScene() {
     const shadow = shadowRef.current;
     const ghostLayer = ghostLayerRef.current;
     const ghostScene = ghostSceneRef.current;
-    if (!layer || !frame || !shadow || !ghostLayer || !ghostScene) return;
+    const orb = orbRef.current;
+    if (!layer || !frame || !shadow || !ghostLayer || !ghostScene || !orb) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Phones and tablets get the plain page, as with reduced motion. Below lg the
+    // columns stack, so the scene could only play behind the cards, dimmed to
+    // smudges; the chips doubled up with the scene's pills; the journey's extra
+    // room read as empty screens; and iPhone Safari lags seeking a video on
+    // every scroll step (screen recording, Nov 25 2026).
+    if (window.matchMedia("(max-width: 1023px)").matches) return;
 
     const root = document.documentElement;
     // The journey plays once, for readers who scroll down from the top. Once
@@ -190,13 +213,20 @@ export function JourneyScene() {
 
     /* ---- The frame: cover the screen on wide screens; on phones, wide enough to keep the middle of every shot ---- */
     let box = { left: 0, top: 0, w: 0, h: 0 };
+    let baseLeft = 0;
+    let panBy = 0;
     const sizeFrame = () => {
       const vw = window.innerWidth;
       const vh = layer.clientHeight;
       const w = vw / vh < 1 ? vw * 1.6 : Math.max(vw, vh * (FRAME_W / FRAME_H));
       const h = w * (FRAME_H / FRAME_W);
       box = { left: (vw - w) / 2, top: (vh - h) / 2, w, h };
+      baseLeft = box.left;
       frame.style.cssText = `left:${box.left}px;top:${box.top}px;width:${w}px;height:${h}px`;
+      // How far the Invoicing pan goes: the Invoices screen's centre onto its phone's.
+      const phone = document.querySelector<HTMLElement>('[data-aside-grid="invoicing"] [data-aside-phone]');
+      const p = phone?.getBoundingClientRect();
+      panBy = p && p.width ? p.left + p.width / 2 - (box.left + ((PAN_TARGET[0] + PAN_TARGET[2] / 2) / FRAME_W) * w) : 0;
     };
     const toScreen = (r: Rect) => {
       const k = box.w / FRAME_W;
@@ -399,6 +429,13 @@ export function JourneyScene() {
         shadow.style.opacity = "0";
       }
 
+      // Invoicing's pan, eased with the scene; morphs and captions follow it through box.
+      const left = baseLeft + panBy * (live.before ? 0 : panAt(seg.id, t));
+      if (left !== box.left) {
+        box.left = left;
+        frame.style.left = `${left}px`;
+      }
+
       // Load this clip, the one before and the next two; the rest follow in the background.
       // Not before the visitor first scrolls, taps or types (or arrives part way down):
       // Chrome counts a clip's first frame as the page's main content even while the
@@ -410,6 +447,11 @@ export function JourneyScene() {
           if (!prefetching && !before) prefetch(clip);
         }
       }
+
+      // The voice orb keeps swirling once clip 12 has landed it, to the foot of the page.
+      const orbIn = clip === 12 && shown === 12 ? easeOut(range(ct, ORB_FROM, 1)) : 0;
+      orb.style.opacity = orbIn.toFixed(3);
+      orb.classList.toggle("is-on", orbIn > 0);
 
       layer.dataset.at = `${clip}:${ct.toFixed(2)}`;
       layer.dataset.seg = live.before ? "before" : live.seg.id;
@@ -625,6 +667,25 @@ export function JourneyScene() {
               className="journey-video absolute inset-0 h-full w-full"
             />
           ))}
+          {/* The voice orb's core, turning over the clip's last frame so the orb keeps
+              swirling behind Voice and the close of the page. Its own backdrop and the
+              scene's strength match the video it covers; the rim stays the video's. */}
+          <div
+            ref={orbRef}
+            className="journey-orb absolute bg-background"
+            style={{
+              left: `${(ORB[0] / FRAME_W) * 100}%`,
+              top: `${(ORB[1] / FRAME_H) * 100}%`,
+              width: `${(ORB[2] / FRAME_W) * 100}%`,
+              height: `${(ORB[3] / FRAME_H) * 100}%`,
+              opacity: 0,
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={media("/images/journey/orb-core.webp")} alt="" decoding="async" className="journey-orb-spin absolute inset-0 h-full w-full" style={{ opacity: SCENE_STRENGTH }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={media("/images/journey/orb-core.webp")} alt="" decoding="async" className="journey-orb-spin journey-orb-back absolute inset-0 h-full w-full" style={{ opacity: SCENE_STRENGTH * 0.35 }} />
+          </div>
         </div>
         {/* Pieces that have arrived from the page sit here, in the scene, until they melt in. */}
         <div ref={ghostSceneRef} className="absolute inset-0" />
