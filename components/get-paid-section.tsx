@@ -3,7 +3,8 @@
 import { useRef, useState, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { PhoneShot, type Screenshot } from "./phone-shot";
+import { type Screenshot } from "./phone-shot";
+import { SCREEN_W, StatusBar, SwayPhone } from "./sway-phone";
 import { Highlights, type Highlight } from "./features/blocks";
 
 type Tool = {
@@ -119,7 +120,7 @@ export function GetPaidSection() {
   }
 
   return (
-    <section id="get-paid" className="scroll-mt-16 bg-surface py-24 lg:py-36">
+    <section id="get-paid" className="scroll-mt-16 overflow-x-clip bg-surface py-24 lg:py-36">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow section-label mb-6">01 / Get paid</span>
@@ -171,20 +172,33 @@ export function GetPaidSection() {
           aria-labelledby={`tab-${tool.id}`}
           className="mt-10 grid items-center gap-12 lg:mt-16 lg:grid-cols-[auto_1fr] lg:gap-20"
         >
-          {/* All three phones share one spot and cross-fade, so the layout never jumps.
-              On phones the copy comes first, so a tab tap changes what's right below it. */}
-          <div className="order-2 grid lg:order-1">
-            {tools.map((item, index) => (
-              <div
-                key={item.id}
-                aria-hidden={index !== active}
-                className={`[grid-area:1/1] transition-opacity duration-500 ${
-                  index === active ? "opacity-100" : "pointer-events-none opacity-0"
-                }`}
-              >
-                <PhoneShot shot={item.shot} className="mx-auto" />
-              </div>
-            ))}
+          {/* One swaying phone; its three screens share the spot and cross-fade,
+              so the layout never jumps. On phones the copy comes first, so a tab
+              tap changes what's right below it. */}
+          <div className="order-2 flex justify-center lg:order-1">
+            <div className="w-[min(480px,112vw)] shrink-0 lg:-mx-16">
+              <SwayPhone bg="1a2024" label={tool.shot.alt}>
+                <StatusBar />
+                {tools.map((item, index) => (
+                  // Static export: images are served as-is, so a plain img is right here.
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    key={item.id}
+                    src={item.shot.src}
+                    srcSet={`${item.shot.src.replace(/\.webp$/, "-360.webp")} 360w, ${item.shot.src} 720w`}
+                    sizes={`${SCREEN_W}px`}
+                    width={item.shot.width}
+                    height={item.shot.height}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className={`absolute inset-x-0 top-[46px] h-auto w-full transition-opacity duration-500 ${
+                      index === active ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                ))}
+              </SwayPhone>
+            </div>
           </div>
 
           {/* Keyed so the copy fades in fresh on each switch. */}

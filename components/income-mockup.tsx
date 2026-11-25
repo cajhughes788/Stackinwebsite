@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowUpRight, Banknote, Landmark, Smartphone } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
+import { StatusBar, SwayPhone } from "./sway-phone";
 
 // Illustrative numbers; the five streams add up to the total shown.
 const streams: { name: string; detail: string; amount: string; share: number; mark: ReactNode }[] = [
@@ -69,15 +70,12 @@ export function IncomeMockup() {
   }, []);
 
   return (
-    <div ref={rootRef} className="mockup relative mx-auto w-full max-w-[340px]" aria-label="521 app showing total income across five payment streams" role="img">
-      <div className="rounded-[2.75rem] border border-border bg-[#0e1214] p-2.5 shadow-raised">
-        <div className="overflow-hidden rounded-[2.25rem] bg-background px-5 pb-6 pt-4">
-          {/* Status bar */}
-          <div className="mb-5 flex items-center justify-between text-[11px] font-medium text-foreground/80">
-            <span>9:41</span>
-            <span className="h-5 w-20 rounded-full bg-[#0e1214]" />
-            <span className="tracking-widest">•••</span>
-          </div>
+    // Wider than its column on purpose: the clip's edges fade into the page,
+    // and the phone itself is about 70% of the clip's width.
+    <div ref={rootRef} className="mockup relative w-[min(480px,112vw)] shrink-0">
+      <SwayPhone bg="161b1e" label="521 app showing total income across five payment streams">
+        <div className="px-5 pb-6 pt-1">
+          <StatusBar className="-mx-5 mb-3" />
 
           <Image src="/images/521-logo.svg" alt="" width={147} height={77} className="mb-5 h-6 w-auto" />
 
@@ -126,7 +124,7 @@ export function IncomeMockup() {
             ))}
           </ul>
         </div>
-      </div>
+      </SwayPhone>
     </div>
   );
 }
