@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node scripts/test-utm.cjs"
+    "test": "node scripts/test-utm.cjs",
+    "prebuild": "node scripts/media-versions.mjs",
+    "predev": "node scripts/media-versions.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",

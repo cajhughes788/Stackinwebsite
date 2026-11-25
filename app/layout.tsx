@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, IBM_Plex_Mono, Sora, Unbounded } from 'next/font/google'
 import { UtmCapture } from '@/components/utm-capture'
 import { APP_STORE_URL, COMPANY_NAME, SITE_URL } from '@/lib/site'
@@ -21,8 +21,9 @@ export const metadata: Metadata = {
     default: '521 | All Your Income. One Place.',
     template: '%s | 521',
   },
+  // 120–160 characters: Google cuts a longer one off mid-sentence.
   description:
-    '521 brings every way you get paid into one clear view. Connect your bank, import Venmo, and see paychecks, transfers, and cash together, with net pay and profit built in.',
+    '521 brings every way you get paid into one view. Connect your bank, import Venmo, and see paychecks, transfers, and cash together, with net pay and profit.',
   applicationName: '521',
   keywords: [
     'income dashboard',
@@ -72,6 +73,11 @@ export const metadata: Metadata = {
   },
 }
 
+// The browser's toolbar and the page behind everything match the site's colour.
+export const viewport: Viewport = {
+  themeColor: '#161b1e',
+}
+
 // Lets Google show 521 as an app, with its App Store listing.
 const structuredData = {
   '@context': 'https://schema.org',
@@ -92,6 +98,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sora.variable} ${unbounded.variable} ${plexMono.variable}`} suppressHydrationWarning>
+      <head>
+        {/* The page colour from the first frame, ahead of the stylesheet, so a browser
+            that paints early (Safari, slow connections) never flashes white. */}
+        <style dangerouslySetInnerHTML={{ __html: 'html{background:#161b1e}' }} />
+      </head>
       <body className={`${_geist.className} font-sans antialiased`}>
         {/* Marks JS as available so scroll reveals can start hidden. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.dataset.js = ''" }} />

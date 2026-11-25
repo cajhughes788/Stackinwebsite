@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { SWAY } from "@/lib/sway-track";
+import { media } from "@/lib/media";
 
 // A rendered phone that sways gently (a looping clip, public/media/phone/),
 // with a real screen pinned to it. The clip was made with a green screen whose
@@ -117,7 +118,38 @@ export function SwayPhone({
       place(last < 0 ? 0 : last, true);
     });
     ro.observe(box);
-    if (still) return () => ro.disconnect();
+    // Nothing far down the page loads up front (sites-engine rule): the clip and its
+    // poster load once the phone is a screen and a half away; with reduced motion,
+    // only the poster, the first frame, facing straight on.
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        near.disconnect();
+        // A clip with a transparent background where the browser can play one:
+        // HEVC with alpha in Safari (every iPhone browser is Safari underneath),
+        // VP9 with alpha elsewhere. Only the plain clip leans on the `lighten`
+        // blend, which Safari drops once the video is composited on scroll.
+        const ua = navigator.userAgent;
+        const kind =
+          /AppleWebKit/.test(ua) && !/Chrome\/|Chromium|Edg\//.test(ua)
+            ? "mov"
+            : video.canPlayType('video/webm; codecs="vp9"')
+              ? "webm"
+              : "";
+        if (kind) box.dataset.alpha = "";
+        video.poster = (kind ? video.dataset.still : video.dataset.poster) ?? "";
+        if (still) return;
+        video.preload = "auto";
+        video.src = (kind === "mov" ? video.dataset.mov : kind === "webm" ? video.dataset.webm : video.dataset.src) ?? "";
+      },
+      { rootMargin: "150% 0px" },
+    );
+    near.observe(box);
+    if (still)
+      return () => {
+        ro.disconnect();
+        near.disconnect();
+      };
 
     // Follow the frame actually on screen; requestVideoFrameCallback where it
     // exists (Chrome, Safari 15.4+), otherwise poll currentTime each paint.
@@ -181,6 +213,7 @@ export function SwayPhone({
       stop = true;
       cancelAnimationFrame(raf);
       clearTimeout(check);
+      near.disconnect();
       video.removeEventListener("timeupdate", onPlaying);
       io.disconnect();
       ro.disconnect();
@@ -202,16 +235,20 @@ export function SwayPhone({
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-[22%] top-[25%] h-[50%] rounded-full bg-primary/[0.12] blur-[60px]"
       />
-      {/* Blended with lighten as a group, so the black background takes the page colour. */}
-      <div className="sway-video sway-stage absolute inset-0 mix-blend-lighten">
+      {/* The plain clip is blended with lighten as a group, so its black background
+          takes the page colour; the alpha clips need no blend (globals.css). */}
+      <div className="sway-video sway-stage absolute inset-0">
         <video
           ref={videoRef}
-          src={`/media/phone/sway.mp4?v=${SWAY.version}`}
-          poster={`/media/phone/sway.webp?v=${SWAY.version}`}
+          data-src={media("/media/phone/sway.mp4")}
+          data-mov={media("/media/phone/sway-alpha.mov")}
+          data-webm={media("/media/phone/sway-alpha.webm")}
+          data-poster={media("/media/phone/sway.webp")}
+          data-still={media("/media/phone/sway-still.webp")}
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           aria-hidden="true"
           className="absolute inset-0 h-full w-full"
         />
@@ -221,7 +258,9 @@ export function SwayPhone({
       <div className="sway-still sway-stage absolute inset-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`/media/phone/sway-still.webp?v=${SWAY.version}`}
+          src={media("/media/phone/sway-still.webp")}
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full"

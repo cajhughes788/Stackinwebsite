@@ -1,3 +1,5 @@
+import { media } from "@/lib/media";
+
 export type Screenshot = { src: string; alt: string; width: number; height: number };
 
 /**
@@ -45,9 +47,9 @@ export function PhoneShot({
     // Static export: images are served as-is, so a plain img is right here.
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={shot.src}
+      src={media(shot.src)}
       alt={shot.alt}
-      srcSet={`${shot.src.replace(/\.webp$/, "-360.webp")} 360w, ${shot.src} 720w`}
+      srcSet={`${media(shot.src.replace(/\.webp$/, "-360.webp"))} 360w, ${media(shot.src)} 720w`}
       sizes="(min-width: 384px) 330px, calc(100vw - 54px)"
       width={shot.width}
       height={shot.height}
@@ -70,8 +72,8 @@ export function PhoneShot({
       {morph?.overlay ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={morph.overlay.src}
-          srcSet={`${morph.overlay.src.replace(/\.webp$/, "-360.webp")} 360w, ${morph.overlay.src} 720w`}
+          src={media(morph.overlay.src)}
+          srcSet={`${media(morph.overlay.src.replace(/\.webp$/, "-360.webp"))} 360w, ${media(morph.overlay.src)} 720w`}
           sizes="(min-width: 384px) 330px, calc(100vw - 54px)"
           alt=""
           aria-hidden="true"

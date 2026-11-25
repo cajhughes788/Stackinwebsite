@@ -714,6 +714,12 @@
   }
   /* Blend modes don't survive 3D transforms, so the video's black background
      would tilt into view; rock a cut-out still of the phone instead. */
+  .sway-video {
+    mix-blend-mode: lighten;
+  }
+  [data-alpha] .sway-video {
+    mix-blend-mode: normal;
+  }
   .sway-still,
   [data-sway="css"] .sway-video {
     display: none;

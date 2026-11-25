@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { pageMetadata } from "@/lib/seo";
 import { LegalTermsContent } from "@/components/legal-content";
 import { TERMS_PAGE_DESCRIPTION, TERMS_PAGE_TITLE } from "@/lib/legal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: TERMS_PAGE_TITLE,
   description: TERMS_PAGE_DESCRIPTION,
-  alternates: {
-    canonical: "/terms",
-  },
-};
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

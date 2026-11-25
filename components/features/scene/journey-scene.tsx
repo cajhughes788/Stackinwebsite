@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { media } from "@/lib/media";
 
 // The Features journey (docs/features-journey.md): twelve generated clips
 // (public/media/journey/c1–c12) that play behind the page as one scene,
@@ -191,7 +192,7 @@ export function JourneyScene() {
       const v = videos[clip - 1];
       if (!v) return;
       loaded.add(clip);
-      v.src = `/media/journey/c${clip}${small.matches ? "-m" : ""}.mp4`;
+      v.src = media(`/media/journey/c${clip}${small.matches ? "-m" : ""}.mp4`);
       v.load();
       // iOS only lets a muted inline video seek after it has played once.
       v.play().then(() => v.pause()).catch(() => {});
@@ -255,7 +256,7 @@ export function JourneyScene() {
         g.classList.add("morph-chip");
       } else if (m.src && m.crop) {
         const [, , cw, ch] = m.crop;
-        g.style.backgroundImage = `url(${m.src})`;
+        g.style.backgroundImage = `url(${media(m.src)})`;
         g.style.backgroundSize = `${(100 / cw) * 100}% ${(100 / ch) * 100}%`;
         g.style.backgroundPosition = `${cw < 100 ? (m.crop[0] / (100 - cw)) * 100 : 0}% ${ch < 100 ? (m.crop[1] / (100 - ch)) * 100 : 0}%`;
       }
@@ -352,6 +353,9 @@ export function JourneyScene() {
       let opacity = live.before ? 0 : live.seg.id === "lift" ? ease(range(live.t, 0.3, FLY)) : 1;
       if (end !== undefined) opacity *= 1 - clamp01((line - (end - vh * 0.6)) / (vh * 0.4));
       layer.style.opacity = opacity.toFixed(3);
+      // Hidden, not just transparent, until it shows: Chrome counts a transparent
+      // video's first frame as the page's main content.
+      layer.style.visibility = opacity > 0 ? "visible" : "hidden";
 
       // Clip and time. In the shadow's first half it sweeps down over clip 8's
       // last frame; in the second, clip 9's empty studio is behind it and it lifts.
@@ -372,8 +376,13 @@ export function JourneyScene() {
       }
 
       // Load this clip, the one before and the next two; the rest follow in the background.
-      load(clip); load(clip - 1); load(clip + 1); load(clip + 2);
-      if (!prefetching && !before) prefetch(clip);
+      // Not before the visitor first scrolls, taps or types (or arrives part way down):
+      // Chrome counts a clip's first frame as the page's main content even while the
+      // scene is hidden, and that measurement stops at the first input.
+      if (woke) {
+        load(clip); load(clip - 1); load(clip + 1); load(clip + 2);
+        if (!prefetching && !before) prefetch(clip);
+      }
 
       layer.dataset.at = `${clip}:${ct.toFixed(2)}`;
       layer.dataset.seg = live.before ? "before" : live.seg.id;
@@ -487,6 +496,7 @@ export function JourneyScene() {
       const shift = keep.getBoundingClientRect().top - before;
       if (Math.abs(shift) > 0.5) window.scrollBy(0, shift);
       layer.style.opacity = "0";
+      layer.style.visibility = "hidden";
       ghosts.forEach((g) => (g.style.opacity = "0"));
       document.querySelectorAll<HTMLElement>("[data-morph-shot]").forEach((el) => el.style.setProperty("--lift", "0"));
       document.querySelectorAll<HTMLElement>("[data-scene-hold]").forEach((el) => el.style.setProperty("--hold", "0"));
@@ -511,6 +521,16 @@ export function JourneyScene() {
     document.addEventListener("click", onClick, true);
     window.addEventListener("hashchange", onHash);
 
+    let woke = window.scrollY > 0;
+    const wake = () => {
+      if (woke) return;
+      woke = true;
+      wakeEvents.forEach((e) => window.removeEventListener(e, wake));
+      schedule();
+    };
+    const wakeEvents = ["scroll", "pointerdown", "keydown", "touchstart"] as const;
+    if (!woke) wakeEvents.forEach((e) => window.addEventListener(e, wake, { passive: true }));
+
     measure();
     draw(eased);
     window.addEventListener("scroll", schedule, { passive: true });
@@ -521,6 +541,7 @@ export function JourneyScene() {
 
     return () => {
       cancelAnimationFrame(frameId);
+      wakeEvents.forEach((e) => window.removeEventListener(e, wake));
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", onResize);
       ro.disconnect();
@@ -534,7 +555,7 @@ export function JourneyScene() {
 
   return (
     <>
-      <div ref={layerRef} aria-hidden="true" className="journey-scene pointer-events-none fixed inset-x-0 top-0 z-0 h-[100lvh] overflow-hidden opacity-0">
+      <div ref={layerRef} aria-hidden="true" className="journey-scene pointer-events-none invisible fixed inset-x-0 top-0 z-0 h-[100lvh] overflow-hidden opacity-0">
         <div ref={frameRef} className="journey-frame absolute">
           {Array.from({ length: CLIPS }, (_, i) => (
             <video

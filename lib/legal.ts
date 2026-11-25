@@ -23,14 +23,16 @@ export type LegalSection = {
 };
 
 export const TERMS_PAGE_TITLE = "Terms and Conditions";
-export const TERMS_PAGE_DESCRIPTION = "Read the 521 terms and conditions.";
+export const TERMS_PAGE_DESCRIPTION =
+  "The terms for using 521: your account, subscriptions and billing, cancellations and refunds, connected bank accounts, and your responsibilities.";
 export const TERMS_PAGE_INTRO =
   "These terms govern your access to and use of 521 and related services.";
 export const TERMS_CLOSING_STATEMENT =
   "By using 521, you acknowledge that you have read and understood these Terms and Conditions, that 521 provides organizational and informational tools only, and that you are responsible for reviewing and verifying any output before relying on it.";
 
 export const PRIVACY_PAGE_TITLE = "Privacy Policy";
-export const PRIVACY_PAGE_DESCRIPTION = "Read the 521 privacy policy.";
+export const PRIVACY_PAGE_DESCRIPTION =
+  "How 521 collects, uses, and protects your information, including bank connections through Plaid, and how to delete your account and data.";
 export const PRIVACY_PAGE_INTRO =
   "This page explains how 521 collects, uses, and protects information when you use our website and services.";
 

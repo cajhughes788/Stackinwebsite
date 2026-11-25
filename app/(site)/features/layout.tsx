@@ -1,13 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Features",
   description:
-    "Bank sync, Venmo import, branded invoices, QR code payments, online booking with deposits and reminders, net pay breakdowns, expenses, receipts, and P&Ls. See how 521 brings every way you get paid into one place.",
-  alternates: {
-    canonical: "/features",
-  },
-}
+    "Booking with deposits, QR card payments, invoices, bank sync, Venmo import, net pay, expenses and P&Ls: how 521 puts every way you get paid in one place.",
+  path: "/features",
+});
 
 export default function FeaturesLayout({
   children,

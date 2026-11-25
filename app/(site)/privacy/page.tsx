@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPrivacyContent } from "@/components/legal-content";
 import { PRIVACY_PAGE_DESCRIPTION, PRIVACY_PAGE_TITLE } from "@/lib/legal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: PRIVACY_PAGE_TITLE,
   description: PRIVACY_PAGE_DESCRIPTION,
-  alternates: {
-    canonical: "/privacy",
-  },
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

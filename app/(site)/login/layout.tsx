@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Log In",
   description: "Log in to your 521 account.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-  alternates: {
-    canonical: "/login",
-  },
-}
+  path: "/login",
+  index: false,
+});
 
 export default function LoginLayout({
   children,

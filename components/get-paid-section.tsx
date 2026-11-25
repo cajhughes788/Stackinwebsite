@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { type Screenshot } from "./phone-shot";
 import { SCREEN_W, StatusBar, SwayPhone } from "./sway-phone";
 import { Highlights, type Highlight } from "./features/blocks";
+import { media } from "@/lib/media";
 
 type Tool = {
   id: string;
@@ -184,8 +185,8 @@ export function GetPaidSection() {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     key={item.id}
-                    src={item.shot.src}
-                    srcSet={`${item.shot.src.replace(/\.webp$/, "-360.webp")} 360w, ${item.shot.src} 720w`}
+                    src={media(item.shot.src)}
+                    srcSet={`${media(item.shot.src.replace(/\.webp$/, "-360.webp"))} 360w, ${media(item.shot.src)} 720w`}
                     sizes={`${SCREEN_W}px`}
                     width={item.shot.width}
                     height={item.shot.height}

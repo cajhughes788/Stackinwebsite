@@ -44,10 +44,23 @@ export function PromoPopup() {
     setOpen(false);
   }
 
+  // Opens on the visitor's first scroll, tap or key, and no sooner than SHOW_DELAY_MS.
+  // Opening on a timer alone made the popup's heading the page's "largest paint"
+  // on slow phones (Google's main-content timing, which stops at the first input).
   useEffect(() => {
     if (!PROMO_ACTIVE || hiddenHere || readDismissed()) return;
-    const timer = window.setTimeout(() => setOpen(true), SHOW_DELAY_MS);
-    return () => window.clearTimeout(timer);
+    const start = performance.now();
+    let timer = 0;
+    const events = ["scroll", "pointerdown", "keydown", "touchstart"] as const;
+    const onFirst = () => {
+      events.forEach((e) => window.removeEventListener(e, onFirst));
+      timer = window.setTimeout(() => setOpen(true), Math.max(0, SHOW_DELAY_MS - (performance.now() - start)));
+    };
+    events.forEach((e) => window.addEventListener(e, onFirst, { passive: true }));
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, onFirst));
+      window.clearTimeout(timer);
+    };
   }, [hiddenHere]);
 
   useEffect(() => {

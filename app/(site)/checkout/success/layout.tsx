@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Account Created",
   description: "Your checkout is complete. Download the mobile app or access the 521 web version.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-  alternates: {
-    canonical: "/checkout/success",
-  },
-};
+  path: "/checkout/success",
+  index: false,
+});
 
 export default function CheckoutSuccessLayout({
   children,
