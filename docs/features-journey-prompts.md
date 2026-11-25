@@ -145,6 +145,62 @@ On the site: "PAID" is laid inside the stamp mark.
 **C8 (F7 → F8)**
 > [CLIP STYLE] The sheet of paper folds itself crease by crease, each fold clear and deliberate (in half, the two top corners, then the wings), into a classic paper airplane that settles hovering at the center, pointing right. Ending exactly on the end frame.
 
+### Redo, Nov 25 2026: a fold a real sheet could make (C8a + C8b)
+
+The first C8 opened the sheet outward into panels as if it were printed on both
+sides, piled on more paper than one sheet has, and drew "PAID" on several
+panels. F8 stays: a real dart folded from this invoice puts the stamp (lower
+right of the sheet) on top of one wing near its tail, the printed front inside
+the body, and blank paper on the nose flaps. The fold is now two clips through a
+new middle frame, F7a; the site joins them into one clip (`c6`).
+
+Rules in every prompt below: the sheet is printed on the **front only**, so any
+flap that folds over shows **blank** paper; it is **one thin sheet** that only
+ever gets smaller as it folds; there is **one stamp**, which moves with its
+corner of the paper.
+
+**F7a, the corners folded** (Claude, built from F7: `work/journey/make_f7a.py`)
+F7 with its two top corners folded forward and down to the vertical center line,
+exact geometry: the point sits where the top edge's center was, the shoulders half
+the sheet's width below it, the flaps show blank paper with the sheet's own light,
+and the folded-away corners show the empty studio (S0). The rest of the invoice
+and the one stamp are untouched. (A generated F7a, kept as `F7a-generated.png`,
+grew a taller point than the sheet allows.)
+
+**C8a (F7 → F7a), 4 s**
+> [CLIP STYLE] A single sheet of thin off-white printer paper floats upright facing the camera. It is printed on its front only; its back is plain blank paper. With no hands, its two top corners fold, one after the other: the top-left corner folds forward and down until its edge lies along the vertical center line, then the top-right corner does the same and meets it there, making a pointed top like a house roof. Each corner turns over as it folds, so the triangle that ends up facing the camera is the blank back of the paper. The point is exactly where the middle of the top edge was; nothing rises above the sheet's original top edge. Creases are sharp and straight, the paper stays thin and never gets bigger, and the lower part of the sheet, with its single green stamp mark, stays flat and still. Slow, deliberate and smooth, ending exactly on the end frame.
+
+Avoid:
+> [AVOID, clips], the sheet opening outward, panels unfolding like doors, the sheet splitting, the sheet getting taller or wider, extra paper appearing, extra layers, thick paper, printing on the folded corners, printing on the back, second stamp, duplicate stamp, stamp moving, stamp changing shape, new text
+
+**F7b, the edges folded** (Claude, built from F7a: `work/journey/make_f7b.py`)
+Each slanted edge of the roof folded forward onto the center line. The crease runs
+from the point at 22.5° off vertical and meets the side edge near the bottom, so the
+sheet becomes a long narrow point; the flaps cover all but a small triangle of the
+invoice at the bottom, and the stamp's lower right corner tucks under the right flap.
+
+**F8, the plane, no stamp** (yours, Nov 25; `F8-nostamp.png`). In a standard dart
+the half fold goes backward, so the corner flaps and the printed front stay outside
+the body and end up under the wings: the wing tops are blank and the stamp is
+underneath. (The first take, `C8b-take1.mp4`, made a real rocket point but bent the
+sheet like a cone on the way, and the wings appeared without folding; hence F7b.)
+
+**C8b (F7a → F7b), 4 s**
+> [CLIP STYLE] The folded paper from the start frame floats upright facing the camera. With no hands, its two slanted top edges fold forward to the vertical center line, one after the other: the left one first, then the right. Each fold is a flat flap turning on a straight crease that runs from the top point down to the side edge near the bottom; the flap turns over toward the camera and lays flat on the front of the sheet, showing the blank back of the paper. Only the flaps move: the rest of the sheet stays flat and still, its bottom edge and bottom corners stay straight and square, and nothing curls, bends or rolls. The lower right corner of the green stamp mark slips under the right flap; there is still only one stamp. The paper stays one thin sheet and never gets bigger. Slow, deliberate and smooth, ending exactly on the end frame.
+
+Avoid:
+> [AVOID, clips], curling, rolling, bending, cone shape, rounded corners, bottom edge moving, the sheet getting taller or wider, extra paper appearing, extra layers, thick paper, printing on the flaps, second stamp, duplicate stamp, stamp moving, new text
+
+**C8c (F7b → F8 no stamp), 6 s**
+> [CLIP STYLE] The folded paper from the start frame becomes a classic dart paper airplane, with no hands, in three clear steps. First it folds in half along its vertical center line like closing a book: the left half swings back, away from the camera, behind the right half until the two halves lie together, leaving a flat narrow triangle with its point at the top. Second, it turns a quarter turn so its point faces right and it lies level, seen from the side: a flat narrow triangle with the fold along its bottom edge; its side shows the folded flaps and part of the green stamp. Third, the near side folds down and outward along a straight line parallel to the bottom fold, turning over to become the near wing and opening out level, and then the far side does the same to become the far wing; once the wings are down, their tops are plain blank paper and the stamp is underneath, out of sight. It is the same single sheet the whole time: the finished plane is as long as the sheet was tall and only a few paper layers thick, with crisp creases and thin paper edges, and it settles hovering at the center pointing right. Slow, deliberate and smooth, ending exactly on the end frame.
+
+Avoid:
+> [AVOID, clips], wings appearing without folding, wings growing out, twisting paper, curling, bending, extra paper appearing, extra layers, thick or puffy paper, cardboard, the plane bigger than the sheet, stamp on top of a wing, second stamp, duplicate stamp, invoice lines or numbers on the plane, new text, spinning, tumbling
+
+Check before keeping. In each take,
+step through the frames: one stamp in every frame, no frame where the sheet is
+wider than it started, and no printing on a flap that has just turned over.
+
 ## C9 Invoicing → Income: the flight (4 s)
 
 **F9, above the streams** (from F8)
@@ -154,6 +210,27 @@ On the site: "PAID" is laid inside the stamp mark.
 > [CLIP STYLE] The paper airplane glides in a gentle descending curve across the frame, leaving a thin luminous green trail that stays visible, and comes to hover low at the center just above a row of eight small frosted-glass tiles that fade up on the floor. Smooth and unhurried, ending exactly on the end frame.
 
 On the site: the eight payment chips on the page light up as the plane arrives.
+
+### Redo, Nov 25 2026: no stamp, and a real descent (F9 new + C9)
+
+The old flight started and ended at the same height (plane centre y 322 in F8, 328 in
+F9), so the generator climbed and looped to fill it. Now the end frame has the plane
+lower, and the clip only ever goes down, at an even pace, so it descends as you
+scroll. Edit F9 itself so the eight tiles keep their exact places (the site's
+payment chips fly to them; `F9-pills.json`). C10 then needs regenerating from the
+new F9 (its plane moves and loses the stamp); its prompt below is unchanged.
+
+**F9 new** (image edit of F9, 16:9, 2K; save as `F9-nostamp.png`)
+> [STYLE] Keep everything in the reference exactly the same: the studio, the light, the camera, and the row of eight small frosted-glass tiles on the floor in exactly the same positions and sizes. Change only the paper airplane and its trail. Remove the green stamp mark from the wing, so the airplane is plain blank paper everywhere. Move the airplane lower, so it hovers just above the middle of the row of tiles with its nose angled gently down toward them, the same size and shape as before. Replace the green trail with a thin luminous emerald-green trail that comes down from the upper middle of the frame in one smooth descending curve to the airplane's tail.
+
+Avoid:
+> stamp, green mark on the airplane, PAID, text, letters, numbers, moving the tiles, changing the tiles, extra tiles, extra airplanes, second trail, loops in the trail, hands, people, extra objects
+
+**C9 (F8-nostamp → F9 new), 4 s**
+> [CLIP STYLE] The paper airplane from the start frame, plain white paper with no markings, glides steadily downward in one smooth, continuous descending curve, nose tipping gently down, from its place at the center to hover just above a row of eight small frosted-glass tiles that fade up on the floor as it comes down. It only ever moves down and slightly forward, never rising, looping or circling back, at an even, unhurried speed, like a real paper plane gliding in to land. A thin luminous emerald-green trail draws itself behind it along the path it flew and stays visible. Ending exactly on the end frame.
+
+Avoid:
+> [AVOID, clips], climbing, rising, loops, circling, swooping up, sudden turns, speeding up, slowing down, stamp, green mark on the airplane, PAID, text on the airplane, the airplane changing shape, extra airplanes, tiles moving
 
 ## C10 Income: dust, streams, one ledger (6 s)
 
