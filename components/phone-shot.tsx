@@ -15,7 +15,30 @@ export type ShotCue = { rect: [number, number, number, number]; at: string; roun
 //
 // Every screenshot ships as a 720px WebP with a 360px twin ("-360"), so 1x
 // screens fetch about a third of the bytes. The frame is at most 22rem wide.
-export function PhoneShot({ shot, cue, className = "" }: { shot: Screenshot; cue?: ShotCue; className?: string }) {
+/**
+ * Ties to the Features journey (components/features/scene/journey-scene.tsx):
+ * `morph` names the screen so a piece of it can lift off into the scene,
+ * `hole` is the patch left where it lifted from (percent rect and the
+ * screen's colour there), and `overlay` is a second screen the phone switches
+ * to at a point in the journey ("clip:at"), like Charge showing its QR.
+ */
+export type ShotMorph = {
+  morph?: string;
+  hole?: { rect: [number, number, number, number]; color: string };
+  overlay?: { src: string; at: string };
+};
+
+export function PhoneShot({
+  shot,
+  cue,
+  morph,
+  className = "",
+}: {
+  shot: Screenshot;
+  cue?: ShotCue;
+  morph?: ShotMorph;
+  className?: string;
+}) {
   const isPhone = shot.height / shot.width > 1;
 
   const img = (
@@ -42,8 +65,34 @@ export function PhoneShot({ shot, cue, className = "" }: { shot: Screenshot; cue
     />
   ) : null;
   const shotWithCue = (
-    <div className="relative">
+    <div className="relative" data-morph-shot={morph?.morph}>
       {img}
+      {morph?.overlay ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={morph.overlay.src}
+          srcSet={`${morph.overlay.src.replace(/\.webp$/, "-360.webp")} 360w, ${morph.overlay.src} 720w`}
+          sizes="(min-width: 384px) 330px, calc(100vw - 54px)"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          data-scene-hold={morph.overlay.at}
+          className="scene-overlay absolute inset-0 h-full w-full"
+        />
+      ) : null}
+      {morph?.hole ? (
+        <span
+          aria-hidden="true"
+          className="scene-hole pointer-events-none absolute rounded-[0.9rem]"
+          style={{
+            left: `${morph.hole.rect[0]}%`,
+            top: `${morph.hole.rect[1]}%`,
+            width: `${morph.hole.rect[2]}%`,
+            height: `${morph.hole.rect[3]}%`,
+            background: morph.hole.color,
+          }}
+        />
+      ) : null}
       {ring}
     </div>
   );

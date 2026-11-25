@@ -38,7 +38,10 @@ export function IncomeSection() {
         ))}
       </div>
 
+      {/* Room for the chips to fly into the scene and the streams to pour, while it runs. */}
+      <div aria-hidden="true" className="scene-gap scene-gap-lg" />
       <SceneMark name="income-chips" />
+      <div aria-hidden="true" className="scene-gap" />
 
       <div className="mt-14 grid items-center gap-14 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-20">
         <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
@@ -50,6 +53,7 @@ export function IncomeSection() {
             width: 720,
             height: 1100,
           }}
+          morph={{ morph: "income" }}
           className="mx-auto"
         />
         </div>
@@ -146,6 +150,7 @@ export function InvoicingSection() {
               height: 888,
             }}
             cue={{ rect: [1.6, 83.1, 96.8, 16.6], at: "5:0-0.3" }}
+            morph={{ morph: "invoicing" }}
             className="mx-auto"
           />
           <SceneMark name="invoicing-row" className="absolute inset-x-0 top-1/2" />
@@ -206,10 +211,11 @@ export function ChargeSection() {
               width: 720,
               height: 786,
             }}
-            cue={{ rect: [1.7, 86.8, 96.7, 12.2], at: "2:0.65-1", round: true }}
+            cue={{ rect: [1.7, 86.8, 96.7, 12.2], at: "2:0.45-0.75", round: true }}
+            morph={{ morph: "charge", overlay: { src: "/images/app/charge-qr.webp", at: "2:0.62" } }}
             className="mx-auto"
           />
-          <SceneMark name="charge-qr" className="absolute inset-x-0 top-0" />
+          <SceneMark name="charge-qr" className="absolute inset-x-0 top-[45%]" />
         </div>
 
         <ul className="mx-auto w-full max-w-sm space-y-6 lg:mx-0">
@@ -266,9 +272,11 @@ export function BookingSection() {
         say="Book Jenna Thursday at 2 for a cut"
       />
 
-      <SceneMark name="booking-start" />
       <div className="mt-14 grid items-start gap-12 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-14">
         <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+          {/* The Sample Client appointment lifts off between these two marks. */}
+          <SceneMark name="booking-lift" className="absolute inset-x-0 top-0" />
+          <SceneMark name="booking-start" className="absolute inset-x-0 top-[85%]" />
           <PhoneShot
             shot={{
               src: "/images/app/booking.webp",
@@ -276,7 +284,7 @@ export function BookingSection() {
               width: 720,
               height: 972,
             }}
-            cue={{ rect: [18.1, 81.1, 76.4, 12.3], at: "1:0-0.35" }}
+            morph={{ morph: "booking", hole: { rect: [18.1, 81.1, 76.4, 12.3], color: "rgb(40, 49, 53)" } }}
             className="mx-auto"
           />
         </div>

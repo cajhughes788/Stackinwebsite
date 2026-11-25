@@ -738,3 +738,56 @@
     0 0 calc(var(--cue, 0) * 22px) rgb(47 168 102 / calc(var(--cue, 0) * 0.6));
   color: rgb(calc(236 - 150 * var(--cue, 0)) calc(235 - 10 * var(--cue, 0)) calc(230 - 100 * var(--cue, 0)));
 }
+/* Features journey morphs: pieces of the page that fly into the scene. */
+.morph-ghost {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform-origin: 0 0;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 calc(var(--shadow, 0) * 30px) calc(var(--shadow, 0) * 70px) calc(var(--shadow, 0) * -20px) rgb(0 0 0 / 0.8),
+    0 0 0 1px rgb(255 255 255 / calc(0.06 * (1 - var(--tint, 0)))),
+    0 0 calc(var(--tint, 0) * 26px) rgb(47 168 102 / calc(var(--tint, 0) * 0.45));
+  will-change: transform, opacity;
+}
+/* Turns into the solid colour of what it lands on (the Sample Client bar, the glass pills). */
+.morph-tint {
+  position: absolute;
+  inset: 0;
+  opacity: var(--tint, 0);
+}
+.morph-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(47 168 102 / 0.14);
+  box-shadow: 0 0 0 1px rgb(47 168 102 / 0.8), 0 0 22px rgb(47 168 102 / 0.5);
+}
+.morph-label {
+  position: relative;
+  color: rgb(140 224 176);
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: var(--label, 1);
+}
+/* The patch left on a screenshot where a piece lifted off, and a second screen it switches to. */
+.scene-hole {
+  opacity: var(--lift, 0);
+  transition: opacity 0.25s;
+}
+.scene-overlay {
+  opacity: var(--hold, 0);
+}
+/* Space that only exists while the journey runs, for its longer moments. */
+.scene-gap {
+  height: 0;
+}
+.scene-on .scene-gap {
+  height: 22svh;
+}
+.scene-on .scene-gap-lg {
+  height: 30svh;
+}
