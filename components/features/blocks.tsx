@@ -15,6 +15,7 @@ export function SectionShell({
   tone = "base",
   size = "lg",
   endMark,
+  endMarkDesktopOnly = false,
   children,
 }: {
   id: string;
@@ -22,6 +23,8 @@ export function SectionShell({
   size?: "lg" | "sm";
   /** A Features journey mark at the end of the section (journey-scene.tsx). */
   endMark?: string;
+  /** The end mark on desktop only: phones place it in the next section (see sections.tsx). */
+  endMarkDesktopOnly?: boolean;
   children: ReactNode;
 }) {
   const bg = tone === "raised" ? "bg-surface" : "bg-background";
@@ -32,7 +35,7 @@ export function SectionShell({
       <Reveal>
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">{children}</div>
       </Reveal>
-      {endMark ? <SceneMark name={endMark} /> : null}
+      {endMark ? <SceneMark name={endMark} only={endMarkDesktopOnly ? "desktop" : undefined} /> : null}
     </section>
   );
 }

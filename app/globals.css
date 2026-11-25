@@ -677,7 +677,12 @@
   height: 30svh;
 }
 .scene-on .scene-gap-xl {
-  height: 60svh;
+  height: 32svh;
+}
+/* The journey closes faded screenshots' space on phones (journey-scene.tsx); the
+   browser must not scroll to make up for it. */
+.scene-on {
+  overflow-anchor: none;
 }
 /* Step aside (journey-scene.tsx): as a piece of a screenshot lifts into the
    scene, its phone fades with the scroll (set inline) and the section's text

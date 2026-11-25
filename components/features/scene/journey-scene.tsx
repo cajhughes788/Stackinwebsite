@@ -110,6 +110,9 @@ const FLY = 0.6;
 const SETTLE = 0.76;
 // The screenshot a piece leaves fades over this stretch of the piece's timeline.
 const PHONE_FADE: [number, number] = [0, 0.42];
+// On phones, the faded screenshot's space starts closing this far into the piece's
+// flight (what follows slides up into it).
+const CLOSE_AT = 0.2;
 // How strongly the video shows (.journey-video.is-shown in globals.css).
 const SCENE_STRENGTH = 0.55;
 
@@ -128,8 +131,12 @@ const CAPTIONS = [
 ];
 
 /** An invisible point on the page where a segment starts or ends (see SEGMENTS). */
-export function SceneMark({ name, className = "" }: { name: string; className?: string }) {
-  return <span aria-hidden="true" data-scene-mark={name} className={`pointer-events-none block h-0 w-0 ${className}`} />;
+export function SceneMark({ name, className = "", only }: { name: string; className?: string; only?: "phone" | "desktop" }) {
+  const mark = <span aria-hidden="true" data-scene-mark={name} className={`pointer-events-none block h-0 w-0 ${className}`} />;
+  // A mark for one layout only (phones place some hand-offs differently); the hidden
+  // copy has no box, so measure() skips it. `contents` keeps it positioned as before.
+  if (!only) return mark;
+  return <span className={only === "phone" ? "contents lg:hidden" : "hidden lg:contents"}>{mark}</span>;
 }
 
 export function JourneyScene() {
@@ -156,6 +163,8 @@ export function JourneyScene() {
     let active = !window.location.hash || window.location.hash === "#";
     if (active) root.classList.add("scene-on");
     const small = window.matchMedia("(max-width: 767px)");
+    // Below lg the columns stack (the phone layout of the marks, sections.tsx).
+    const stacked = window.matchMedia("(max-width: 1023px)");
     const videos = videoRefs.current;
 
     /* ---- Marks: where each one sits on the page ---- */
@@ -294,10 +303,17 @@ export function JourneyScene() {
       });
     };
     // The phone a screenshot sits in: its step-aside wrapper, or the phone frame itself.
-    const fadePhone = (shotName: string, gone: number) => {
+    const phoneOf = (shotName: string) => {
       const shot = document.querySelector<HTMLElement>(`[data-morph-shot="${shotName}"]`);
-      const phone = shot?.closest<HTMLElement>("[data-aside-phone]") ?? shot?.closest<HTMLElement>("figure");
+      return shot?.closest<HTMLElement>("[data-aside-phone]") ?? shot?.closest<HTMLElement>("figure") ?? null;
+    };
+    const fadePhone = (shotName: string, gone: number, close: number) => {
+      const phone = phoneOf(shotName);
       if (!phone) return;
+      // A negative bottom margin pulls what follows up over the faded phone without
+      // moving the phone (or the marks inside it), so the scene's timing holds still.
+      const mb = close > 0 ? `${(-phone.offsetHeight * close).toFixed(1)}px` : "";
+      if (phone.style.marginBottom !== mb) phone.style.marginBottom = mb;
       const o = (1 - gone).toFixed(3);
       if (phone.style.opacity === o) return;
       phone.style.opacity = o;
@@ -309,6 +325,7 @@ export function JourneyScene() {
       document.querySelectorAll<HTMLElement>("[data-aside-phone], figure:has([data-morph-shot])").forEach((p) => {
         p.style.opacity = "";
         p.style.transform = "";
+        p.style.marginBottom = "";
         p.style.pointerEvents = "";
       });
     };
@@ -427,7 +444,18 @@ export function JourneyScene() {
         if (m.aside || m.fade) {
           const [f0, f1] = m.fade ?? PHONE_FADE;
           const gone = local < m.t0 ? 0 : mi < live.index ? 1 : ease(range(k, f0, f1));
-          if (m.shot) fadePhone(m.shot, gone);
+          // Phones: the faded screenshot's space closes as the piece flies, so what
+          // follows comes straight up instead of after a screen of nothing.
+          // It starts a little into the flight and rises at about twice the scroll speed
+          // (the phone's height over as much scrolling), following the scroll both ways.
+          let close = 0;
+          const r = segRange(SEGMENTS[mi]);
+          if (stacked.matches && m.shot && r) {
+            const from = r[0] + (r[1] - r[0]) * (m.t0 + CLOSE_AT * (m.t1 - m.t0));
+            const h = phoneOf(m.shot)?.offsetHeight ?? 1;
+            close = live.before ? 0 : ease(clamp01((live.line - from) / h));
+          }
+          if (m.shot) fadePhone(m.shot, gone, close);
           if (m.aside) setAside(m.aside, gone >= 0.35);
         }
         if (local < m.t0 || k >= 1) {

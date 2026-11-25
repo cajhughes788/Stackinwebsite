@@ -39,12 +39,15 @@ export function IncomeSection() {
 
       {/* Room for the chips to fly into the scene and the streams to pour, while it runs. */}
       <div aria-hidden="true" className="scene-gap scene-gap-lg" />
-      <SceneMark name="income-chips" />
+      <SceneMark name="income-chips" only="desktop" />
       <div aria-hidden="true" className="scene-gap" />
 
       <div data-aside-grid="income" className="mt-14 grid items-center gap-14 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-20">
         <div data-aside-phone className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
-          <SceneMark name="income-phone" className="absolute inset-x-0 top-1/2" />
+          {/* Phones: Payment streams stays in full view a while longer, then shrinks into
+              the scene from its middle to its foot. */}
+          <SceneMark name="income-chips" only="phone" className="absolute inset-x-0 top-0" />
+          <SceneMark name="income-phone" className="absolute inset-x-0 top-full lg:top-1/2" />
         <PhoneShot
           shot={{
             src: "/images/app/payment-streams.webp",
@@ -152,7 +155,9 @@ export function InvoicingSection() {
             morph={{ morph: "invoicing" }}
             className="mx-auto"
           />
-          <SceneMark name="invoicing-row" className="absolute inset-x-0 top-1/2" />
+          {/* Phones: the same, for the Invoices screen. */}
+          <SceneMark name="charge-end" only="phone" className="absolute inset-x-0 top-[15%]" />
+          <SceneMark name="invoicing-row" className="absolute inset-x-0 top-full lg:top-1/2" />
         </div>
       </div>
 
@@ -192,7 +197,7 @@ const chargeSteps = [
 
 export function ChargeSection() {
   return (
-    <SectionShell id="charge" tone="raised" endMark="charge-end">
+    <SectionShell id="charge" tone="raised" endMark="charge-end" endMarkDesktopOnly>
       <SectionHeader
         label="02 / Charge"
         title="Take a payment on the spot"
@@ -224,7 +229,10 @@ export function ChargeSection() {
             morph={{ morph: "charge", overlay: { src: "/images/app/charge-qr.webp", at: "2:0.62" } }}
             className="mx-auto"
           />
-          <SceneMark name="charge-qr" className="absolute inset-x-0 top-[45%]" />
+          {/* Phones: the QR lifts once the whole screenshot is on screen (booking-end here
+              puts that at about its middle), and leaves by its foot. */}
+          <SceneMark name="booking-end" only="phone" className="absolute inset-x-0 top-[15%]" />
+          <SceneMark name="charge-qr" className="absolute inset-x-0 top-full lg:top-[45%]" />
         </div>
 
         <ul className="aside-col mx-auto w-full max-w-sm space-y-6 lg:mx-0">
@@ -273,7 +281,7 @@ function Fragment({ children }: { children: ReactNode }) {
 
 export function BookingSection() {
   return (
-    <SectionShell id="booking" endMark="booking-end">
+    <SectionShell id="booking" endMark="booking-end" endMarkDesktopOnly>
       <SectionHeader
         label="01 / Booking"
         title="Booking that gets you paid"
@@ -282,10 +290,11 @@ export function BookingSection() {
       />
 
       <div className="mt-14 grid items-start gap-12 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-14">
-        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
-          {/* The Sample Client appointment lifts off between these two marks. */}
-          <SceneMark name="booking-lift" className="absolute inset-x-0 top-0" />
-          <SceneMark name="booking-start" className="absolute inset-x-0 top-[85%]" />
+        <div data-aside-phone className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+          {/* The Sample Client appointment lifts off between these two marks. On phones
+              it waits until the whole screenshot is on screen (from its middle to its foot). */}
+          <SceneMark name="booking-lift" className="absolute inset-x-0 top-1/2 lg:top-0" />
+          <SceneMark name="booking-start" className="absolute inset-x-0 top-full lg:top-[85%]" />
           <PhoneShot
             shot={{
               src: "/images/app/booking.webp",
