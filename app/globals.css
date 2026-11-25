@@ -759,10 +759,9 @@
      the scene shows around and between them. */
   .scene-on :is(.section-head, .aside-col):not(.aside-col .section-head) {
     border-radius: 1.25rem;
-    background: rgb(20 25 28 / 0.74);
+    /* Solid, not frosted: a blur over the scrubbing video repaints every frame on phones. */
+    background: rgb(20 25 28 / 0.86);
     box-shadow: 0 0 0 1px rgb(255 255 255 / 0.05);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
     padding: 1.25rem 1.1rem;
   }
   .scene-on .section-head::before {

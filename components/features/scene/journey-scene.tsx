@@ -118,8 +118,8 @@ const SCENE_STRENGTH = 0.55;
 
 const clamp01 = (n: number) => Math.min(Math.max(n, 0), 1);
 const range = (t: number, a: number, b: number) => clamp01((t - a) / (b - a || 1));
-const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+// Scrubbed motion eases out, never in, so it answers from the first pixel of scroll.
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
 // Captions in the scene: real text where the video carries none.
@@ -166,11 +166,20 @@ export function JourneyScene() {
     // Below lg the columns stack (the phone layout of the marks, sections.tsx).
     const stacked = window.matchMedia("(max-width: 1023px)");
     const videos = videoRefs.current;
+    // Data saver and 2G load only what's on screen and the next clip; 3G and
+    // slower take the light encodes even on a big screen.
+    const net = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    const thrifty = Boolean(net?.saveData) || /2g/.test(net?.effectiveType ?? "");
+    const lite = thrifty || net?.effectiveType === "3g";
+    // The screen's height for "the middle of the screen": the scene layer's 100lvh,
+    // which stays put while iPhone Safari's toolbar slides (innerHeight doesn't).
+    let screenH = layer.clientHeight || window.innerHeight;
 
     /* ---- Marks: where each one sits on the page ---- */
     const markY = new Map<string, number>();
     const measure = () => {
       markY.clear();
+      screenH = layer.clientHeight || window.innerHeight;
       document.querySelectorAll<HTMLElement>("[data-scene-mark]").forEach((el) => {
         // A mark can exist twice, one per layout (phones / desktop); the hidden one doesn't count.
         if (!el.getClientRects().length) return;
@@ -201,7 +210,7 @@ export function JourneyScene() {
       const v = videos[clip - 1];
       if (!v) return;
       loaded.add(clip);
-      v.src = media(`/media/journey/c${clip}${small.matches ? "-m" : ""}.mp4`);
+      v.src = media(`/media/journey/c${clip}${small.matches || lite ? "-m" : ""}.mp4`);
       v.load();
       // iOS only lets a muted inline video seek after it has played once.
       v.play().then(() => v.pause()).catch(() => {});
@@ -337,7 +346,7 @@ export function JourneyScene() {
       return [a + (b - a) * (sg.a ?? 0), a + (b - a) * (sg.b ?? 1)] as const;
     };
     const stateAt = (y: number) => {
-      const line = y + window.innerHeight * 0.5;
+      const line = y + screenH * 0.5;
       const first = segRange(SEGMENTS[0]);
       const last = segRange(SEGMENTS[SEGMENTS.length - 1]);
       if (!first || !last) return null;
@@ -352,9 +361,11 @@ export function JourneyScene() {
 
     /* ---- One frame: the video follows the eased scroll; morphs follow the page itself ---- */
     let shown = -1;
+    let sceneIn = 0;
+    let fading = false;
     const draw = (y: number) => {
       if (!active) return;
-      const vh = window.innerHeight;
+      const vh = screenH;
       const st = stateAt(y);
       const live = stateAt(window.scrollY);
       const end = markY.get("scene-end");
@@ -367,12 +378,8 @@ export function JourneyScene() {
       }
 
       // The scene appears as the appointment lands in it, and fades out at the closing section.
-      let opacity = live.before ? 0 : live.seg.id === "lift" ? ease(range(live.t, 0.3, FLY)) : 1;
+      let opacity = live.before ? 0 : live.seg.id === "lift" ? easeOut(range(live.t, 0.3, FLY)) : 1;
       if (end !== undefined) opacity *= 1 - clamp01((line - (end - vh * 0.6)) / (vh * 0.4));
-      layer.style.opacity = opacity.toFixed(3);
-      // Hidden, not just transparent, until it shows: Chrome counts a transparent
-      // video's first frame as the page's main content.
-      layer.style.visibility = opacity > 0 ? "visible" : "hidden";
 
       // Clip and time. In the shadow's first half it sweeps down over clip 8's
       // last frame; in the second, clip 9's empty studio is behind it and it lifts.
@@ -397,8 +404,11 @@ export function JourneyScene() {
       // Chrome counts a clip's first frame as the page's main content even while the
       // scene is hidden, and that measurement stops at the first input.
       if (woke) {
-        load(clip); load(clip - 1); load(clip + 1); load(clip + 2);
-        if (!prefetching && !before) prefetch(clip);
+        load(clip); load(clip + 1);
+        if (!thrifty) {
+          load(clip - 1); load(clip + 2);
+          if (!prefetching && !before) prefetch(clip);
+        }
       }
 
       layer.dataset.at = `${clip}:${ct.toFixed(2)}`;
@@ -412,6 +422,18 @@ export function JourneyScene() {
           shown = clip;
         }
       }
+
+      // The scene shows only once a clip has a frame to show (never an empty, dark
+      // scene on a slow phone), then fades in over a few frames.
+      if (shown >= 0 && sceneIn < 1) {
+        sceneIn = Math.min(1, sceneIn + 1 / 12);
+        fading = true;
+      }
+      opacity *= sceneIn;
+      layer.style.opacity = opacity.toFixed(3);
+      // Hidden, not just transparent, until it shows: Chrome counts a transparent
+      // video's first frame as the page's main content.
+      layer.style.visibility = opacity > 0 ? "visible" : "hidden";
 
       // Where the scene is in the whole journey, for cues, holds and captions.
       const progress = before ? 0 : clip + ct;
@@ -443,7 +465,7 @@ export function JourneyScene() {
         // as it fades (desktop).
         if (m.aside || m.fade) {
           const [f0, f1] = m.fade ?? PHONE_FADE;
-          const gone = local < m.t0 ? 0 : mi < live.index ? 1 : ease(range(k, f0, f1));
+          const gone = local < m.t0 ? 0 : mi < live.index ? 1 : easeOut(range(k, f0, f1));
           // Phones: the faded screenshot's space closes as the piece flies, so what
           // follows comes straight up instead of after a screen of nothing.
           // It starts a little into the flight and rises at about twice the scroll speed
@@ -453,7 +475,7 @@ export function JourneyScene() {
           if (stacked.matches && m.shot && r) {
             const from = r[0] + (r[1] - r[0]) * (m.t0 + CLOSE_AT * (m.t1 - m.t0));
             const h = phoneOf(m.shot)?.offsetHeight ?? 1;
-            close = live.before ? 0 : ease(clamp01((live.line - from) / h));
+            close = live.before ? 0 : easeOut(clamp01((live.line - from) / h));
           }
           if (m.shot) fadePhone(m.shot, gone, close);
           if (m.aside) setAside(m.aside, gone >= 0.35);
@@ -467,7 +489,7 @@ export function JourneyScene() {
         const to = toScreen(m.to);
         // Lift: rise a little off the page. Fly: travel there. Settle: sit, still.
         const up = easeOut(range(k, 0, LIFT));
-        const fly = ease(range(k, LIFT, FLY));
+        const fly = easeOut(range(k, LIFT, FLY));
         const x = lerp(from.x, to.x, fly);
         const y2 = lerp(from.y, to.y, fly) - up * (1 - fly) * 10 - Math.sin(Math.PI * fly) * 36;
         const w = lerp(from.w, to.w, fly), h = lerp(from.h, to.h, fly);
@@ -478,20 +500,24 @@ export function JourneyScene() {
           g.style.height = `${to.h}px`;
           g.dataset.size = `${to.w}x${to.h}`;
         }
-        g.style.transform = `translate3d(${x}px, ${y2}px, 0) scale(${((w / to.w) * pop).toFixed(4)}, ${((h / to.h) * pop).toFixed(4)})`;
+        // In flight it sits in the page at the scroll it was drawn for, so Safari's
+        // own scrolling carries it with the screenshot it leaves instead of a frame
+        // behind it (shake). Once it has arrived it belongs to the fixed scene.
+        const arrived = k >= FLY;
+        const pageY = arrived ? 0 : window.scrollY;
+        g.style.transform = `translate3d(${x}px, ${y2 + pageY}px, 0) scale(${((w / to.w) * pop).toFixed(4)}, ${((h / to.h) * pop).toFixed(4)})`;
         g.style.borderRadius = `${lerp(from.r * (to.w / w), m.radius * to.k, fly)}px`;
         g.style.setProperty("--shadow", (up * (1 - range(k, FLY, SETTLE))).toFixed(3));
-        g.style.setProperty("--tint", ease(range(k, FLY - 0.1, SETTLE)).toFixed(3));
+        g.style.setProperty("--tint", easeOut(range(k, FLY - 0.1, SETTLE)).toFixed(3));
         // A chip's words leave as it lifts, so they never stretch in flight.
         g.style.setProperty("--label", (1 - range(k, LIFT * 0.5, LIFT + 0.1)).toFixed(3));
         // On the way in it dims to the scene's own strength; once there it
         // moves behind the page's words (into the scene, under its scrim) and melts in.
-        const arrived = k >= FLY;
         const home = arrived ? ghostScene : ghostLayer;
         if (g.parentElement !== home) home.appendChild(g);
-        const dim = lerp(1, SCENE_STRENGTH, ease(range(k, LIFT + (FLY - LIFT) * 0.4, FLY)));
-        const away = m.out ? 1 - ease(range(k, m.out[0], m.out[1])) : 1;
-        g.style.opacity = ((arrived ? SCENE_STRENGTH * (1 - ease(range(k, SETTLE, 1))) : dim) * away).toFixed(3);
+        const dim = lerp(1, SCENE_STRENGTH, easeOut(range(k, LIFT + (FLY - LIFT) * 0.4, FLY)));
+        const away = m.out ? 1 - easeOut(range(k, m.out[0], m.out[1])) : 1;
+        g.style.opacity = ((arrived ? SCENE_STRENGTH * (1 - easeOut(range(k, SETTLE, 1))) : dim) * away).toFixed(3);
       });
     };
 
@@ -499,11 +525,12 @@ export function JourneyScene() {
     let eased = window.scrollY;
     let frameId = 0;
     const tick = () => {
+      fading = false;
       const goal = window.scrollY;
       eased += (goal - eased) * 0.18;
       if (Math.abs(goal - eased) < 0.5) eased = goal;
       draw(eased);
-      frameId = eased !== goal ? requestAnimationFrame(tick) : 0;
+      frameId = eased !== goal || fading ? requestAnimationFrame(tick) : 0;
     };
     const schedule = () => {
       if (!frameId) frameId = requestAnimationFrame(tick);
@@ -562,16 +589,17 @@ export function JourneyScene() {
     measure();
     draw(eased);
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", onResize);
-    // Images and fonts move the marks as they load.
+    // Images and fonts move the marks as they load; the layer changes size only on a
+    // real resize (rotation, window), never as iPhone Safari's toolbar slides.
     const ro = new ResizeObserver(onResize);
     ro.observe(document.body);
+    ro.observe(layer);
 
     return () => {
       cancelAnimationFrame(frameId);
       wakeEvents.forEach((e) => window.removeEventListener(e, wake));
       window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", onResize);
+      if ("scrollRestoration" in history) history.scrollRestoration = "auto";
       ro.disconnect();
       document.removeEventListener("click", onClick, true);
       window.removeEventListener("hashchange", onHash);
@@ -616,8 +644,9 @@ export function JourneyScene() {
           </p>
         ))}
       </div>
-      {/* Morph ghosts fly above the page, from a screenshot into the scene. */}
-      <div ref={ghostLayerRef} aria-hidden="true" className="morph-layer pointer-events-none fixed inset-0 z-[25] overflow-hidden" />
+      {/* Morph ghosts fly above the page, from a screenshot into the scene. The layer
+          is in the page (top of the document), so a piece in flight scrolls with it. */}
+      <div ref={ghostLayerRef} aria-hidden="true" className="morph-layer pointer-events-none absolute inset-x-0 top-0 z-[25] h-0" />
     </>
   );
 }
