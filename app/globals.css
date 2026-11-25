@@ -442,6 +442,142 @@
   }
 }
 
+/* Voice: a sticky stage (see VoiceSection). --local is how far the current
+   sentence has been said, 0..1; words and form fields appear along it. */
+@layer components {
+  [data-js] .voice-track {
+    height: calc(100svh + 5 * 55svh);
+  }
+  [data-js] .voice-stage {
+    position: sticky;
+    top: 4rem;
+    height: calc(100svh - 4rem);
+  }
+  .voice-deck-stage {
+    perspective: 1400px;
+  }
+  .voice-deck {
+    transform-style: preserve-3d;
+    transform: rotateY(calc(-8deg + var(--tx, 0) * 10deg)) rotateX(calc(4deg - var(--ty, 0) * 6deg));
+  }
+  .voice-slot {
+    will-change: transform, opacity;
+  }
+  .voice-word {
+    opacity: clamp(0.12, calc((var(--local, 1) * 1.7 - var(--w, 0)) * 8), 1);
+  }
+  .voice-field {
+    --f: clamp(0, calc((var(--local, 1) - var(--s, 0)) * 7), 1);
+    opacity: var(--f);
+    transform: translateZ(calc(var(--f) * 22px)) translateY(calc((1 - var(--f)) * 10px));
+  }
+  /* Rows show as an empty form first; their values arrive as they're said. */
+  .voice-row {
+    opacity: calc(0.28 + var(--f) * 0.72);
+    transform: translateZ(calc(var(--f) * 22px));
+  }
+  .voice-row > * {
+    opacity: var(--f);
+  }
+  /* On phones the big quote above the deck is what was heard. */
+  @media (max-width: 1023px) {
+    [data-js] .voice-heard {
+      display: none;
+    }
+  }
+  .voice-bar {
+    height: 100%;
+    transform: scaleY(0.12);
+    transition: transform 0.4s ease-out;
+  }
+  .is-listening .voice-bar {
+    animation: voice-bar 0.9s ease-in-out infinite alternate;
+  }
+  .voice-step {
+    transition: color 0.3s;
+  }
+  .voice-step-tick {
+    transform-origin: left;
+    transform: scaleX(0.4);
+    transition: transform 0.3s;
+  }
+  .voice-step.is-active {
+    color: var(--foreground);
+  }
+  .voice-step.is-active .voice-step-tick {
+    transform: none;
+    color: var(--primary);
+  }
+
+  /* Without JS (and with reduced motion, below), the cards sit in a grid and
+     the stage's live parts step aside. */
+  html:not([data-js]) .voice-said {
+    display: none;
+  }
+  html:not([data-js]) .voice-deck {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.5rem), 1fr));
+    gap: 1.25rem;
+    transform: none;
+  }
+  html:not([data-js]) .voice-slot {
+    grid-area: auto;
+  }
+  html:not([data-js]) .voice-stage {
+    grid-template-columns: 1fr;
+    max-width: 72rem;
+    padding-block: 3rem;
+  }
+}
+
+@keyframes voice-bar {
+  from {
+    transform: scaleY(0.15);
+  }
+  to {
+    transform: scaleY(var(--h, 0.8));
+  }
+}
+
+/* Features journey scene (components/features/scene/journey-scene.tsx). */
+@layer components {
+  .journey-video {
+    object-fit: cover;
+    opacity: 0;
+  }
+  /* The scene stays behind the words: about two-thirds strength. */
+  .journey-video.is-shown {
+    opacity: 0.55;
+  }
+  /* Darker toward the edges and the top, where the page's text sits; the
+     middle of the shot stays open. */
+  .journey-scrim {
+    background:
+      radial-gradient(ellipse 60% 55% at 50% 55%, rgb(18 23 26 / 0) 0%, rgb(18 23 26 / 0.35) 70%, rgb(18 23 26 / 0.7) 100%),
+      linear-gradient(to bottom, rgb(18 23 26 / 0.55), rgb(18 23 26 / 0.15) 35%, rgb(18 23 26 / 0.25));
+  }
+  /* The shadow between Income and Business: a soft edge leading a dark sheet down. */
+  .journey-shadow {
+    top: -30%;
+    height: 130%;
+    background: linear-gradient(to bottom, rgb(14 18 20 / 0) 0%, rgb(14 18 20 / 0.92) 18%, rgb(14 18 20) 26%);
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .journey-cap {
+    text-shadow: 0 1px 12px rgb(0 0 0 / 0.8);
+  }
+  /* Rings on the real screenshots and the payment chips, lit by --cue. */
+  .scene-ring {
+    opacity: var(--cue, 0);
+    box-shadow:
+      0 0 0 2px rgb(47 168 102 / 0.95),
+      0 0 22px 4px rgb(47 168 102 / 0.55);
+    transform: scale(calc(1 + var(--cue, 0) * 0.02));
+  }
+}
+
+
 @keyframes toast-in {
   from {
     opacity: 0;
@@ -546,4 +682,59 @@
   .paid-card {
     transition: none;
   }
+  [data-js] .voice-track {
+    height: auto;
+  }
+  [data-js] .voice-stage {
+    position: static;
+    height: auto;
+    grid-template-columns: 1fr;
+    padding-block: 3rem;
+  }
+  .voice-said {
+    display: none;
+  }
+  [data-js] .voice-heard {
+    display: block;
+  }
+  .voice-deck {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18.5rem), 1fr));
+    gap: 1.25rem;
+    transform: none;
+  }
+  .voice-slot {
+    grid-area: auto;
+  }
+  .is-listening .voice-bar {
+    animation: none;
+  }
+}
+
+/* While the journey scene plays, the Features sections go see-through so it
+   shows behind them (unlayered, so it wins over the bg utilities). */
+.scene-on .section-shell {
+  background-color: transparent;
+}
+.scene-on .section-shell[data-tone="raised"] {
+  background-color: rgb(255 255 255 / 0.015);
+}
+.scene-on .section-shell :is(h2, h3, p, li, dt, dd, span) {
+  text-shadow: 0 1px 14px rgb(12 16 18 / 0.85), 0 0 2px rgb(12 16 18 / 0.6);
+}
+/* A soft dark halo behind each section's heading, so it reads over the scene. */
+.scene-on .section-head::before {
+  content: "";
+  position: absolute;
+  inset: -2.5rem -4rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgb(14 18 20 / 0.82), rgb(14 18 20 / 0.5) 60%, rgb(14 18 20 / 0));
+  pointer-events: none;
+}
+/* The payment chips light up as the streams pour out of them. Unlayered, so
+   it wins over the chips' own ring and text-color utilities. */
+.scene-on .scene-chip {
+  box-shadow:
+    0 0 0 1px rgb(47 168 102 / calc(0.08 + var(--cue, 0) * 0.85)),
+    0 0 calc(var(--cue, 0) * 22px) rgb(47 168 102 / calc(var(--cue, 0) * 0.6));
+  color: rgb(calc(236 - 150 * var(--cue, 0)) calc(235 - 10 * var(--cue, 0)) calc(230 - 100 * var(--cue, 0)));
 }

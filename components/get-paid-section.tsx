@@ -17,34 +17,35 @@ type Tool = {
   shot: Screenshot;
 };
 
-// Invoicing, Charge, and Booking are one idea (getting paid by clients), so the
-// homepage shows them as tabs over one phone instead of three full sections.
+// Booking, Charge, and Invoicing are one idea (getting paid by clients), so the
+// homepage shows them as tabs over one phone instead of three full sections, in
+// the order the Features page tells them: booked, paid on the spot, paid later.
 const tools: Tool[] = [
   {
-    id: "invoice",
-    tab: "Invoice",
-    title: "Invoices that keep your books right",
-    description: "Bill clients and get paid by card, bank transfer, Venmo, or Zelle. Every payment lands in your books.",
+    id: "book",
+    tab: "Book",
+    title: "Appointments that pay, start to finish",
+    description: "Booking, deposits, reminders, and checkout, connected to your website, your calendar, and your books.",
     points: [
       {
-        title: "Branded in under a minute",
-        description: "Your logo, colors, payment details, and policies. Email it, text it, or share a link or PDF.",
+        title: "Your own booking page",
+        description: "Clients pick a service and an open time, any time. No back-and-forth.",
       },
       {
-        title: "Venmo, Zelle, or check? Covered.",
-        description: "521 spots the payment when it lands in your connected bank. Confirm it with one tap.",
+        title: "Deposits that protect your time",
+        description: "Require a deposit to confirm. Refunds follow your cancellation policy automatically.",
       },
       {
-        title: "Reminders that do the chasing",
-        description: "Friendly nudges before and after the due date, and an alert the moment a client pays.",
+        title: "Finish and get paid in one tap",
+        description: "The deposit is subtracted, the balance is collected, and it's already in your books.",
       },
     ],
-    link: { href: "/features#invoicing", label: "Everything invoicing can do" },
+    link: { href: "/features#booking", label: "Everything booking can do" },
     shot: {
-      src: "/images/app/invoices.webp",
-      alt: "The 521 Invoices screen showing $14 waiting on clients, with one invoice overdue 8 days",
+      src: "/images/app/booking.webp",
+      alt: "The 521 booking calendar with a haircut appointment on the day view",
       width: 720,
-      height: 888,
+      height: 972,
     },
   },
   {
@@ -75,30 +76,30 @@ const tools: Tool[] = [
     },
   },
   {
-    id: "book",
-    tab: "Book",
-    title: "Appointments that pay, start to finish",
-    description: "Booking, deposits, reminders, and checkout, connected to your website, your calendar, and your books.",
+    id: "invoice",
+    tab: "Invoice",
+    title: "Invoices that keep your books right",
+    description: "Bill clients and get paid by card, bank transfer, Venmo, or Zelle. Every payment lands in your books.",
     points: [
       {
-        title: "Your own booking page",
-        description: "Clients pick a service and an open time, any time. No back-and-forth.",
+        title: "Branded in under a minute",
+        description: "Your logo, colors, payment details, and policies. Email it, text it, or share a link or PDF.",
       },
       {
-        title: "Deposits that protect your time",
-        description: "Require a deposit to confirm. Refunds follow your cancellation policy automatically.",
+        title: "Venmo, Zelle, or check? Covered.",
+        description: "521 spots the payment when it lands in your connected bank. Confirm it with one tap.",
       },
       {
-        title: "Finish and get paid in one tap",
-        description: "The deposit is subtracted, the balance is collected, and it's already in your books.",
+        title: "Reminders that do the chasing",
+        description: "Friendly nudges before and after the due date, and an alert the moment a client pays.",
       },
     ],
-    link: { href: "/features#booking", label: "Everything booking can do" },
+    link: { href: "/features#invoicing", label: "Everything invoicing can do" },
     shot: {
-      src: "/images/app/booking.webp",
-      alt: "The 521 booking calendar with a haircut appointment on the day view",
+      src: "/images/app/invoices.webp",
+      alt: "The 521 Invoices screen showing $14 waiting on clients, with one invoice overdue 8 days",
       width: 720,
-      height: 972,
+      height: 888,
     },
   },
 ];
@@ -130,7 +131,7 @@ export function GetPaidSection() {
             <span className="text-balance">Get paid, your way</span>
           </h2>
           <p className="mx-auto max-w-xl text-base text-muted-foreground sm:text-lg">
-            Send an invoice, take a payment on the spot, or let clients book and pay a deposit. Every dollar lands in
+            Let clients book and pay a deposit, take a payment on the spot, or send an invoice. Every dollar lands in
             your books.
           </p>
         </div>

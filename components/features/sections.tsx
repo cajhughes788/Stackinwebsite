@@ -1,8 +1,12 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { PhoneShot } from "@/components/phone-shot";
-import { AlsoIncluded, Highlights, SectionHeader, SectionShell, Tile } from "./blocks";
+import { AlsoIncluded, Highlights, SayIt, SectionHeader, SectionShell, Tile } from "./blocks";
+import { SceneMark } from "./scene/journey-scene";
 
-// The seven Features sections. Each keeps the same parts (top three points,
+// The Features sections, in the order of a worker's week: a client books, you
+// get paid on the spot or later, the money lands, you see what you made. The
+// eight sections. Each keeps the same parts (top three points,
 // then everything else as a checklist) but gets its own shape, so readers can
 // tell where one topic ends and the next begins.
 
@@ -12,11 +16,13 @@ const paymentTypes = ["Bank deposits", "Zelle", "Venmo", "Cash", "Card", "Apple 
 
 export function IncomeSection() {
   return (
-    <SectionShell id="income">
+    <SectionShell id="income" tone="raised">
+      <SceneMark name="income-start" />
       <SectionHeader
-        label="01 / Income"
+        label="04 / Income"
         title="Every way you get paid"
         description="Bank deposits, Venmo, and cash come together in one ledger, sorted for you."
+        say="Made 270 today, worked 9 to 5"
       />
 
       {/* Every payment type, pouring into one ledger. */}
@@ -24,14 +30,19 @@ export function IncomeSection() {
         {paymentTypes.map((type) => (
           <span
             key={type}
-            className="rounded-full bg-white/[0.04] px-3.5 py-1.5 text-[13px] text-foreground/80 ring-1 ring-white/[0.08]"
+            data-scene-cue="8:0-0.6"
+            className="scene-chip rounded-full bg-white/[0.04] px-3.5 py-1.5 text-[13px] text-foreground/80 ring-1 ring-white/[0.08]"
           >
             {type}
           </span>
         ))}
       </div>
 
+      <SceneMark name="income-chips" />
+
       <div className="mt-14 grid items-center gap-14 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-20">
+        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+          <SceneMark name="income-phone" className="absolute inset-x-0 top-1/2" />
         <PhoneShot
           shot={{
             src: "/images/app/payment-streams.webp",
@@ -41,6 +52,7 @@ export function IncomeSection() {
           }}
           className="mx-auto"
         />
+        </div>
         <div>
           <Highlights
             items={[
@@ -97,14 +109,15 @@ const invoiceSteps = [
 
 export function InvoicingSection() {
   return (
-    <SectionShell id="invoicing" tone="raised">
+    <SectionShell id="invoicing">
       <div className="grid items-center gap-14 lg:grid-cols-[1fr_auto] lg:gap-20">
         <div>
           <SectionHeader
             align="left"
-            label="02 / Invoicing"
+            label="03 / Invoicing"
             title="Invoicing, built into your books"
             description="From the first draft to the money landing, every step keeps your profit, goals, and tax numbers right."
+            say="Invoice Jenna Morales 120 for a cut and color, due Friday"
             className="mb-10"
           />
 
@@ -124,17 +137,22 @@ export function InvoicingSection() {
           </ol>
         </div>
 
-        <PhoneShot
-          shot={{
-            src: "/images/app/invoices.webp",
-            alt: "The 521 Invoices screen showing $14 waiting on clients, with one invoice overdue 8 days",
-            width: 720,
-            height: 888,
-          }}
-          className="mx-auto"
-        />
+        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+          <PhoneShot
+            shot={{
+              src: "/images/app/invoices.webp",
+              alt: "The 521 Invoices screen showing $14 waiting on clients, with one invoice overdue 8 days",
+              width: 720,
+              height: 888,
+            }}
+            cue={{ rect: [1.6, 83.1, 96.8, 16.6], at: "5:0-0.3" }}
+            className="mx-auto"
+          />
+          <SceneMark name="invoicing-row" className="absolute inset-x-0 top-1/2" />
+        </div>
       </div>
 
+      <SceneMark name="invoicing-end" />
       <AlsoIncluded
         className="mt-14 lg:mt-20"
         items={[
@@ -160,9 +178,9 @@ const chargeSteps = [
 
 export function ChargeSection() {
   return (
-    <SectionShell id="charge">
+    <SectionShell id="charge" tone="raised" endMark="charge-end">
       <SectionHeader
-        label="03 / Charge"
+        label="02 / Charge"
         title="Take a payment on the spot"
         description="Show a QR code and your customer pays on their own phone. No card reader needed."
       />
@@ -180,15 +198,19 @@ export function ChargeSection() {
           ))}
         </ol>
 
-        <PhoneShot
-          shot={{
-            src: "/images/app/charge.webp",
-            alt: "The 521 Charge screen set to $45 for an early check-in, with Ask for a tip turned on",
-            width: 720,
-            height: 786,
-          }}
-          className="mx-auto"
-        />
+        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+          <PhoneShot
+            shot={{
+              src: "/images/app/charge.webp",
+              alt: "The 521 Charge screen set to $45 for an early check-in, with Ask for a tip turned on",
+              width: 720,
+              height: 786,
+            }}
+            cue={{ rect: [1.7, 86.8, 96.7, 12.2], at: "2:0.65-1", round: true }}
+            className="mx-auto"
+          />
+          <SceneMark name="charge-qr" className="absolute inset-x-0 top-0" />
+        </div>
 
         <ul className="mx-auto w-full max-w-sm space-y-6 lg:mx-0">
           {[
@@ -236,15 +258,17 @@ function Fragment({ children }: { children: ReactNode }) {
 
 export function BookingSection() {
   return (
-    <SectionShell id="booking" tone="raised">
+    <SectionShell id="booking" endMark="booking-end">
       <SectionHeader
-        label="04 / Booking"
+        label="01 / Booking"
         title="Booking that gets you paid"
         description="A booking page clients can use any time, with deposits, reminders, and one-tap checkout, all connected to your books."
+        say="Book Jenna Thursday at 2 for a cut"
       />
 
+      <SceneMark name="booking-start" />
       <div className="mt-14 grid items-start gap-12 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-14">
-        <div className="lg:sticky lg:top-36">
+        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
           <PhoneShot
             shot={{
               src: "/images/app/booking.webp",
@@ -252,6 +276,7 @@ export function BookingSection() {
               width: 720,
               height: 972,
             }}
+            cue={{ rect: [18.1, 81.1, 76.4, 12.3], at: "1:0-0.35" }}
             className="mx-auto"
           />
         </div>
@@ -407,14 +432,16 @@ function PayStub() {
 
 export function PaychecksSection() {
   return (
-    <SectionShell id="paychecks">
+    <SectionShell id="paychecks" tone="raised">
+      <SceneMark name="paychecks-start" />
       <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <div>
           <SectionHeader
             align="left"
-            label="05 / Paychecks"
+            label="06 / Paychecks"
             title="Paychecks, explained"
             description="See what you earned, what was withheld, and what you actually take home."
+            say="9 to 5, 40 in card tips"
             className="mb-10"
           />
           <Highlights
@@ -434,7 +461,10 @@ export function PaychecksSection() {
             ]}
           />
         </div>
-        <PayStub />
+        <div className="relative">
+          <PayStub />
+          <SceneMark name="paychecks-stub" className="absolute inset-x-0 bottom-0" />
+        </div>
       </div>
     </SectionShell>
   );
@@ -444,12 +474,14 @@ export function PaychecksSection() {
 
 export function BusinessSection() {
   return (
-    <SectionShell id="business" tone="raised">
+    <SectionShell id="business" endMark="business-end">
       <SectionHeader
-        label="06 / Business"
+        label="05 / Business"
         title="Run your business with clarity"
         description="Expenses, receipts, and profit, organized for tax time and every day before it."
+        say="Spent 42 on gas at Shell yesterday"
       />
+      <SceneMark name="business-start" />
 
       <div className="mt-12 grid gap-4 md:grid-cols-3 lg:mt-16">
         {[
@@ -472,6 +504,7 @@ export function BusinessSection() {
         Plus custom categories, so your reports match how you work.
       </p>
 
+
       <div className="mt-14 lg:mt-20">
         <PhoneShot
           shot={{
@@ -492,13 +525,16 @@ export function BusinessSection() {
 export function OrganizeSection() {
   return (
     <SectionShell id="organize" size="sm">
-      <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+      <div className="relative grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+        <SceneMark name="organize-mid" className="absolute inset-x-0 top-1/2" />
         <div>
           <SectionHeader
             align="left"
             label="07 / Organization"
             title="Organized your way"
             description="Workspaces and reminders that keep everything current without extra effort."
+            say="How much did I make this week?"
+            sayLabel="Ask 521"
             className="mb-8"
           />
           <dl className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -524,6 +560,56 @@ export function OrganizeSection() {
           }}
           className="mx-auto"
         />
+      </div>
+
+    </SectionShell>
+  );
+}
+
+/* ------------------------------------------------------------------- Voice */
+
+// Questions from the app's Ask 521 test sheet (scripts/voice-ask-cases.json).
+const askExamples = [
+  "How much did I make this week?",
+  "Who owes me money?",
+  "What's on tomorrow?",
+  "How much have I spent on gas this year?",
+  "What's my profit this quarter?",
+  "Show my October P&L",
+];
+const siriPhrases = ["Log my tips in 521", "Add an expense in 521", "Book in 521", "Ask 521"];
+
+export function FeaturesVoiceSection() {
+  return (
+    <SectionShell id="voice" tone="raised" size="sm">
+      <SectionHeader
+        label="08 / Voice"
+        title="Ask 521, or just ask Siri"
+        description="Ask about your money the way you'd ask a friend. 521 answers from your own numbers, with the same math as your screens, and can open the page you need."
+      />
+      <SceneMark name="voice-start" />
+
+      <ul className="mx-auto mt-10 grid max-w-3xl gap-2.5 sm:grid-cols-2">
+        {askExamples.map((question) => (
+          <li key={question}>
+            <SayIt text={question} label="Ask" className="w-full" />
+          </li>
+        ))}
+      </ul>
+
+      <div className="mx-auto mt-12 max-w-3xl text-center">
+        <p className="mb-4 text-sm text-muted-foreground">Or skip opening the app. Say it to Siri, or set it on the Action Button:</p>
+        <ul className="flex flex-wrap justify-center gap-2.5">
+          {siriPhrases.map((phrase) => (
+            <li key={phrase} className="rounded-full border border-white/[0.09] bg-white/[0.03] px-4 py-2 text-sm text-foreground">
+              &ldquo;{phrase}&rdquo;
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4 text-xs text-muted-foreground">Siri and the Action Button need iOS 16 or later.</p>
+        <Link href="/#voice" className="mt-6 inline-block text-sm font-medium text-foreground underline-offset-4 hover:underline">
+          See voice fill in a form
+        </Link>
       </div>
     </SectionShell>
   );

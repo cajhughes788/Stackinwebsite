@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
-import { Check } from "lucide-react";
+import { Check, Mic } from "lucide-react";
 import { Reveal } from "@/components/reveal";
+import { SceneMark } from "./scene/journey-scene";
 
 export type Highlight = { title: string; description: string };
 
@@ -13,21 +14,25 @@ export function SectionShell({
   id,
   tone = "base",
   size = "lg",
+  endMark,
   children,
 }: {
   id: string;
   tone?: "base" | "raised";
   size?: "lg" | "sm";
+  /** A Features journey mark at the end of the section (journey-scene.tsx). */
+  endMark?: string;
   children: ReactNode;
 }) {
   const bg = tone === "raised" ? "bg-surface" : "bg-background";
   const pad = size === "lg" ? "py-20 sm:py-24 lg:py-32" : "py-16 sm:py-20 lg:py-24";
   return (
     // scroll-mt clears the fixed navbar plus the section chips under it.
-    <section id={id} className={`scroll-mt-32 ${bg} ${pad}`}>
+    <section id={id} className={`section-shell relative z-10 scroll-mt-32 ${bg} ${pad}`} data-tone={tone}>
       <Reveal>
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">{children}</div>
       </Reveal>
+      {endMark ? <SceneMark name={endMark} /> : null}
     </section>
   );
 }
@@ -36,24 +41,45 @@ export function SectionHeader({
   label,
   title,
   description,
+  say,
+  sayLabel,
   align = "center",
   className = "",
 }: {
   label: string;
   title: string;
   description: string;
+  /** A real sentence the app understands by voice, shown as a mic chip. */
+  say?: string;
+  sayLabel?: string;
   align?: "center" | "left";
   className?: string;
 }) {
   const centered = align === "center";
   return (
-    <div className={`${centered ? "mx-auto max-w-2xl text-center" : "max-w-xl"} ${className}`}>
+    <div className={`section-head relative isolate ${centered ? "mx-auto max-w-2xl text-center" : "max-w-xl"} ${className}`}>
       <span className="eyebrow section-label mb-5">{label}</span>
       <h2 className="mb-4 text-3xl font-normal leading-[1.1] text-foreground sm:text-4xl lg:text-[2.75rem]">
         <span className="text-balance">{title}</span>
       </h2>
       <p className={`text-base text-muted-foreground sm:text-lg ${centered ? "mx-auto max-w-xl" : ""}`}>{description}</p>
+      {say ? <SayIt text={say} label={sayLabel} className="mt-6" /> : null}
     </div>
+  );
+}
+
+/** A mic chip with a sentence the app understands by voice. */
+export function SayIt({ text, label = "Say it", className = "" }: { text: string; label?: string; className?: string }) {
+  return (
+    <p
+      className={`inline-flex items-center gap-2.5 rounded-[1.25rem] bg-white/[0.035] py-1.5 pl-1.5 pr-4 text-left text-[13px] leading-snug text-foreground/85 ring-1 ring-white/[0.08] ${className}`}
+    >
+      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+        <Mic className="h-3.5 w-3.5" aria-hidden="true" />
+      </span>
+      <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-primary">{label}</span>
+      <span>&ldquo;{text}&rdquo;</span>
+    </p>
   );
 }
 

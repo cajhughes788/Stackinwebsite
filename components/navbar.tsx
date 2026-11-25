@@ -71,6 +71,12 @@ export function Navbar() {
               Support
             </Link>
             <Link
+              href="/#voice"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Voice
+            </Link>
+            <Link
               href="/#security"
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -154,6 +160,13 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Support
+            </Link>
+            <Link
+              href="/#voice"
+              className="block text-sm text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Voice
             </Link>
             <Link
               href="/#security"

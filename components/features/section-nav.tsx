@@ -3,13 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 
 const sections = [
-  { id: "income", label: "Income" },
-  { id: "invoicing", label: "Invoicing" },
-  { id: "charge", label: "Charge" },
   { id: "booking", label: "Booking" },
-  { id: "paychecks", label: "Paychecks" },
+  { id: "charge", label: "Charge" },
+  { id: "invoicing", label: "Invoicing" },
+  { id: "income", label: "Income" },
   { id: "business", label: "Business" },
+  { id: "paychecks", label: "Paychecks" },
   { id: "organize", label: "Organization" },
+  { id: "voice", label: "Voice" },
 ];
 
 // Chips that stick under the navbar and light up for the section in view, so a

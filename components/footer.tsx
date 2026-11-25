@@ -10,6 +10,7 @@ const footerColumns = [
       { label: "Invoicing", href: "/features#invoicing" },
       { label: "Charge", href: "/features#charge" },
       { label: "Booking", href: "/features#booking" },
+      { label: "Voice", href: "/#voice" },
       { label: "Security", href: "/#security" },
       { label: "Pricing", href: "/#pricing" },
       { label: "Download for iPhone", href: APP_STORE_URL, external: true },
