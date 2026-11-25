@@ -117,7 +117,8 @@ export function SwayPhone({
       ref={boxRef}
       role={label ? "img" : undefined}
       aria-label={label}
-      className={`relative isolate aspect-[2/3] w-full overflow-hidden ${className}`}
+      className={`relative isolate w-full overflow-hidden ${className}`}
+      style={{ aspectRatio: `${SWAY.width} / ${SWAY.height}` }}
     >
       <div
         aria-hidden="true"
@@ -132,7 +133,7 @@ export function SwayPhone({
         playsInline
         preload="auto"
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full [mask-image:linear-gradient(to_right,transparent,#000_6%,#000_94%,transparent)]"
+        className="sway-fade absolute inset-0 h-full w-full"
       />
       <div
         ref={screenRef}
