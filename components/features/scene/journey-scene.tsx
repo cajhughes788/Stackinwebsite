@@ -83,6 +83,11 @@ type Morph = {
   lift?: boolean;
   /** Once it has landed, its phone steps aside and the section's text closes in ([data-aside-grid]). */
   aside?: string;
+  /** Fade the screenshot it came from over this stretch of its timeline (default PHONE_FADE). */
+  fade?: [number, number];
+  /** Fade the piece itself out over this stretch, for when what it lands on in the
+   *  scene doesn't match it (the Charge QR is a different code), so the two never blur together. */
+  out?: [number, number];
 };
 
 // Frame positions measured on the clips' own frames (work/journey/*.json).
@@ -91,8 +96,8 @@ const PILLS: Rect[] = [
   [655, 455, 71, 94], [751, 456, 71, 94], [847, 457, 70, 94], [943, 459, 70, 94],
 ];
 const MORPHS: Morph[] = [
-  { seg: "lift", t0: 0, t1: 1, shot: "booking", crop: [18.1, 81.1, 76.4, 12.3], src: "/images/app/booking.webp", to: [487, 327, 307, 67], radius: 7, lift: true, tint: "rgb(48, 168, 102)" },
-  { seg: "h2", t0: 0, t1: 1, shot: "charge", crop: [22.2, 35.9, 55.6, 50.9], src: "/images/app/charge-qr.webp", to: [481, 190, 318, 314], radius: 22, aside: "charge" },
+  { seg: "lift", t0: 0, t1: 1, shot: "booking", crop: [18.1, 81.1, 76.4, 12.3], src: "/images/app/booking.webp", to: [487, 327, 307, 67], radius: 7, lift: true, tint: "rgb(48, 168, 102)", fade: [0.14, 0.46] },
+  { seg: "h2", t0: 0, t1: 1, shot: "charge", crop: [22.2, 35.9, 55.6, 50.9], src: "/images/app/charge-qr.webp", to: [481, 190, 318, 314], radius: 22, aside: "charge", out: [0.26, 0.42] },
   { seg: "h4", t0: 0, t1: 1, shot: "invoicing", crop: [0, 0, 100, 100], src: "/images/app/invoices.webp", to: [485, 155.8, 310, 382.3], radius: 18, aside: "invoicing" },
   ...PILLS.map((to, i): Morph => ({ seg: "h7", t0: i * 0.04, t1: 0.72 + i * 0.04, chip: i, to, radius: 34, tint: "rgb(30, 92, 62)" })),
   { seg: "h8", t0: 0, t1: 1, shot: "income", crop: [0, 0, 100, 100], src: "/images/app/payment-streams.webp", to: [564.5, 371.6, 149, 227.7], radius: 14, aside: "income" },
@@ -285,8 +290,10 @@ export function JourneyScene() {
         col.style.setProperty("--aside-x", `${c.left + c.width / 2 < p.left ? d : -d}px`);
       });
     };
-    const fadePhone = (name: string, gone: number) => {
-      const phone = document.querySelector<HTMLElement>(`[data-aside-grid="${name}"] [data-aside-phone]`);
+    // The phone a screenshot sits in: its step-aside wrapper, or the phone frame itself.
+    const fadePhone = (shotName: string, gone: number) => {
+      const shot = document.querySelector<HTMLElement>(`[data-morph-shot="${shotName}"]`);
+      const phone = shot?.closest<HTMLElement>("[data-aside-phone]") ?? shot?.closest<HTMLElement>("figure");
       if (!phone) return;
       const o = (1 - gone).toFixed(3);
       if (phone.style.opacity === o) return;
@@ -296,7 +303,7 @@ export function JourneyScene() {
     };
     const clearAsides = () => {
       document.querySelectorAll<HTMLElement>("[data-aside-grid]").forEach((g) => (g.dataset.aside = "0"));
-      document.querySelectorAll<HTMLElement>("[data-aside-phone]").forEach((p) => {
+      document.querySelectorAll<HTMLElement>("[data-aside-phone], figure:has([data-morph-shot])").forEach((p) => {
         p.style.opacity = "";
         p.style.transform = "";
         p.style.pointerEvents = "";
@@ -406,10 +413,11 @@ export function JourneyScene() {
         // two never show side by side: gone by about a third of the way through
         // the flight, following the scroll both ways. The text starts closing in
         // as it fades (desktop).
-        if (m.aside) {
-          const gone = local < m.t0 ? 0 : mi < live.index ? 1 : ease(range(k, PHONE_FADE[0], PHONE_FADE[1]));
-          fadePhone(m.aside, gone);
-          setAside(m.aside, gone >= 0.35);
+        if (m.aside || m.fade) {
+          const [f0, f1] = m.fade ?? PHONE_FADE;
+          const gone = local < m.t0 ? 0 : mi < live.index ? 1 : ease(range(k, f0, f1));
+          if (m.shot) fadePhone(m.shot, gone);
+          if (m.aside) setAside(m.aside, gone >= 0.35);
         }
         if (local < m.t0 || k >= 1) {
           if (g.style.opacity !== "0") g.style.opacity = "0";
@@ -443,7 +451,8 @@ export function JourneyScene() {
         const home = arrived ? ghostScene : ghostLayer;
         if (g.parentElement !== home) home.appendChild(g);
         const dim = lerp(1, SCENE_STRENGTH, ease(range(k, LIFT + (FLY - LIFT) * 0.4, FLY)));
-        g.style.opacity = (arrived ? SCENE_STRENGTH * (1 - ease(range(k, SETTLE, 1))) : dim).toFixed(3);
+        const away = m.out ? 1 - ease(range(k, m.out[0], m.out[1])) : 1;
+        g.style.opacity = ((arrived ? SCENE_STRENGTH * (1 - ease(range(k, SETTLE, 1))) : dim) * away).toFixed(3);
       });
     };
 
