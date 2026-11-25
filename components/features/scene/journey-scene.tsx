@@ -102,6 +102,8 @@ const MORPHS: Morph[] = [
 const LIFT = 0.16;
 const FLY = 0.6;
 const SETTLE = 0.76;
+// The screenshot a piece leaves fades over this stretch of the piece's timeline.
+const PHONE_FADE: [number, number] = [0, 0.42];
 // How strongly the video shows (.journey-video.is-shown in globals.css).
 const SCENE_STRENGTH = 0.55;
 
@@ -265,8 +267,8 @@ export function JourneyScene() {
       return { x: r.left + (cx / 100) * r.width, y: r.top + (cy / 100) * r.height, w: (cw / 100) * r.width, h: (ch / 100) * r.height, r: Math.min(18, r.width * 0.04) };
     };
 
-    /* ---- Step aside: a phone fades once its piece lands; the other columns
-       each move toward it by half its width plus the gap, which centres them. */
+    /* ---- Step aside: as a phone fades (fadePhone, scroll-linked), the other
+       columns each move toward it by half its width plus the gap, which centres them. */
     const setAside = (name: string, on: boolean) => {
       const grid = document.querySelector<HTMLElement>(`[data-aside-grid="${name}"]`);
       if (!grid || (grid.dataset.aside === "1") === on) return;
@@ -277,14 +279,28 @@ export function JourneyScene() {
       const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
       // Two columns flanking the phone keep a little air between them.
       const cols = grid.querySelectorAll(":scope > .aside-col").length;
-      const d = (p.width + gap) / 2 - (cols > 1 ? 32 : 0);
+      const d = (phone.offsetWidth + gap) / 2 - (cols > 1 ? 32 : 0);
       grid.querySelectorAll<HTMLElement>(":scope > .aside-col").forEach((col) => {
         const c = col.getBoundingClientRect();
         col.style.setProperty("--aside-x", `${c.left + c.width / 2 < p.left ? d : -d}px`);
       });
     };
+    const fadePhone = (name: string, gone: number) => {
+      const phone = document.querySelector<HTMLElement>(`[data-aside-grid="${name}"] [data-aside-phone]`);
+      if (!phone) return;
+      const o = (1 - gone).toFixed(3);
+      if (phone.style.opacity === o) return;
+      phone.style.opacity = o;
+      phone.style.transform = gone > 0 ? `scale(${(1 - 0.04 * gone).toFixed(4)})` : "";
+      phone.style.pointerEvents = gone > 0.5 ? "none" : "";
+    };
     const clearAsides = () => {
       document.querySelectorAll<HTMLElement>("[data-aside-grid]").forEach((g) => (g.dataset.aside = "0"));
+      document.querySelectorAll<HTMLElement>("[data-aside-phone]").forEach((p) => {
+        p.style.opacity = "";
+        p.style.transform = "";
+        p.style.pointerEvents = "";
+      });
     };
 
     /* ---- Where the page is: segment and progress at a scroll position ---- */
@@ -386,8 +402,15 @@ export function JourneyScene() {
           const lifted = !live.before && live.index >= mi && live.index <= mi + 1 && (live.index > mi || local >= m.t0);
           shot.style.setProperty("--lift", lifted ? "1" : "0");
         }
-        // Fully over its place in the scene: the screenshot it came from steps aside.
-        if (m.aside) setAside(m.aside, local >= m.t0 && (mi < live.index || k >= FLY));
+        // The screenshot it came from fades as the piece lifts out of it, so the
+        // two never show side by side: gone by about a third of the way through
+        // the flight, following the scroll both ways. The text starts closing in
+        // as it fades (desktop).
+        if (m.aside) {
+          const gone = local < m.t0 ? 0 : mi < live.index ? 1 : ease(range(k, PHONE_FADE[0], PHONE_FADE[1]));
+          fadePhone(m.aside, gone);
+          setAside(m.aside, gone >= 0.35);
+        }
         if (local < m.t0 || k >= 1) {
           if (g.style.opacity !== "0") g.style.opacity = "0";
           return;

@@ -676,20 +676,13 @@
 .scene-on .scene-gap-lg {
   height: 30svh;
 }
-/* Step aside (journey-scene.tsx): once a piece of a screenshot has landed in
-   the scene, the phone fades and the section's text closes in on the centre.
-   Desktop only; on phones the columns already stack. */
+/* Step aside (journey-scene.tsx): as a piece of a screenshot lifts into the
+   scene, its phone fades with the scroll (set inline) and the section's text
+   closes in on the centre. The closing-in is desktop only; on phones the
+   columns already stack. */
 @media (min-width: 1024px) {
-  .scene-on [data-aside-phone] {
-    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  }
   .scene-on [data-aside-grid] > .aside-col {
-    transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
-  }
-  .scene-on [data-aside-grid][data-aside="1"] [data-aside-phone] {
-    opacity: 0;
-    transform: scale(0.96);
-    pointer-events: none;
+    transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1);
   }
   .scene-on [data-aside-grid][data-aside="1"] > .aside-col {
     transform: translate3d(var(--aside-x, 0), 0, 0);
