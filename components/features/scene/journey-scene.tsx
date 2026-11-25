@@ -81,6 +81,8 @@ type Morph = {
   radius: number;
   /** Leave a hole where it lifted from (the shot's hole layer). */
   lift?: boolean;
+  /** Once it has landed, its phone steps aside and the section's text closes in ([data-aside-grid]). */
+  aside?: string;
 };
 
 // Frame positions measured on the clips' own frames (work/journey/*.json).
@@ -90,10 +92,10 @@ const PILLS: Rect[] = [
 ];
 const MORPHS: Morph[] = [
   { seg: "lift", t0: 0, t1: 1, shot: "booking", crop: [18.1, 81.1, 76.4, 12.3], src: "/images/app/booking.webp", to: [487, 327, 307, 67], radius: 7, lift: true, tint: "rgb(48, 168, 102)" },
-  { seg: "h2", t0: 0, t1: 1, shot: "charge", crop: [22.2, 35.9, 55.6, 50.9], src: "/images/app/charge-qr.webp", to: [481, 190, 318, 314], radius: 22 },
-  { seg: "h4", t0: 0, t1: 1, shot: "invoicing", crop: [0, 0, 100, 100], src: "/images/app/invoices.webp", to: [485, 155.8, 310, 382.3], radius: 18 },
+  { seg: "h2", t0: 0, t1: 1, shot: "charge", crop: [22.2, 35.9, 55.6, 50.9], src: "/images/app/charge-qr.webp", to: [481, 190, 318, 314], radius: 22, aside: "charge" },
+  { seg: "h4", t0: 0, t1: 1, shot: "invoicing", crop: [0, 0, 100, 100], src: "/images/app/invoices.webp", to: [485, 155.8, 310, 382.3], radius: 18, aside: "invoicing" },
   ...PILLS.map((to, i): Morph => ({ seg: "h7", t0: i * 0.04, t1: 0.72 + i * 0.04, chip: i, to, radius: 34, tint: "rgb(30, 92, 62)" })),
-  { seg: "h8", t0: 0, t1: 1, shot: "income", crop: [0, 0, 100, 100], src: "/images/app/payment-streams.webp", to: [564.5, 371.6, 149, 227.7], radius: 14 },
+  { seg: "h8", t0: 0, t1: 1, shot: "income", crop: [0, 0, 100, 100], src: "/images/app/payment-streams.webp", to: [564.5, 371.6, 149, 227.7], radius: 14, aside: "income" },
 ];
 // A morph's own timeline (0–1): it lifts off the page, travels, settles on its
 // spot in the frame (turning into the tint, if any), then melts into the video.
@@ -140,7 +142,11 @@ export function JourneyScene() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const root = document.documentElement;
-    root.classList.add("scene-on");
+    // The journey plays once, for readers who scroll down from the top. Once
+    // it has played through, or if they arrive at a section by its link
+    // (#invoicing), the page is the plain page for the rest of the visit.
+    let active = !window.location.hash || window.location.hash === "#";
+    if (active) root.classList.add("scene-on");
     const small = window.matchMedia("(max-width: 767px)");
     const videos = videoRefs.current;
 
@@ -259,6 +265,28 @@ export function JourneyScene() {
       return { x: r.left + (cx / 100) * r.width, y: r.top + (cy / 100) * r.height, w: (cw / 100) * r.width, h: (ch / 100) * r.height, r: Math.min(18, r.width * 0.04) };
     };
 
+    /* ---- Step aside: a phone fades once its piece lands; the other columns
+       each move toward it by half its width plus the gap, which centres them. */
+    const setAside = (name: string, on: boolean) => {
+      const grid = document.querySelector<HTMLElement>(`[data-aside-grid="${name}"]`);
+      if (!grid || (grid.dataset.aside === "1") === on) return;
+      grid.dataset.aside = on ? "1" : "0";
+      const phone = grid.querySelector<HTMLElement>("[data-aside-phone]");
+      if (!phone) return;
+      const p = phone.getBoundingClientRect();
+      const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
+      // Two columns flanking the phone keep a little air between them.
+      const cols = grid.querySelectorAll(":scope > .aside-col").length;
+      const d = (p.width + gap) / 2 - (cols > 1 ? 32 : 0);
+      grid.querySelectorAll<HTMLElement>(":scope > .aside-col").forEach((col) => {
+        const c = col.getBoundingClientRect();
+        col.style.setProperty("--aside-x", `${c.left + c.width / 2 < p.left ? d : -d}px`);
+      });
+    };
+    const clearAsides = () => {
+      document.querySelectorAll<HTMLElement>("[data-aside-grid]").forEach((g) => (g.dataset.aside = "0"));
+    };
+
     /* ---- Where the page is: segment and progress at a scroll position ---- */
     const segRange = (sg: Segment) => {
       const a = markY.get(sg.from), b = markY.get(sg.to);
@@ -282,12 +310,18 @@ export function JourneyScene() {
     /* ---- One frame: the video follows the eased scroll; morphs follow the page itself ---- */
     let shown = -1;
     const draw = (y: number) => {
+      if (!active) return;
       const vh = window.innerHeight;
       const st = stateAt(y);
       const live = stateAt(window.scrollY);
       const end = markY.get("scene-end");
       if (!st || !live) return;
       const { seg, t, before, line } = st;
+      // Played through: the scene has faded out at the closing section.
+      if (end !== undefined && live.line >= end) {
+        finish();
+        return;
+      }
 
       // The scene appears as the appointment lands in it, and fades out at the closing section.
       let opacity = live.before ? 0 : live.seg.id === "lift" ? ease(range(live.t, 0.3, FLY)) : 1;
@@ -352,6 +386,8 @@ export function JourneyScene() {
           const lifted = !live.before && live.index >= mi && live.index <= mi + 1 && (live.index > mi || local >= m.t0);
           shot.style.setProperty("--lift", lifted ? "1" : "0");
         }
+        // Fully over its place in the scene: the screenshot it came from steps aside.
+        if (m.aside) setAside(m.aside, local >= m.t0 && (mi < live.index || k >= FLY));
         if (local < m.t0 || k >= 1) {
           if (g.style.opacity !== "0") g.style.opacity = "0";
           return;
@@ -406,6 +442,41 @@ export function JourneyScene() {
       schedule();
     };
 
+    const deactivate = () => {
+      if (!active) return;
+      active = false;
+      // The journey's extra room comes out of the page above; keep what the
+      // reader is looking at exactly where it is.
+      const keep = document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2) ?? document.body;
+      const before = keep.getBoundingClientRect().top;
+      root.classList.remove("scene-on");
+      const shift = keep.getBoundingClientRect().top - before;
+      if (Math.abs(shift) > 0.5) window.scrollBy(0, shift);
+      layer.style.opacity = "0";
+      ghosts.forEach((g) => (g.style.opacity = "0"));
+      document.querySelectorAll<HTMLElement>("[data-morph-shot]").forEach((el) => el.style.setProperty("--lift", "0"));
+      document.querySelectorAll<HTMLElement>("[data-scene-hold]").forEach((el) => el.style.setProperty("--hold", "0"));
+      document.querySelectorAll<HTMLElement>("[data-scene-cue]").forEach((el) => el.style.setProperty("--cue", "0"));
+      clearAsides();
+    };
+    function finish() {
+      deactivate();
+    }
+    // A link to a section on this page: turn the journey off before the browser
+    // scrolls, so the page it lands on is laid out without the journey's room.
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement | null)?.closest?.("a[href*='#']") as HTMLAnchorElement | null;
+      if (!a) return;
+      const url = new URL(a.href, window.location.href);
+      if (url.pathname.replace(/\/$/, "") !== window.location.pathname.replace(/\/$/, "") || !url.hash) return;
+      deactivate();
+    };
+    const onHash = () => {
+      if (window.location.hash) deactivate();
+    };
+    document.addEventListener("click", onClick, true);
+    window.addEventListener("hashchange", onHash);
+
     measure();
     draw(eased);
     window.addEventListener("scroll", schedule, { passive: true });
@@ -419,6 +490,9 @@ export function JourneyScene() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", onResize);
       ro.disconnect();
+      document.removeEventListener("click", onClick, true);
+      window.removeEventListener("hashchange", onHash);
+      clearAsides();
       ghosts.forEach((g) => g.remove());
       root.classList.remove("scene-on");
     };

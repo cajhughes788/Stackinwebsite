@@ -43,8 +43,8 @@ export function IncomeSection() {
       <SceneMark name="income-chips" />
       <div aria-hidden="true" className="scene-gap" />
 
-      <div className="mt-14 grid items-center gap-14 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-20">
-        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+      <div data-aside-grid="income" className="mt-14 grid items-center gap-14 lg:mt-20 lg:grid-cols-[auto_1fr] lg:gap-20">
+        <div data-aside-phone className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
           <SceneMark name="income-phone" className="absolute inset-x-0 top-1/2" />
         <PhoneShot
           shot={{
@@ -57,7 +57,7 @@ export function IncomeSection() {
           className="mx-auto"
         />
         </div>
-        <div>
+        <div className="aside-col">
           <Highlights
             items={[
               {
@@ -114,8 +114,8 @@ const invoiceSteps = [
 export function InvoicingSection() {
   return (
     <SectionShell id="invoicing">
-      <div className="grid items-center gap-14 lg:grid-cols-[1fr_auto] lg:gap-20">
-        <div>
+      <div data-aside-grid="invoicing" className="grid items-center gap-14 lg:grid-cols-[1fr_auto] lg:gap-20">
+        <div className="aside-col">
           <SectionHeader
             align="left"
             label="03 / Invoicing"
@@ -141,7 +141,7 @@ export function InvoicingSection() {
           </ol>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+        <div data-aside-phone className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
           <PhoneShot
             shot={{
               src: "/images/app/invoices.webp",
@@ -191,8 +191,8 @@ export function ChargeSection() {
       />
 
       {/* Steps, phone, points: the phone sits in the middle of the story. */}
-      <div className="mt-14 grid items-center gap-14 lg:mt-20 lg:grid-cols-[1fr_auto_1fr] lg:gap-14">
-        <ol className="mx-auto w-full max-w-sm space-y-7 lg:mx-0">
+      <div data-aside-grid="charge" className="mt-14 grid items-center gap-14 lg:mt-20 lg:grid-cols-[1fr_auto_1fr] lg:gap-14">
+        <ol className="aside-col mx-auto w-full max-w-sm space-y-7 lg:mx-0">
           {chargeSteps.map((step, index) => (
             <li key={step} className="flex gap-5">
               <span className="font-[family-name:var(--font-display)] text-4xl font-light leading-none tabular-nums text-primary/70">
@@ -203,7 +203,7 @@ export function ChargeSection() {
           ))}
         </ol>
 
-        <div className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
+        <div data-aside-phone className="relative mx-auto w-full max-w-[22rem] lg:w-[22rem]">
           <PhoneShot
             shot={{
               src: "/images/app/charge.webp",
@@ -218,7 +218,7 @@ export function ChargeSection() {
           <SceneMark name="charge-qr" className="absolute inset-x-0 top-[45%]" />
         </div>
 
-        <ul className="mx-auto w-full max-w-sm space-y-6 lg:mx-0">
+        <ul className="aside-col mx-auto w-full max-w-sm space-y-6 lg:mx-0">
           {[
             ["Tips built in", "15%, 20%, 25%, or a custom tip. Turn it off for any charge."],
             ["Paid straight to you", "Money goes into your own Stripe account. 521 never holds it."],
